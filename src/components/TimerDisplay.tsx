@@ -14,7 +14,6 @@ interface TimerDisplayProps {
   isRunning: boolean;
   totalSets: number;
   totalRounds: number;
-  remainingTime: number;
   onToggleTimer: () => void;
   onResetTimer: () => void;
 }
@@ -27,17 +26,10 @@ const TimerDisplay = ({
   isRunning, 
   totalSets, 
   totalRounds,
-  remainingTime,
   onToggleTimer,
   onResetTimer
 }: TimerDisplayProps) => {
   const formatTimeDisplay = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
@@ -69,15 +61,6 @@ const TimerDisplay = ({
 
   return (
     <div className="lg:col-span-2 p-8 flex flex-col bg-white relative">
-      <div className="text-center mb-4">
-        <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
-          Remaining
-        </div>
-        <div className="text-4xl font-light font-roboto-mono">
-          {formatTime(remainingTime)}
-        </div>
-      </div>
-
       <ProgressBars 
         currentSet={currentSet}
         currentRound={currentRound}
