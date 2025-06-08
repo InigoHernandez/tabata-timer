@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import TimerControls from './TimerControls';
@@ -59,8 +58,13 @@ const TimerDisplay = ({
   if (isFullscreen) {
     return (
       <div 
-        className="fixed inset-0 w-full h-full flex flex-col p-8 pb-8 overflow-hidden z-50 animate-fade-in transition-colors duration-500"
-        style={{ backgroundColor, height: '100vh', width: '100vw' }}
+        className="fixed inset-0 flex flex-col p-8 overflow-hidden z-50 animate-fade-in transition-colors duration-500"
+        style={{ 
+          backgroundColor, 
+          height: '100vh', 
+          width: '100vw',
+          minHeight: '100vh'
+        }}
       >
         <TimerInfo
           remainingTime={remainingTime}
@@ -80,13 +84,15 @@ const TimerDisplay = ({
           />
         </div>
 
-        <TimerMainDisplay
-          currentTime={currentTime}
-          timerState={timerState}
-          isRunning={isRunning}
-          workTime={workTime}
-          isFullscreen={true}
-        />
+        <div className="flex-1 min-h-0">
+          <TimerMainDisplay
+            currentTime={currentTime}
+            timerState={timerState}
+            isRunning={isRunning}
+            workTime={workTime}
+            isFullscreen={true}
+          />
+        </div>
 
         <div className="flex justify-between items-end flex-shrink-0 animate-fade-in">
           <div>

@@ -43,7 +43,7 @@ const TimerMainDisplay = ({
   );
 
   return (
-    <div className={`${isFullscreen ? 'flex-1 flex items-center justify-center min-h-0 -mt-20' : 'flex-1 flex items-center justify-center min-h-0 py-4 -mt-16'} animate-fade-in`}>
+    <div className={`${isFullscreen ? 'h-full flex items-center justify-center' : 'flex-1 flex items-center justify-center min-h-0 py-4 -mt-16'} animate-fade-in`}>
       <div className="text-center">
         <Badge 
           className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
