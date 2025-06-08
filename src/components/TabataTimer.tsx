@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -154,13 +153,13 @@ const TabataTimer = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in">
-      <div className="h-screen flex flex-col p-2 md:p-4 lg:p-8">
+      <div className="h-screen flex flex-col p-2 md:p-4 lg:p-8 overflow-hidden">
         <div className="flex-shrink-0">
           <TimerHero />
         </div>
 
-        <Card className="flex-1 overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none">
-          <div className={`grid ${isFullscreen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'} h-full`}>
+        <Card className="flex-1 overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none min-h-0">
+          <div className={`grid ${isFullscreen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'} h-full min-h-0`}>
             <TimerDisplay 
               currentTime={currentTime} 
               currentRound={currentRound} 
@@ -175,7 +174,7 @@ const TabataTimer = () => {
             />
 
             {!isFullscreen && (
-              <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col">
+              <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col overflow-y-auto">
                 <TimerSettingsPanel 
                   settings={settings} 
                   onSettingsChange={setSettings} 
