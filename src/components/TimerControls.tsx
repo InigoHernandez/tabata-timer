@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
@@ -12,7 +11,11 @@ interface TimerControlsProps {
 }
 
 const TimerControls = ({
-  remainingTime
+  isRunning: isRunning,
+  timerState: timerState,
+  remainingTime: remainingTime,
+  onToggleTimer: onToggleTimer,
+  onResetTimer: onResetTimer
 }: TimerControlsProps) => {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);

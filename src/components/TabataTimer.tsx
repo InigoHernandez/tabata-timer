@@ -120,6 +120,7 @@ const TabataTimer = () => {
               isRunning={isRunning}
               totalSets={settings.sets}
               totalRounds={settings.rounds}
+              remainingTime={getRemainingTime()}
               onToggleTimer={toggleTimer}
               onResetTimer={resetTimer}
             />
