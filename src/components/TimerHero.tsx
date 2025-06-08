@@ -1,3 +1,4 @@
+
 import React from 'react';
 interface TimerHeroProps {
   hideInFullscreen?: boolean;
@@ -10,13 +11,13 @@ const TimerHero = ({
       <div className="text-left">
         
       </div>
-      <div className="text-right max-w-md">
+      <div className="text-left max-w-md">
         <p className="font-light text-lg leading-relaxed md:text-xl">
-          Effective intervals for busy lives.
+          tabat.app
           <br />
           <span style={{
           color: '#0000004d'
-        }}>Train smart, see results fast.</span>
+        }}>high intensity training timer</span>
         </p>
       </div>
     </div>;
