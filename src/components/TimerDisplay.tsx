@@ -113,7 +113,7 @@ const TimerDisplay = ({
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Remaining time
           </div>
-          <div className="text-2xl md:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '200' }}>
+          <div className="text-2xl md:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '300' }}>
             {formatTime(remainingTime)}
           </div>
         </div>
@@ -127,7 +127,7 @@ const TimerDisplay = ({
           />
         </div>
 
-        <div className="flex-1 flex items-center justify-center min-h-0 -mt-8 transition-all duration-300">
+        <div className="flex-1 flex items-center justify-center min-h-0 -mt-16 transition-all duration-300">
           <div className="text-center">
             <Badge 
               className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-[4px]`}
@@ -139,7 +139,7 @@ const TimerDisplay = ({
             </Badge>
             <div 
               className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-roboto-mono leading-none animate-fade-in"
-              style={{ letterSpacing: '-0.04em', fontWeight: '200' }}
+              style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
               key={`time-${timerState}-transition`}
             >
               {formatTimeDisplay(getDisplayTime())}
@@ -154,7 +154,7 @@ const TimerDisplay = ({
             </div>
             <div 
               className="text-2xl md:text-4xl font-roboto-mono transition-all duration-300"
-              style={{ letterSpacing: '-0.01em', fontWeight: '200' }}
+              style={{ letterSpacing: '-0.01em', fontWeight: '300' }}
               key={`cycles-${getCurrentCycleNumber()}`}
             >
               {getCurrentCycleNumber()}/{getTotalCycles()}
@@ -200,7 +200,7 @@ const TimerDisplay = ({
         <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining time
         </div>
-        <div className="text-xl md:text-2xl lg:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '200' }}>
+        <div className="text-xl md:text-2xl lg:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '300' }}>
           {formatTime(remainingTime)}
         </div>
       </div>
@@ -214,7 +214,7 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-4 transition-all duration-300">
+      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-8 transition-all duration-300">
         <div className="text-center">
           <Badge 
             className={`${stateInfo.color} text-black mb-4 px-3 py-1 text-sm font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-[4px]`}
@@ -226,7 +226,7 @@ const TimerDisplay = ({
           </Badge>
           <div 
             className="text-[6rem] md:text-[10rem] lg:text-[14rem] font-roboto-mono leading-none animate-fade-in"
-            style={{ letterSpacing: '-0.04em', fontWeight: '200' }}
+            style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
             key={`time-${timerState}-transition`}
           >
             {formatTimeDisplay(getDisplayTime())}
@@ -241,7 +241,7 @@ const TimerDisplay = ({
           </div>
           <div 
             className="text-xl md:text-2xl lg:text-4xl font-roboto-mono transition-all duration-300"
-            style={{ letterSpacing: '-0.01em', fontWeight: '200' }}
+            style={{ letterSpacing: '-0.01em', fontWeight: '300' }}
             key={`cycles-${getCurrentCycleNumber()}`}
           >
             {getCurrentCycleNumber()}/{getTotalCycles()}

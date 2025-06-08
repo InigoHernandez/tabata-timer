@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -51,7 +50,7 @@ const TimerSettingsPanel = ({
             }}>
               Number of tabatas
             </span>
-            <span className="font-normal text-sm md:text-base font-roboto-mono">{settings.sets}</span>
+            <span className="font-normal text-sm md:text-base font-roboto-mono" style={{ fontWeight: '300' }}>{settings.sets}</span>
           </div>
           <Slider 
             value={[settings.sets]} 
@@ -71,7 +70,7 @@ const TimerSettingsPanel = ({
             }}>
               Rounds per tabatas
             </span>
-            <span className="font-normal text-sm md:text-base font-roboto-mono">{settings.rounds}</span>
+            <span className="font-normal text-sm md:text-base font-roboto-mono" style={{ fontWeight: '300' }}>{settings.rounds}</span>
           </div>
           <Slider 
             value={[settings.rounds]} 
@@ -91,7 +90,7 @@ const TimerSettingsPanel = ({
             }}>
               Work time
             </span>
-            <span className="font-normal text-sm md:text-base font-roboto-mono">{formatTime(settings.workTime)}</span>
+            <span className="font-normal text-sm md:text-base font-roboto-mono" style={{ fontWeight: '300' }}>{formatTime(settings.workTime)}</span>
           </div>
           <Slider 
             value={[settings.workTime]} 
@@ -111,7 +110,7 @@ const TimerSettingsPanel = ({
             }}>
               Rest time
             </span>
-            <span className="font-normal text-sm md:text-base font-roboto-mono">{formatTime(settings.restTime)}</span>
+            <span className="font-normal text-sm md:text-base font-roboto-mono" style={{ fontWeight: '300' }}>{formatTime(settings.restTime)}</span>
           </div>
           <Slider 
             value={[settings.restTime]} 
@@ -131,7 +130,7 @@ const TimerSettingsPanel = ({
             }}>
               Rest between tabatas
             </span>
-            <span className="font-normal text-sm md:text-base font-roboto-mono">{formatTime(settings.restBetweenSets)}</span>
+            <span className="font-normal text-sm md:text-base font-roboto-mono" style={{ fontWeight: '300' }}>{formatTime(settings.restBetweenSets)}</span>
           </div>
           <Slider 
             value={[settings.restBetweenSets]} 
@@ -151,7 +150,7 @@ const TimerSettingsPanel = ({
             }}>
               Countdown time
             </span>
-            <span className="font-normal text-sm md:text-base font-roboto-mono">{settings.countdownTime}s</span>
+            <span className="font-normal text-sm md:text-base font-roboto-mono" style={{ fontWeight: '300' }}>{settings.countdownTime}s</span>
           </div>
           <Slider 
             value={[settings.countdownTime]} 
