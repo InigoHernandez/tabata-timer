@@ -127,7 +127,7 @@ const TabataTimer = () => {
 
   return <div className="min-h-screen font-aspekta relative" style={{ backgroundColor: '#F5F5F5' }}>
       <OvalsBackground />
-      <div className="flex flex-col items-center justify-center p-8 pb-32">
+      <div className="flex flex-col items-center justify-center p-8 pb-32 relative z-10">
         <div className="w-full max-w-6xl space-y-16">
           {/* Header */}
           <div className="text-left space-y-8">

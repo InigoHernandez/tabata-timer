@@ -3,14 +3,14 @@ import React from 'react';
 
 const OvalsBackground = () => {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1 }}>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
       {/* Large oval */}
       <div 
         className="absolute animate-pulse"
         style={{
           width: '800px',
           height: '400px',
-          border: '1px solid rgba(254, 100, 23, 0.2)',
+          border: '2px solid rgba(254, 100, 23, 0.3)',
           borderRadius: '50%',
           top: '20%',
           left: '50%',
@@ -26,7 +26,7 @@ const OvalsBackground = () => {
         style={{
           width: '600px',
           height: '300px',
-          border: '1px solid rgba(254, 100, 23, 0.15)',
+          border: '2px solid rgba(254, 100, 23, 0.25)',
           borderRadius: '50%',
           top: '30%',
           right: '10%',
@@ -42,7 +42,7 @@ const OvalsBackground = () => {
         style={{
           width: '400px',
           height: '200px',
-          border: '1px solid rgba(254, 100, 23, 0.1)',
+          border: '2px solid rgba(254, 100, 23, 0.2)',
           borderRadius: '50%',
           bottom: '20%',
           left: '15%',
@@ -58,7 +58,7 @@ const OvalsBackground = () => {
         style={{
           width: '1000px',
           height: '500px',
-          border: '1px solid rgba(254, 100, 23, 0.08)',
+          border: '1px solid rgba(254, 100, 23, 0.15)',
           borderRadius: '50%',
           top: '10%',
           left: '20%',
