@@ -84,6 +84,12 @@ const TabataTimer = () => {
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings]);
 
   const getRemainingTime = () => {
+    // Calculate total remaining time based on current state
+    if (timerState === 'idle') {
+      // When idle, show the total workout time (excluding countdown)
+      return settings.sets * settings.rounds * (settings.workTime + settings.restTime) + (settings.sets - 1) * settings.restBetweenSets;
+    }
+    
     // Don't include countdown time in remaining time calculation
     if (timerState === 'countdown') {
       return settings.sets * settings.rounds * (settings.workTime + settings.restTime) + (settings.sets - 1) * settings.restBetweenSets;
