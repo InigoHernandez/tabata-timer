@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Play, Pause, RotateCcw, Settings } from 'lucide-react';
+
 interface TimerSettings {
   workTime: number;
   restTime: number;
@@ -10,7 +11,9 @@ interface TimerSettings {
   sets: number;
   restBetweenSets: number;
 }
+
 type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
+
 const TabataTimer = () => {
   const [settings, setSettings] = useState<TimerSettings>({
     workTime: 20,
@@ -25,6 +28,7 @@ const TabataTimer = () => {
   const [currentSet, setCurrentSet] = useState(1);
   const [timerState, setTimerState] = useState<TimerState>('idle');
   const [showSettings, setShowSettings] = useState(false);
+
   const resetTimer = useCallback(() => {
     setIsRunning(false);
     setCurrentTime(settings.workTime);
@@ -32,6 +36,7 @@ const TabataTimer = () => {
     setCurrentSet(1);
     setTimerState('idle');
   }, [settings.workTime]);
+
   const toggleTimer = () => {
     if (timerState === 'idle') {
       setTimerState('work');
@@ -39,6 +44,7 @@ const TabataTimer = () => {
     }
     setIsRunning(!isRunning);
   };
+
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isRunning && currentTime > 0) {
@@ -71,15 +77,22 @@ const TabataTimer = () => {
     }
     return () => clearInterval(interval);
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings]);
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
+
   const getStateColor = () => {
+    // If timer is not running and not in idle or finished state, show paused color
+    if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
+      return '#0000004d';
+    }
+    
     switch (timerState) {
       case 'work':
-        return 'text-green-500';
+        return '#FE6417';
       case 'rest':
         return 'text-blue-500';
       case 'setRest':
@@ -87,10 +100,16 @@ const TabataTimer = () => {
       case 'finished':
         return 'text-orange-500';
       default:
-        return 'text-foreground';
+        return '#020817';
     }
   };
+
   const getStateText = () => {
+    // If timer is not running and not in idle or finished state, show "paused"
+    if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
+      return 'paused';
+    }
+    
     switch (timerState) {
       case 'work':
         return 'work';
@@ -104,12 +123,13 @@ const TabataTimer = () => {
         return 'ready';
     }
   };
+
   return <div className="min-h-screen font-aspekta" style={{ backgroundColor: '#F5F5F5' }}>
       <div className="flex flex-col items-center justify-center p-4 pb-32">
         <div className="w-full max-w-6xl space-y-12">
           {/* Header */}
           <div className="text-left space-y-6">
-            <p className="tracking-wider uppercase text-xs text-orange-600 font-medium">TABAT.APP — HIGH INTENSITY TRAINING</p>
+            <p className="tracking-wider uppercase text-xs font-medium" style={{ color: '#FE6417' }}>TABAT.APP — HIGH INTENSITY TRAINING</p>
             <div className="w-8/12">
               <h1 className="text-2xl md:text-3xl leading-tight text-foreground font-normal">
                 Tabata timer for focused workouts.
@@ -121,7 +141,7 @@ const TabataTimer = () => {
 
           {/* Main Timer Display */}
           <Card className="p-12 md:p-16 text-center space-y-8 backdrop-blur-md border border-border/20">
-            <div className={`text-3xl font-light tracking-wider ${getStateColor()}`}>
+            <div className="text-3xl font-light tracking-wider" style={{ color: getStateColor() }}>
               {getStateText()}
             </div>
             
