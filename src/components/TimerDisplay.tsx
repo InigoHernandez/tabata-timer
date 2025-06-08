@@ -31,20 +31,20 @@ const TimerDisplay = ({
 
   const getStateText = () => {
     if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
-      return 'PAUSED';
+      return 'Paused';
     }
     
     switch (timerState) {
       case 'work':
-        return 'WORK';
+        return 'Work';
       case 'rest':
-        return 'REST';
+        return 'Rest';
       case 'setRest':
-        return 'SET REST';
+        return 'Set Rest';
       case 'finished':
-        return 'FINISHED';
+        return 'Finished';
       default:
-        return 'READY';
+        return 'Ready';
     }
   };
 
@@ -72,7 +72,7 @@ const TimerDisplay = ({
 
         <div className="text-left">
           <div className="text-sm font-medium mb-2 tracking-wider" style={{ color: '#0000004d' }}>
-            CYCLES
+            Cycles
           </div>
           <div className="text-4xl font-light font-roboto-mono">
             {getCurrentCycleNumber()}/{getTotalCycles()}
