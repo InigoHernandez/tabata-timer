@@ -111,7 +111,7 @@ const TabataTimer = () => {
           <div className="text-left space-y-6">
             <p className="tracking-wider uppercase text-xs text-orange-600 font-medium">TABAT.APP — HIGH INTENSITY TRAINING</p>
             <div className="w-8/12">
-              <h1 className="text-4xl md:text-6xl leading-tight text-foreground font-normal lg:text-2xl">
+              <h1 className="text-2xl md:text-3xl leading-tight text-foreground font-normal">
                 Tabata timer for focused workouts.
                 <br />
                 <span style={{ color: '#0000004d' }}>Train efficiently with precise intervals.</span>
