@@ -65,7 +65,7 @@ const TimerDisplay = ({
           <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
             {getStateText()}
           </div>
-          <div className="text-9xl font-light tracking-tighter font-mono">
+          <div className="text-9xl font-light tracking-tighter font-roboto-mono">
             {formatTimeDisplay(currentTime)}
           </div>
         </div>
@@ -74,7 +74,7 @@ const TimerDisplay = ({
           <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
             CYCLES
           </div>
-          <div className="text-4xl font-light font-mono">
+          <div className="text-4xl font-light font-roboto-mono">
             {getCurrentCycleNumber()}/{getTotalCycles()}
           </div>
         </div>

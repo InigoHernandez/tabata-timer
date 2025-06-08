@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Square } from 'lucide-react';
@@ -32,7 +31,7 @@ const TimerControls = ({
         <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
           REMAINING
         </div>
-        <div className="text-2xl font-light font-mono">
+        <div className="text-2xl font-light font-roboto-mono">
           {formatTime(remainingTime)}
         </div>
       </div>
