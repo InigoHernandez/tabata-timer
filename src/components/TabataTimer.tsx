@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -140,7 +141,7 @@ const TabataTimer = () => {
           </div>
 
           {/* Main Timer Display */}
-          <Card className="p-16 md:p-20 text-center space-y-12 backdrop-blur-md border border-border/20 relative overflow-hidden">
+          <Card className="p-16 md:p-20 text-center space-y-20 backdrop-blur-md border border-border/20 relative overflow-hidden">
             <div className="relative z-10">
               <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: getStateColor() }}>
                 {getStateText()}
@@ -151,17 +152,17 @@ const TabataTimer = () => {
               </div>
 
               <div className="grid grid-cols-3 gap-12 text-center">
-                <div className="space-y-3">
+                <div className="space-y-1">
                   <div className="text-2xl md:text-3xl font-normal text-foreground">{currentRound}</div>
-                  <div className="text-lg font-normal tracking-wide" style={{ color: '#0000004d' }}>round</div>
+                  <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>round</div>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-1">
                   <div className="text-2xl md:text-3xl font-normal text-foreground">{currentSet}</div>
-                  <div className="text-lg font-normal tracking-wide" style={{ color: '#0000004d' }}>set</div>
+                  <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>set</div>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-1">
                   <div className="text-2xl md:text-3xl font-normal text-foreground">{settings.rounds * settings.sets}</div>
-                  <div className="text-lg font-normal tracking-wide" style={{ color: '#0000004d' }}>total</div>
+                  <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>total</div>
                 </div>
               </div>
             </div>
