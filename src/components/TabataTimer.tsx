@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Play, Pause, RotateCcw, Settings } from 'lucide-react';
-import OvalsBackground from './OvalsBackground';
 
 interface TimerSettings {
   workTime: number;
@@ -96,11 +94,11 @@ const TabataTimer = () => {
       case 'work':
         return '#FE6417';
       case 'rest':
-        return 'text-blue-500';
+        return '#0000004d';
       case 'setRest':
-        return 'text-purple-500';
+        return '#0000004d';
       case 'finished':
-        return 'text-orange-500';
+        return '#FE6417';
       default:
         return '#020817';
     }
@@ -133,8 +131,8 @@ const TabataTimer = () => {
           <div className="text-left space-y-8">
             <p className="tracking-wider uppercase text-xs font-medium" style={{ color: '#FE6417' }}>TABAT.APP — HIGH INTENSITY TRAINING</p>
             <div className="w-8/12">
-              <h1 className="text-2xl md:text-3xl leading-tight text-foreground font-normal">
-                Maximum results in minimum time.
+              <h1 className="text-2xl md:text-3xl leading-tight font-normal">
+                <span className="text-foreground">Maximum results in minimum time.</span>
                 <br />
                 <span style={{ color: '#0000004d' }}>Train smarter with scientific intervals.</span>
               </h1>
@@ -143,9 +141,8 @@ const TabataTimer = () => {
 
           {/* Main Timer Display */}
           <Card className="p-16 md:p-20 text-center space-y-12 backdrop-blur-md border border-border/20 relative overflow-hidden">
-            <OvalsBackground isRunning={isRunning} timerState={timerState} />
             <div className="relative z-10">
-              <div className="text-3xl font-light tracking-wider" style={{ color: getStateColor() }}>
+              <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: getStateColor() }}>
                 {getStateText()}
               </div>
               
@@ -155,16 +152,16 @@ const TabataTimer = () => {
 
               <div className="grid grid-cols-3 gap-12 text-center">
                 <div className="space-y-3">
-                  <div className="text-4xl font-light text-foreground">{currentRound}</div>
-                  <div className="text-lg font-light text-muted-foreground tracking-wide">round</div>
+                  <div className="text-2xl md:text-3xl font-normal text-foreground">{currentRound}</div>
+                  <div className="text-lg font-normal tracking-wide" style={{ color: '#0000004d' }}>round</div>
                 </div>
                 <div className="space-y-3">
-                  <div className="text-4xl font-light text-foreground">{currentSet}</div>
-                  <div className="text-lg font-light text-muted-foreground tracking-wide">set</div>
+                  <div className="text-2xl md:text-3xl font-normal text-foreground">{currentSet}</div>
+                  <div className="text-lg font-normal tracking-wide" style={{ color: '#0000004d' }}>set</div>
                 </div>
                 <div className="space-y-3">
-                  <div className="text-4xl font-light text-foreground">{settings.rounds * settings.sets}</div>
-                  <div className="text-lg font-light text-muted-foreground tracking-wide">total</div>
+                  <div className="text-2xl md:text-3xl font-normal text-foreground">{settings.rounds * settings.sets}</div>
+                  <div className="text-lg font-normal tracking-wide" style={{ color: '#0000004d' }}>total</div>
                 </div>
               </div>
             </div>
