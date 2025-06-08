@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -30,10 +31,14 @@ const TimerSettingsPanel = ({ settings, remainingTime, onSettingsChange }: Timer
 
   return (
     <div className="flex-1 space-y-8 pb-4">
-      <div className="space-y-4 py-[15px]">
-        <div className="flex justify-between items-center">
-          <span className="text-base font-normal" style={{ color: '#0000004d' }}>Remaining</span>
-          <span className="font-normal font-roboto-mono text-lg">{formatTime(remainingTime)}</span>
+      <div className="space-y-6 py-[15px]">
+        <div className="text-center">
+          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+            Remaining
+          </div>
+          <div className="text-4xl font-light font-roboto-mono">
+            {formatTime(remainingTime)}
+          </div>
         </div>
       </div>
 
