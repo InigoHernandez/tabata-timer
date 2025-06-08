@@ -24,7 +24,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
             className={`h-4 md:h-6 w-[2px] transition-all duration-300 ease-out ${
               isActive ? 'bg-foreground scale-110 opacity-100' : 
               isCompleted ? 'bg-muted-foreground scale-100 opacity-100' : 
-              'bg-[#B2B2B3] scale-100 opacity-100'
+              'bg-[#B2B2B3] scale-100 opacity-50'
             }`}
           />
         );
@@ -55,7 +55,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
   };
 
   return (
-    <div className="mb-4 md:mb-8 h-16 md:h-18 flex items-start overflow-hidden">
+    <div className="mb-4 md:mb-8 h-16 md:h-18 flex items-start overflow-hidden transition-all duration-300">
       <div 
         className="flex gap-1 md:gap-2 items-start justify-start flex-wrap transition-opacity duration-300 ease-out max-h-16 md:max-h-18"
         key={`bars-${totalSets}-${totalRounds}`}

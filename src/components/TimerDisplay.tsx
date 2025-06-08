@@ -111,17 +111,17 @@ const TimerDisplay = ({
 
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 bg-white flex flex-col p-8 animate-fade-in overflow-hidden z-50">
-        <div className="absolute top-8 right-8 text-right z-10">
+      <div className="fixed inset-0 bg-white flex flex-col p-8 animate-fade-in overflow-hidden z-50 transition-all duration-500 ease-in-out">
+        <div className="absolute top-8 right-8 text-right z-10 transition-all duration-300">
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Remaining time
           </div>
-          <div className="text-2xl md:text-4xl font-light font-roboto-mono">
+          <div className="text-2xl md:text-4xl font-light font-geist-mono tracking-tighter-custom">
             {formatTime(remainingTime)}
           </div>
         </div>
 
-        <div className="mr-32 md:mr-48 flex-shrink-0">
+        <div className="mr-32 md:mr-48 flex-shrink-0 transition-all duration-300">
           <ProgressBars 
             currentSet={currentSet}
             currentRound={currentRound}
@@ -130,17 +130,18 @@ const TimerDisplay = ({
           />
         </div>
 
-        <div className="flex-1 flex items-center justify-center min-h-0 -mt-8">
+        <div className="flex-1 flex items-center justify-center min-h-0 -mt-8 transition-all duration-300">
           <div className="text-center">
             <Badge 
-              className={`${stateInfo.color} text-white mb-6 px-4 py-2 text-lg font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-lg`}
+              className={`${stateInfo.color} text-white mb-6 px-4 py-2 text-lg font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-lg font-geist-mono`}
               key={`${timerState}-${isRunning}`}
             >
               <StateIcon className="w-4 h-4 fill-current" />
               {stateInfo.text}
             </Badge>
             <div 
-              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-extralight tracking-tighter font-roboto-mono leading-none animate-fade-in"
+              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-extralight font-geist-mono leading-none animate-fade-in"
+              style={{ letterSpacing: '-0.02em' }}
               key={`time-${timerState}-transition`}
             >
               {formatTimeDisplay(getDisplayTime())}
@@ -148,20 +149,20 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className="flex justify-between items-end flex-shrink-0 pb-8">
+        <div className="flex justify-between items-end flex-shrink-0 pb-8 transition-all duration-300">
           <div>
             <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
               Cycles
             </div>
             <div 
-              className="text-2xl md:text-4xl font-light font-roboto-mono transition-all duration-300"
+              className="text-2xl md:text-4xl font-light font-geist-mono transition-all duration-300 tracking-tighter-custom"
               key={`cycles-${getCurrentCycleNumber()}`}
             >
               {getCurrentCycleNumber()}/{getTotalCycles()}
             </div>
           </div>
 
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center transition-all duration-300">
             <Button 
               onClick={toggleFullscreen} 
               size="lg" 
@@ -195,17 +196,17 @@ const TimerDisplay = ({
   }
 
   return (
-    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative animate-fade-in min-h-0 overflow-y-auto">
-      <div className="absolute top-4 right-4 md:top-8 md:right-8 text-right z-10">
+    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative animate-fade-in min-h-0 overflow-y-auto transition-all duration-500 ease-in-out">
+      <div className="absolute top-4 right-4 md:top-8 md:right-8 text-right z-10 transition-all duration-300">
         <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining time
         </div>
-        <div className="text-xl md:text-2xl lg:text-4xl font-light font-roboto-mono">
+        <div className="text-xl md:text-2xl lg:text-4xl font-light font-geist-mono tracking-tighter-custom">
           {formatTime(remainingTime)}
         </div>
       </div>
 
-      <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0">
+      <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0 transition-all duration-300">
         <ProgressBars 
           currentSet={currentSet}
           currentRound={currentRound}
@@ -214,17 +215,18 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-4">
+      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-4 transition-all duration-300">
         <div className="text-center">
           <Badge 
-            className={`${stateInfo.color} text-white mb-4 px-3 py-1 text-sm font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-lg`}
+            className={`${stateInfo.color} text-white mb-4 px-3 py-1 text-sm font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-lg font-geist-mono`}
             key={`${timerState}-${isRunning}`}
           >
             <StateIcon className="w-4 h-4 fill-current" />
             {stateInfo.text}
           </Badge>
           <div 
-            className="text-[6rem] md:text-[10rem] lg:text-[14rem] font-extralight tracking-tighter font-roboto-mono leading-none animate-fade-in"
+            className="text-[6rem] md:text-[10rem] lg:text-[14rem] font-extralight font-geist-mono leading-none animate-fade-in"
+            style={{ letterSpacing: '-0.02em' }}
             key={`time-${timerState}-transition`}
           >
             {formatTimeDisplay(getDisplayTime())}
@@ -232,20 +234,20 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <div className="flex justify-between items-end flex-shrink-0 pt-4">
+      <div className="flex justify-between items-end flex-shrink-0 pt-4 transition-all duration-300">
         <div>
           <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Cycles
           </div>
           <div 
-            className="text-xl md:text-2xl lg:text-4xl font-light font-roboto-mono transition-all duration-300"
+            className="text-xl md:text-2xl lg:text-4xl font-light font-geist-mono transition-all duration-300 tracking-tighter-custom"
             key={`cycles-${getCurrentCycleNumber()}`}
           >
             {getCurrentCycleNumber()}/{getTotalCycles()}
           </div>
         </div>
 
-        <div className="flex gap-2 md:gap-4 items-center">
+        <div className="flex gap-2 md:gap-4 items-center transition-all duration-300">
           <Button 
             onClick={toggleFullscreen} 
             size="lg" 
