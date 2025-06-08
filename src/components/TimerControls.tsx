@@ -21,7 +21,7 @@ const TimerControls = ({
   };
 
   return (
-    <div className="space-y-6 pt-8 border-t border-[#E8E8E8] py-[31px]">
+    <div className="space-y-6 pt-8 py-[31px]">
       <div className="text-center">
         <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining
