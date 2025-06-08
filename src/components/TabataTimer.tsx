@@ -1,11 +1,8 @@
-
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Play, Pause, RotateCcw, Settings } from 'lucide-react';
-
 interface TimerSettings {
   workTime: number;
   restTime: number;
@@ -13,9 +10,7 @@ interface TimerSettings {
   sets: number;
   restBetweenSets: number;
 }
-
 type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
-
 const TabataTimer = () => {
   const [settings, setSettings] = useState<TimerSettings>({
     workTime: 20,
@@ -24,14 +19,12 @@ const TabataTimer = () => {
     sets: 1,
     restBetweenSets: 60
   });
-
   const [isRunning, setIsRunning] = useState(false);
   const [currentTime, setCurrentTime] = useState(settings.workTime);
   const [currentRound, setCurrentRound] = useState(1);
   const [currentSet, setCurrentSet] = useState(1);
   const [timerState, setTimerState] = useState<TimerState>('idle');
   const [showSettings, setShowSettings] = useState(false);
-
   const resetTimer = useCallback(() => {
     setIsRunning(false);
     setCurrentTime(settings.workTime);
@@ -39,7 +32,6 @@ const TabataTimer = () => {
     setCurrentSet(1);
     setTimerState('idle');
   }, [settings.workTime]);
-
   const toggleTimer = () => {
     if (timerState === 'idle') {
       setTimerState('work');
@@ -47,10 +39,8 @@ const TabataTimer = () => {
     }
     setIsRunning(!isRunning);
   };
-
   useEffect(() => {
     let interval: NodeJS.Timeout;
-
     if (isRunning && currentTime > 0) {
       interval = setInterval(() => {
         setCurrentTime(prev => prev - 1);
@@ -79,44 +69,48 @@ const TabataTimer = () => {
         setCurrentTime(settings.workTime);
       }
     }
-
     return () => clearInterval(interval);
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings]);
-
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-
   const getStateColor = () => {
     switch (timerState) {
-      case 'work': return 'text-green-500';
-      case 'rest': return 'text-blue-500';
-      case 'setRest': return 'text-purple-500';
-      case 'finished': return 'text-orange-500';
-      default: return 'text-foreground';
+      case 'work':
+        return 'text-green-500';
+      case 'rest':
+        return 'text-blue-500';
+      case 'setRest':
+        return 'text-purple-500';
+      case 'finished':
+        return 'text-orange-500';
+      default:
+        return 'text-foreground';
     }
   };
-
   const getStateText = () => {
     switch (timerState) {
-      case 'work': return 'work';
-      case 'rest': return 'rest';
-      case 'setRest': return 'set rest';
-      case 'finished': return 'finished';
-      default: return 'ready';
+      case 'work':
+        return 'work';
+      case 'rest':
+        return 'rest';
+      case 'setRest':
+        return 'set rest';
+      case 'finished':
+        return 'finished';
+      default:
+        return 'ready';
     }
   };
-
-  return (
-    <div className="min-h-screen bg-background font-aspekta">
+  return <div className="min-h-screen bg-background font-aspekta">
       <div className="flex flex-col items-center justify-center p-4 pb-32">
         <div className="w-full max-w-6xl space-y-12">
           {/* Header */}
           <div className="text-left space-y-6">
-            <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">HIGH-INTENSITY TRAINING</p>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium leading-tight text-foreground">
+            <p className="font-medium tracking-wider uppercase text-xs text-orange-600">HIGH-INTENSITY TRAINING</p>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl leading-tight text-foreground font-normal">
               The ultimate 
               <span className="text-muted-foreground/60"> Tabata timer for focused workouts. Train efficiently with precise intervals. Build strength and endurance with customizable rounds and sets.</span>
             </h1>
@@ -149,91 +143,62 @@ const TabataTimer = () => {
           </Card>
 
           {/* Settings Panel */}
-          {showSettings && (
-            <Card className="p-8 space-y-8 backdrop-blur-md border border-border/20">
+          {showSettings && <Card className="p-8 space-y-8 backdrop-blur-md border border-border/20">
               <h3 className="text-2xl font-normal tracking-wide">timer settings</h3>
               
               <div className="grid gap-8">
                 <div className="space-y-3">
                   <label className="text-lg font-light tracking-wide">work time: {settings.workTime}s</label>
-                  <Slider
-                    value={[settings.workTime]}
-                    onValueChange={(value) => setSettings(prev => ({ ...prev, workTime: value[0] }))}
-                    max={60}
-                    min={5}
-                    step={5}
-                    className="w-full"
-                  />
+                  <Slider value={[settings.workTime]} onValueChange={value => setSettings(prev => ({
+                ...prev,
+                workTime: value[0]
+              }))} max={60} min={5} step={5} className="w-full" />
                 </div>
 
                 <div className="space-y-3">
                   <label className="text-lg font-light tracking-wide">rest time: {settings.restTime}s</label>
-                  <Slider
-                    value={[settings.restTime]}
-                    onValueChange={(value) => setSettings(prev => ({ ...prev, restTime: value[0] }))}
-                    max={60}
-                    min={5}
-                    step={5}
-                    className="w-full"
-                  />
+                  <Slider value={[settings.restTime]} onValueChange={value => setSettings(prev => ({
+                ...prev,
+                restTime: value[0]
+              }))} max={60} min={5} step={5} className="w-full" />
                 </div>
 
                 <div className="space-y-3">
                   <label className="text-lg font-light tracking-wide">rounds: {settings.rounds}</label>
-                  <Slider
-                    value={[settings.rounds]}
-                    onValueChange={(value) => setSettings(prev => ({ ...prev, rounds: value[0] }))}
-                    max={12}
-                    min={1}
-                    step={1}
-                    className="w-full"
-                  />
+                  <Slider value={[settings.rounds]} onValueChange={value => setSettings(prev => ({
+                ...prev,
+                rounds: value[0]
+              }))} max={12} min={1} step={1} className="w-full" />
                 </div>
 
                 <div className="space-y-3">
                   <label className="text-lg font-light tracking-wide">sets: {settings.sets}</label>
-                  <Slider
-                    value={[settings.sets]}
-                    onValueChange={(value) => setSettings(prev => ({ ...prev, sets: value[0] }))}
-                    max={5}
-                    min={1}
-                    step={1}
-                    className="w-full"
-                  />
+                  <Slider value={[settings.sets]} onValueChange={value => setSettings(prev => ({
+                ...prev,
+                sets: value[0]
+              }))} max={5} min={1} step={1} className="w-full" />
                 </div>
 
                 <div className="space-y-3">
                   <label className="text-lg font-light tracking-wide">rest between sets: {settings.restBetweenSets}s</label>
-                  <Slider
-                    value={[settings.restBetweenSets]}
-                    onValueChange={(value) => setSettings(prev => ({ ...prev, restBetweenSets: value[0] }))}
-                    max={180}
-                    min={30}
-                    step={10}
-                    className="w-full"
-                  />
+                  <Slider value={[settings.restBetweenSets]} onValueChange={value => setSettings(prev => ({
+                ...prev,
+                restBetweenSets: value[0]
+              }))} max={180} min={30} step={10} className="w-full" />
                 </div>
               </div>
 
               <Button onClick={resetTimer} className="w-full font-light text-lg">
                 apply settings
               </Button>
-            </Card>
-          )}
+            </Card>}
 
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <Button 
-              size="lg" 
-              className="px-8 py-4 text-lg font-medium bg-foreground text-background hover:bg-foreground/90 rounded-none"
-            >
+            <Button size="lg" className="px-8 py-4 text-lg font-medium bg-foreground text-background hover:bg-foreground/90 rounded-none">
               START TRAINING
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="px-8 py-4 text-lg font-medium border-2 border-foreground text-foreground hover:bg-foreground hover:text-background rounded-none"
-            >
+            <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-medium border-2 border-foreground text-foreground hover:bg-foreground hover:text-background rounded-none">
               VIEW WORKOUTS
             </Button>
           </div>
@@ -243,37 +208,19 @@ const TabataTimer = () => {
       {/* Fixed Controls - Always Visible */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
         <div className="flex justify-center gap-6 backdrop-blur-md border border-border/20 rounded-full p-4">
-          <Button
-            onClick={toggleTimer}
-            size="lg"
-            className="w-16 h-16 rounded-full text-xl font-light"
-            disabled={timerState === 'finished'}
-          >
+          <Button onClick={toggleTimer} size="lg" className="w-16 h-16 rounded-full text-xl font-light" disabled={timerState === 'finished'}>
             {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" />}
           </Button>
           
-          <Button
-            onClick={resetTimer}
-            size="lg"
-            variant="outline"
-            className="w-16 h-16 rounded-full font-light"
-          >
+          <Button onClick={resetTimer} size="lg" variant="outline" className="w-16 h-16 rounded-full font-light">
             <RotateCcw className="w-6 h-6" />
           </Button>
 
-          <Button
-            onClick={() => setShowSettings(!showSettings)}
-            size="lg"
-            variant="outline"
-            className="w-16 h-16 rounded-full font-light"
-          >
+          <Button onClick={() => setShowSettings(!showSettings)} size="lg" variant="outline" className="w-16 h-16 rounded-full font-light">
             <Settings className="w-6 h-6" />
           </Button>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default TabataTimer;
-
