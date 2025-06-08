@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
@@ -65,7 +66,7 @@ const TimerDisplay = ({
         totalRounds={totalRounds}
       />
 
-      <div className="flex-1 flex items-center justify-center -mt-6">
+      <div className="flex-1 flex items-center justify-center -mt-10">
         <div className="text-left">
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             {getStateText()}
