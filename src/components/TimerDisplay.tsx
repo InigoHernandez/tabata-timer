@@ -113,7 +113,7 @@ const TimerDisplay = ({
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Remaining time
           </div>
-          <div className="text-2xl md:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '300' }}>
+          <div className="text-2xl md:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
             {formatTime(remainingTime)}
           </div>
         </div>
@@ -127,11 +127,11 @@ const TimerDisplay = ({
           />
         </div>
 
-        <div className="flex-1 flex items-center justify-center min-h-0 -mt-24 transition-all duration-300">
+        <div className="flex-1 flex items-center justify-center min-h-0 -mt-32 transition-all duration-300">
           <div className="text-center">
             <Badge 
               className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-[4px]`}
-              style={{ fontWeight: '300' }}
+              style={{ fontWeight: '400' }}
               key={`${timerState}-${isRunning}`}
             >
               <SolidDot />
@@ -154,7 +154,7 @@ const TimerDisplay = ({
             </div>
             <div 
               className="text-2xl md:text-4xl font-roboto-mono transition-all duration-300"
-              style={{ letterSpacing: '-0.01em', fontWeight: '300' }}
+              style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               key={`cycles-${getCurrentCycleNumber()}`}
             >
               {getCurrentCycleNumber()}/{getTotalCycles()}
@@ -200,7 +200,7 @@ const TimerDisplay = ({
         <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining time
         </div>
-        <div className="text-xl md:text-2xl lg:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '300' }}>
+        <div className="text-xl md:text-2xl lg:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
           {formatTime(remainingTime)}
         </div>
       </div>
@@ -214,11 +214,11 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-12 transition-all duration-300">
+      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-16 transition-all duration-300">
         <div className="text-center">
           <Badge 
             className={`${stateInfo.color} text-black mb-4 px-3 py-1 text-sm font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-[4px]`}
-            style={{ fontWeight: '300' }}
+            style={{ fontWeight: '400' }}
             key={`${timerState}-${isRunning}`}
           >
             <SolidDot />
@@ -241,7 +241,7 @@ const TimerDisplay = ({
           </div>
           <div 
             className="text-xl md:text-2xl lg:text-4xl font-roboto-mono transition-all duration-300"
-            style={{ letterSpacing: '-0.01em', fontWeight: '300' }}
+            style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
             key={`cycles-${getCurrentCycleNumber()}`}
           >
             {getCurrentCycleNumber()}/{getTotalCycles()}
