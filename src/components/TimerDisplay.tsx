@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
@@ -34,28 +35,15 @@ const TimerDisplay = ({
   onResetTimer
 }: TimerDisplayProps) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      const newFullscreenState = !!document.fullscreenElement;
-      
-      if (newFullscreenState !== isFullscreen) {
-        setIsTransitioning(true);
-        
-        // Start transition immediately
-        setIsFullscreen(newFullscreenState);
-        
-        // Reset transition state after animation completes
-        setTimeout(() => {
-          setIsTransitioning(false);
-        }, 500);
-      }
+      setIsFullscreen(!!document.fullscreenElement);
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, [isFullscreen]);
+  }, []);
 
   const formatTimeDisplay = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -119,12 +107,8 @@ const TimerDisplay = ({
 
   if (isFullscreen) {
     return (
-      <div className={`fixed inset-0 bg-white flex flex-col p-8 pb-8 overflow-hidden z-50 transition-all duration-500 ease-in-out ${
-        isTransitioning ? 'animate-fade-in' : ''
-      }`}>
-        <div className={`absolute top-8 right-8 text-right z-10 transition-all duration-500 ease-in-out ${
-          isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-        }`}>
+      <div className="fixed inset-0 bg-white flex flex-col p-8 pb-8 overflow-hidden z-50 animate-fade-in">
+        <div className="absolute top-8 right-8 text-right z-10">
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Remaining time
           </div>
@@ -133,9 +117,7 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className={`mr-32 md:mr-48 flex-shrink-0 transition-all duration-500 ease-in-out ${
-          isTransitioning ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'
-        }`}>
+        <div className="mr-32 md:mr-48 flex-shrink-0">
           <ProgressBars 
             currentSet={currentSet}
             currentRound={currentRound}
@@ -144,9 +126,7 @@ const TimerDisplay = ({
           />
         </div>
 
-        <div className={`flex-1 flex items-center justify-center min-h-0 -mt-20 transition-all duration-500 ease-in-out ${
-          isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-        }`}>
+        <div className="flex-1 flex items-center justify-center min-h-0 -mt-20">
           <div className="text-center">
             <Badge 
               className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
@@ -166,9 +146,7 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className={`flex justify-between items-end flex-shrink-0 transition-all duration-500 ease-in-out ${
-          isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-        }`}>
+        <div className="flex justify-between items-end flex-shrink-0">
           <div>
             <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
               Cycles
@@ -216,12 +194,8 @@ const TimerDisplay = ({
   }
 
   return (
-    <div className={`lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative min-h-0 overflow-y-auto transition-all duration-500 ease-in-out ${
-      isTransitioning ? 'animate-fade-in' : ''
-    }`}>
-      <div className={`absolute top-4 right-4 md:top-8 md:right-8 text-right z-10 transition-all duration-500 ease-in-out ${
-        isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-      }`}>
+    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative min-h-0 overflow-y-auto">
+      <div className="absolute top-4 right-4 md:top-8 md:right-8 text-right z-10">
         <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining time
         </div>
@@ -230,9 +204,7 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <div className={`mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0 transition-all duration-500 ease-in-out ${
-        isTransitioning ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'
-      }`}>
+      <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0">
         <ProgressBars 
           currentSet={currentSet}
           currentRound={currentRound}
@@ -241,9 +213,7 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className={`flex-1 flex items-center justify-center min-h-0 py-4 -mt-16 transition-all duration-500 ease-in-out ${
-        isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-      }`}>
+      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-16">
         <div className="text-center">
           <Badge 
             className={`${stateInfo.color} text-black mb-4 px-3 py-1 text-sm font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
@@ -263,9 +233,7 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <div className={`flex justify-between items-end flex-shrink-0 pt-4 transition-all duration-500 ease-in-out ${
-        isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-      }`}>
+      <div className="flex justify-between items-end flex-shrink-0 pt-4">
         <div>
           <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Cycles

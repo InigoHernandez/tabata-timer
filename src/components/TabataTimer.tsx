@@ -28,7 +28,6 @@ const TabataTimer = () => {
   const [currentSet, setCurrentSet] = useState(1);
   const [timerState, setTimerState] = useState<TimerState>('idle');
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const {
     playCountdownSound,
@@ -39,21 +38,11 @@ const TabataTimer = () => {
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      const newFullscreenState = !!document.fullscreenElement;
-      
-      if (newFullscreenState !== isFullscreen) {
-        setIsTransitioning(true);
-        setIsFullscreen(newFullscreenState);
-        
-        // Reset transition state after animation completes
-        setTimeout(() => {
-          setIsTransitioning(false);
-        }, 500);
-      }
+      setIsFullscreen(!!document.fullscreenElement);
     };
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, [isFullscreen]);
+  }, []);
 
   useEffect(() => {
     if (timerState === 'idle') {
@@ -159,11 +148,11 @@ const TabataTimer = () => {
   return (
     <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out">
       <div className="h-screen flex flex-col p-2 md:p-4 lg:p-8 overflow-hidden transition-all duration-500 ease-in-out">
-        <div className={`flex-shrink-0 transition-all duration-500 ease-in-out ${
-          isTransitioning && isFullscreen ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'
-        }`}>
-          <TimerHero hideInFullscreen={isFullscreen} />
-        </div>
+        {!isFullscreen && (
+          <div className="flex-shrink-0">
+            <TimerHero hideInFullscreen={isFullscreen} />
+          </div>
+        )}
 
         <Card className="flex-1 overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out">
           <div className={`grid ${isFullscreen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'} h-full min-h-0 transition-all duration-500 ease-in-out`}>
@@ -182,9 +171,7 @@ const TabataTimer = () => {
             />
 
             {!isFullscreen && (
-              <div className={`border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out px-[32px] py-[31px] ${
-                isTransitioning ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
-              }`}>
+              <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out px-[32px] py-[31px]">
                 <TimerSettingsPanel 
                   settings={settings} 
                   onSettingsChange={setSettings} 
