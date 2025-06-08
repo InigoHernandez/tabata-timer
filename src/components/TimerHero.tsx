@@ -6,7 +6,7 @@ const TimerHero = ({
   hideInFullscreen = false
 }: TimerHeroProps) => {
   if (hideInFullscreen) return null;
-  return <div className="flex justify-between items-start mb-6 md:mb-4 animate-fade-in">
+  return <div className="flex justify-between items-start mb-4 md:mb-6 animate-fade-in">
       <div className="text-left max-w-md">
         <p className="font-light text-lg leading-relaxed md:text-xl">
           tabat.app{' '}
