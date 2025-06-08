@@ -7,12 +7,12 @@ const TimerHero = () => {
       <div className="text-[#FF6B35] text-xs font-medium tracking-wider mb-6">
         TABAT.APP — HIGH INTENSITY TRAINING
       </div>
-      <h1 className="text-6xl font-light text-black mb-1 leading-tight">
+      <div className="text-6xl font-light text-black leading-tight">
         Maximum results in minimum time.
-      </h1>
-      <p className="text-4xl font-light text-gray-400 leading-tight">
-        Train smarter with scientific intervals.
-      </p>
+        <span className="block text-4xl text-gray-400">
+          Train smarter with scientific intervals.
+        </span>
+      </div>
     </div>
   );
 };
