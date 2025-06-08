@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -119,7 +118,7 @@ const TabataTimer = () => {
           </div>
 
           {/* Main Timer Display */}
-          <Card className="p-12 md:p-16 text-center space-y-8 bg-card/30 backdrop-blur-sm border-border/30">
+          <Card className="p-12 md:p-16 text-center space-y-8 backdrop-blur-md border border-border/20">
             <div className={`text-3xl font-light tracking-wider ${getStateColor()}`}>
               {getStateText()}
             </div>
@@ -146,7 +145,7 @@ const TabataTimer = () => {
 
           {/* Settings Panel */}
           {showSettings && (
-            <Card className="p-8 space-y-8 bg-card/30 backdrop-blur-sm border-border/30">
+            <Card className="p-8 space-y-8 backdrop-blur-md border border-border/20">
               <h3 className="text-2xl font-normal tracking-wide">timer settings</h3>
               
               <div className="grid gap-8">
@@ -221,7 +220,7 @@ const TabataTimer = () => {
 
       {/* Fixed Controls - Always Visible */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex justify-center gap-6 bg-background/80 backdrop-blur-sm border border-border/30 rounded-full p-4 shadow-lg">
+        <div className="flex justify-center gap-6 backdrop-blur-md border border-border/20 rounded-full p-4 shadow-lg">
           <Button
             onClick={toggleTimer}
             size="lg"
