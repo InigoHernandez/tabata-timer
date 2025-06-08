@@ -1,7 +1,8 @@
+
 import React from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, CircleStop } from 'lucide-react';
+import { Play, Pause, RefreshCcw } from 'lucide-react';
 
 type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -93,7 +94,7 @@ const TimerDisplay = ({
             variant="outline" 
             className="w-16 h-16 rounded-full p-0"
           >
-            <CircleStop className="w-8 h-8 fill-current" />
+            <RefreshCcw className="w-8 h-8" />
           </Button>
           
           <Button 
