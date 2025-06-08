@@ -102,4 +102,19 @@
   body {
     @apply bg-[#F8F8F8] text-foreground font-aspekta;
   }
+
+  /* Improve Roboto Mono font rendering */
+  .font-roboto-mono {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 300;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Apply Roboto Mono to slider text */
+  input[type="range"] + * {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 300;
+  }
 }

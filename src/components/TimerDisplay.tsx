@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Play, Pause, RefreshCcw, Maximize, Minimize, Hourglass, Dumbbell } from 'lucide-react';
+import { Play, Pause, RefreshCcw, Maximize, Minimize } from 'lucide-react';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -59,33 +59,26 @@ const TimerDisplay = ({
 
   const getStateInfo = () => {
     if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
-      return { text: 'PAUSED', color: 'bg-[#ffcc14]', icon: Pause };
+      return { text: 'PAUSED', color: 'bg-[#ffcc14]' };
     }
     
     switch (timerState) {
       case 'idle':
-        return { text: 'READY', color: 'bg-[#e4e2df]', icon: Hourglass };
+        return { text: 'READY', color: 'bg-[#e4e2df]' };
       case 'countdown':
-        return { text: 'GET READY', color: 'bg-[#ff6414]', icon: Bolt };
+        return { text: 'GET READY', color: 'bg-[#ff6414]' };
       case 'work':
-        return { text: 'WORK', color: 'bg-[#2ed24f]', icon: Dumbbell };
+        return { text: 'WORK', color: 'bg-[#2ed24f]' };
       case 'rest':
-        return { text: 'REST', color: 'bg-[#2170ec]', icon: Pause };
+        return { text: 'REST', color: 'bg-[#2170ec]' };
       case 'setRest':
-        return { text: 'SET REST', color: 'bg-[#2abfc1]', icon: Pause };
+        return { text: 'SET REST', color: 'bg-[#2abfc1]' };
       case 'finished':
-        return { text: 'FINISHED', color: 'bg-[#ff6414]', icon: Bolt };
+        return { text: 'FINISHED', color: 'bg-[#ff6414]' };
       default:
-        return { text: 'READY', color: 'bg-[#e4e2df]', icon: Hourglass };
+        return { text: 'READY', color: 'bg-[#e4e2df]' };
     }
   };
-
-  // Import Bolt icon for countdown and finished states
-  const Bolt = ({ className }: { className?: string }) => (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M11.5 2L4.5 11h5v9l7-9h-5V2z"/>
-    </svg>
-  );
 
   const getCurrentCycleNumber = () => (currentSet - 1) * totalRounds + currentRound;
   const getTotalCycles = () => totalRounds * totalSets;
@@ -107,7 +100,11 @@ const TimerDisplay = ({
   };
 
   const stateInfo = getStateInfo();
-  const StateIcon = stateInfo.icon;
+
+  // Solid dot component (4px circle)
+  const SolidDot = () => (
+    <div className="w-1 h-1 bg-black rounded-full" />
+  );
 
   if (isFullscreen) {
     return (
@@ -133,16 +130,15 @@ const TimerDisplay = ({
         <div className="flex-1 flex items-center justify-center min-h-0 -mt-8 transition-all duration-300">
           <div className="text-center">
             <Badge 
-              className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 font-roboto-mono`}
-              style={{ borderRadius: '6px' }}
+              className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 font-roboto-mono rounded-[6px]`}
               key={`${timerState}-${isRunning}`}
             >
-              <StateIcon className="w-4 h-4 fill-current" />
+              <SolidDot />
               {stateInfo.text}
             </Badge>
             <div 
-              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-extralight font-roboto-mono leading-none animate-fade-in"
-              style={{ letterSpacing: '-0.05em' }}
+              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-light font-roboto-mono leading-none animate-fade-in"
+              style={{ letterSpacing: '-0.1em' }}
               key={`time-${timerState}-transition`}
             >
               {formatTimeDisplay(getDisplayTime())}
@@ -219,16 +215,15 @@ const TimerDisplay = ({
       <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-4 transition-all duration-300">
         <div className="text-center">
           <Badge 
-            className={`${stateInfo.color} text-black mb-4 px-3 py-1 text-sm font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 font-roboto-mono`}
-            style={{ borderRadius: '6px' }}
+            className={`${stateInfo.color} text-black mb-4 px-3 py-1 text-sm font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 font-roboto-mono rounded-[6px]`}
             key={`${timerState}-${isRunning}`}
           >
-            <StateIcon className="w-4 h-4 fill-current" />
+            <SolidDot />
             {stateInfo.text}
           </Badge>
           <div 
-            className="text-[6rem] md:text-[10rem] lg:text-[14rem] font-extralight font-roboto-mono leading-none animate-fade-in"
-            style={{ letterSpacing: '-0.05em' }}
+            className="text-[6rem] md:text-[10rem] lg:text-[14rem] font-light font-roboto-mono leading-none animate-fade-in"
+            style={{ letterSpacing: '-0.1em' }}
             key={`time-${timerState}-transition`}
           >
             {formatTimeDisplay(getDisplayTime())}
