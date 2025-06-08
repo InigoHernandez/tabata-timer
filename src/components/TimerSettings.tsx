@@ -14,10 +14,11 @@ interface TimerSettings {
 
 interface TimerSettingsProps {
   settings: TimerSettings;
+  remainingTime: number;
   onSettingsChange: (settings: TimerSettings) => void;
 }
 
-const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) => {
+const TimerSettingsPanel = ({ settings, remainingTime, onSettingsChange }: TimerSettingsProps) => {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -30,6 +31,17 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
 
   return (
     <div className="flex-1 space-y-8">
+      <div className="space-y-6 pt-8 py-[31px]">
+        <div className="text-center">
+          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+            Remaining
+          </div>
+          <div className="text-4xl font-light font-roboto-mono">
+            {formatTime(remainingTime)}
+          </div>
+        </div>
+      </div>
+
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <span className="text-base font-normal" style={{ color: '#0000004d' }}>Number of tabatas</span>

@@ -4,7 +4,6 @@ import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
 import TimerDisplay from './TimerDisplay';
 import TimerSettingsPanel from './TimerSettings';
-import TimerControls from './TimerControls';
 
 interface TimerSettings {
   workTime: number;
@@ -127,15 +126,8 @@ const TabataTimer = () => {
             <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-6 flex flex-col">
               <TimerSettingsPanel
                 settings={settings}
-                onSettingsChange={setSettings}
-              />
-
-              <TimerControls
-                isRunning={isRunning}
-                timerState={timerState}
                 remainingTime={getRemainingTime()}
-                onToggleTimer={toggleTimer}
-                onResetTimer={resetTimer}
+                onSettingsChange={setSettings}
               />
             </div>
           </div>
