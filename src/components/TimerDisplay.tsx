@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
@@ -64,7 +63,7 @@ const TimerDisplay = ({
       case 'setRest':
         return 'text-blue-600';
       case 'countdown':
-        return 'text-orange-600';
+        return 'text-[#FF6B35]';
       case 'finished':
         return 'text-purple-600';
       default:
