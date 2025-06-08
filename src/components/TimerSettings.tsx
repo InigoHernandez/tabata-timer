@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -27,7 +28,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
   };
 
   return (
-    <div className="flex-1 space-y-6">
+    <div className="flex-1 space-y-8">
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <span className="text-base font-normal" style={{ color: '#0000004d' }}>Number of tabatas</span>
