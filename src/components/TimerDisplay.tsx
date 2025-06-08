@@ -56,6 +56,22 @@ const TimerDisplay = ({
     }
   };
 
+  const getStateColor = () => {
+    switch (timerState) {
+      case 'work':
+        return 'text-green-600';
+      case 'rest':
+      case 'setRest':
+        return 'text-blue-600';
+      case 'countdown':
+        return 'text-orange-600';
+      case 'finished':
+        return 'text-purple-600';
+      default:
+        return 'text-muted-foreground';
+    }
+  };
+
   const getCurrentCycleNumber = () => (currentSet - 1) * totalRounds + currentRound;
   const getTotalCycles = () => totalRounds * totalSets;
 
@@ -70,10 +86,16 @@ const TimerDisplay = ({
 
       <div className="flex-1 flex items-center justify-center -mt-10">
         <div className="text-left">
-          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+          <div 
+            className={`text-base font-normal mb-2 transition-all duration-300 ${getStateColor()}`}
+            key={`${timerState}-${isRunning}`}
+          >
             {getStateText()}
           </div>
-          <div className="text-[12rem] font-extralight tracking-tighter font-roboto-mono leading-none">
+          <div 
+            className="text-[12rem] font-extralight tracking-tighter font-roboto-mono leading-none transition-all duration-200"
+            key={`time-${currentTime}-${timerState}`}
+          >
             {timerState === 'countdown' ? currentTime : formatTimeDisplay(currentTime)}
           </div>
         </div>
@@ -84,7 +106,10 @@ const TimerDisplay = ({
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Cycles
           </div>
-          <div className="text-4xl font-light font-roboto-mono">
+          <div 
+            className="text-4xl font-light font-roboto-mono transition-all duration-300"
+            key={`cycles-${getCurrentCycleNumber()}`}
+          >
             {getCurrentCycleNumber()}/{getTotalCycles()}
           </div>
         </div>
