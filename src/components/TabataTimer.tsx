@@ -4,6 +4,7 @@ import TimerHero from './TimerHero';
 import TimerDisplay from './TimerDisplay';
 import TimerSettingsPanel from './TimerSettings';
 import { useAudio } from '@/hooks/useAudio';
+
 interface TimerSettings {
   workTime: number;
   restTime: number;
@@ -12,16 +13,19 @@ interface TimerSettings {
   restBetweenSets: number;
   countdownTime: number;
 }
+
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
+
 const TabataTimer = () => {
   const [settings, setSettings] = useState<TimerSettings>({
-    workTime: 30,
-    restTime: 15,
+    workTime: 20,
+    restTime: 10,
     rounds: 8,
-    sets: 4,
-    restBetweenSets: 45,
+    sets: 2,
+    restBetweenSets: 40,
     countdownTime: 5
   });
+
   const [isRunning, setIsRunning] = useState(false);
   const [currentTime, setCurrentTime] = useState(settings.workTime);
   const [currentRound, setCurrentRound] = useState(1);
