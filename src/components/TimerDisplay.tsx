@@ -26,7 +26,7 @@ const TimerDisplay = ({
   const formatTimeDisplay = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')} ${secs.toString().padStart(2, '0')}`;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   const getStateText = () => {
@@ -65,7 +65,7 @@ const TimerDisplay = ({
           <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
             {getStateText()}
           </div>
-          <div className="text-9xl font-light tracking-tighter">
+          <div className="text-9xl font-light tracking-tighter font-mono">
             {formatTimeDisplay(currentTime)}
           </div>
         </div>
@@ -74,7 +74,7 @@ const TimerDisplay = ({
           <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
             CYCLES
           </div>
-          <div className="text-4xl font-light">
+          <div className="text-4xl font-light font-mono">
             {getCurrentCycleNumber()}/{getTotalCycles()}
           </div>
         </div>
