@@ -52,7 +52,7 @@ const TimerDisplay = ({
   const getTotalCycles = () => totalRounds * totalSets;
 
   return (
-    <div className="lg:col-span-2 p-8 flex flex-col">
+    <div className="lg:col-span-2 p-8 flex flex-col bg-white">
       <ProgressBars 
         currentSet={currentSet}
         currentRound={currentRound}

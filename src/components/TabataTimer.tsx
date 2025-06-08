@@ -117,7 +117,7 @@ const TabataTimer = () => {
               totalRounds={settings.rounds}
             />
 
-            <div className="border-l border-[#E8E8E8] bg-white p-6 flex flex-col">
+            <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-6 flex flex-col">
               <TimerSettingsPanel
                 settings={settings}
                 onSettingsChange={setSettings}
