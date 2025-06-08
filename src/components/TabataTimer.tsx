@@ -104,7 +104,7 @@ const TabataTimer = () => {
         return 'ready';
     }
   };
-  return <div className="min-h-screen bg-background font-aspekta">
+  return <div className="min-h-screen font-aspekta" style={{ backgroundColor: '#F5F5F5' }}>
       <div className="flex flex-col items-center justify-center p-4 pb-32">
         <div className="w-full max-w-6xl space-y-12">
           {/* Header */}
@@ -112,7 +112,9 @@ const TabataTimer = () => {
             <p className="tracking-wider uppercase text-xs text-orange-600 font-medium">TABAT.APP — HIGH INTENSITY TRAINING</p>
             <div className="w-8/12">
               <h1 className="text-4xl md:text-6xl leading-tight text-foreground font-normal lg:text-2xl">
-                Tabata timer for focused workouts. Train efficiently with precise intervals.
+                Tabata timer for focused workouts.
+                <br />
+                <span style={{ color: '#0000004d' }}>Train efficiently with precise intervals.</span>
               </h1>
             </div>
           </div>
