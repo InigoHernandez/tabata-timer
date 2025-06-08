@@ -43,7 +43,7 @@ const TimerSettingsPanel = ({
 
   return (
     <div className="flex-1 py-4 animate-fade-in md:py-[8px]">
-      <div className="space-y-4 md:space-y-5">
+      <div className="space-y-4 md:space-y-5 px-6">
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm md:text-base font-normal" style={{

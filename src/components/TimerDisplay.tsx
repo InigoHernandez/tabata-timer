@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
@@ -108,7 +107,7 @@ const TimerDisplay = ({
 
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 bg-white flex flex-col p-8 animate-fade-in overflow-hidden z-50 transition-all duration-500 ease-in-out">
+      <div className="fixed inset-0 bg-white flex flex-col p-8 pb-8 animate-fade-in overflow-hidden z-50 transition-all duration-500 ease-in-out">
         <div className="absolute top-8 right-8 text-right z-10 transition-all duration-300">
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Remaining time
@@ -127,7 +126,7 @@ const TimerDisplay = ({
           />
         </div>
 
-        <div className="flex-1 flex items-center justify-center min-h-0 -mt-32 transition-all duration-300">
+        <div className="flex-1 flex items-center justify-center min-h-0 -mt-20 transition-all duration-300">
           <div className="text-center">
             <Badge 
               className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-[4px]`}
@@ -147,7 +146,7 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className="flex justify-between items-end flex-shrink-0 pb-8 transition-all duration-300">
+        <div className="flex justify-between items-end flex-shrink-0 transition-all duration-300">
           <div>
             <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
               Cycles
