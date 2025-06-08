@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -108,13 +109,16 @@ const TabataTimer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background font-aspekta font-light">
+    <div className="min-h-screen bg-background font-aspekta">
       <div className="flex flex-col items-center justify-center p-4 pb-32">
-        <div className="w-full max-w-4xl space-y-12">
+        <div className="w-full max-w-6xl space-y-12">
           {/* Header */}
-          <div className="text-center space-y-4">
-            <h1 className="text-3xl md:text-4xl font-normal tracking-wide text-foreground">tabat.app</h1>
-            <p className="text-muted-foreground text-xl font-light">high-intensity interval training</p>
+          <div className="text-left space-y-6">
+            <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">STAY STRONGER</p>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium leading-tight text-foreground">
+              Das intelligente 
+              <span className="text-muted-foreground/60"> Tabata für den Mittelstand. Strategisch arbeiten – Fokus auf das Wesentliche statt manueller Aufwände. Optimal einkaufen – Kosten einsparen ohne Abstriche bei Qualität und Zeit.</span>
+            </h1>
           </div>
 
           {/* Main Timer Display */}
@@ -215,12 +219,29 @@ const TabataTimer = () => {
               </Button>
             </Card>
           )}
+
+          {/* Action Buttons */}
+          <div className="flex gap-4">
+            <Button 
+              size="lg" 
+              className="px-8 py-4 text-lg font-medium bg-foreground text-background hover:bg-foreground/90 rounded-none"
+            >
+              GESPRÄCH VEREINBAREN
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="px-8 py-4 text-lg font-medium border-2 border-foreground text-foreground hover:bg-foreground hover:text-background rounded-none"
+            >
+              PRODUKT ANSCHAUEN
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Fixed Controls - Always Visible */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex justify-center gap-6 backdrop-blur-md border border-border/20 rounded-full p-4 shadow-lg">
+        <div className="flex justify-center gap-6 backdrop-blur-md border border-border/20 rounded-full p-4">
           <Button
             onClick={toggleTimer}
             size="lg"
