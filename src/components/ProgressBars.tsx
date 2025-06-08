@@ -68,7 +68,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
 
   return (
     <div className="mb-4 md:mb-8 h-16 md:h-18 flex items-start overflow-hidden">
-      <style jsx>{`
+      <style>{`
         @keyframes fadeInScale {
           0% {
             opacity: 0;
