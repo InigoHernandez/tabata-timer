@@ -41,7 +41,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
       
       if (set < totalSets) {
         bars.push(
-          <div key={`rest-${set}`} className="flex items-center justify-center w-8 h-8 flex-shrink-0">
+          <div key={`rest-${set}`} className="flex items-center justify-center w-4 h-8 flex-shrink-0">
             <span className="text-sm font-medium">R</span>
           </div>
         );
