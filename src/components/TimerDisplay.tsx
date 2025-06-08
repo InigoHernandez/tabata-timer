@@ -2,7 +2,7 @@
 import React from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, RefreshCcw } from 'lucide-react';
+import { Play, Pause, RefreshCcw, Maximize } from 'lucide-react';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -93,8 +93,8 @@ const TimerDisplay = ({
 
   return (
     <div className="lg:col-span-2 p-8 flex flex-col bg-white relative">
-      {/* Remaining time in top right */}
-      <div className="absolute top-8 right-8 text-right">
+      {/* Remaining time in top right with proper spacing */}
+      <div className="absolute top-8 right-8 text-right z-10">
         <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining time
         </div>
@@ -103,12 +103,15 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <ProgressBars 
-        currentSet={currentSet}
-        currentRound={currentRound}
-        totalSets={totalSets}
-        totalRounds={totalRounds}
-      />
+      {/* Progress bars with proper margin to avoid overlap */}
+      <div className="mr-48">
+        <ProgressBars 
+          currentSet={currentSet}
+          currentRound={currentRound}
+          totalSets={totalSets}
+          totalRounds={totalRounds}
+        />
+      </div>
 
       <div className="flex-1 flex items-center justify-center -mt-10">
         <div className="text-left">
@@ -147,19 +150,7 @@ const TimerDisplay = ({
             variant="outline" 
             className="w-16 h-16 rounded-md p-0 active:scale-95 transition-transform duration-100"
           >
-            <svg 
-              className="w-8 h-8" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M4 7V4a1 1 0 011-1h3M4 17v3a1 1 0 001 1h3m10-20h3a1 1 0 011 1v3m0 10v3a1 1 0 01-1 1h-3" 
-              />
-            </svg>
+            <Maximize className="w-8 h-8" />
           </Button>
           
           <Button 
