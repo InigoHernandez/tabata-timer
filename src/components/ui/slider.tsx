@@ -16,10 +16,19 @@ const Slider = React.forwardRef<
     )}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-0.5 w-full grow overflow-hidden rounded-full bg-[#B2B2B3] bg-opacity-25">
-      <SliderPrimitive.Range className="absolute h-full bg-primary" style={{ height: '2px' }} />
+    <SliderPrimitive.Track className={cn(
+      "relative h-0.5 w-full grow overflow-hidden rounded-full",
+      props.disabled ? "bg-[#B2B2B3] bg-opacity-15" : "bg-[#B2B2B3] bg-opacity-15"
+    )}>
+      <SliderPrimitive.Range className={cn(
+        "absolute h-full",
+        props.disabled ? "bg-[#B2B2B3] bg-opacity-30" : "bg-primary"
+      )} style={{ height: '2px' }} />
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="block h-6 w-6 rounded-full bg-primary ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-110 transition-transform cursor-pointer" />
+    <SliderPrimitive.Thumb className={cn(
+      "block h-5 w-5 rounded-full ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-110 transition-transform cursor-pointer",
+      props.disabled ? "bg-[#B2B2B3] bg-opacity-60" : "bg-primary"
+    )} />
   </SliderPrimitive.Root>
 ))
 Slider.displayName = SliderPrimitive.Root.displayName
