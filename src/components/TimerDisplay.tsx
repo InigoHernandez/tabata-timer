@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
@@ -108,16 +107,16 @@ const TimerDisplay = ({
   if (isFullscreen) {
     return (
       <div className="fixed inset-0 bg-white flex flex-col p-8 pb-8 overflow-hidden z-50 animate-fade-in">
-        <div className="absolute top-8 right-8 text-right z-10">
-          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+        <div className="absolute top-8 right-8 text-right z-10 animate-fade-in">
+          <div className="text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
             Remaining time
           </div>
-          <div className="text-2xl md:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+          <div className="text-2xl md:text-4xl font-roboto-mono transition-all duration-500" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
             {formatTime(remainingTime)}
           </div>
         </div>
 
-        <div className="mr-32 md:mr-48 flex-shrink-0">
+        <div className="mr-32 md:mr-48 flex-shrink-0 animate-fade-in">
           <ProgressBars 
             currentSet={currentSet}
             currentRound={currentRound}
@@ -126,7 +125,7 @@ const TimerDisplay = ({
           />
         </div>
 
-        <div className="flex-1 flex items-center justify-center min-h-0 -mt-20">
+        <div className="flex-1 flex items-center justify-center min-h-0 -mt-20 animate-fade-in">
           <div className="text-center">
             <Badge 
               className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
@@ -137,7 +136,7 @@ const TimerDisplay = ({
               {stateInfo.text}
             </Badge>
             <div 
-              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-roboto-mono leading-none"
+              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-roboto-mono leading-none transition-all duration-500"
               style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
               key={`time-${timerState}-transition`}
             >
@@ -146,13 +145,13 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className="flex justify-between items-end flex-shrink-0">
+        <div className="flex justify-between items-end flex-shrink-0 animate-fade-in">
           <div>
-            <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+            <div className="text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
               Cycles
             </div>
             <div 
-              className="text-2xl md:text-4xl font-roboto-mono transition-all duration-300"
+              className="text-2xl md:text-4xl font-roboto-mono transition-all duration-500"
               style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               key={`cycles-${getCurrentCycleNumber()}`}
             >
@@ -160,7 +159,7 @@ const TimerDisplay = ({
             </div>
           </div>
 
-          <div className="flex gap-4 items-center transition-all duration-300">
+          <div className="flex gap-4 items-center transition-all duration-500">
             <Button 
               onClick={toggleFullscreen} 
               size="lg" 
@@ -194,17 +193,17 @@ const TimerDisplay = ({
   }
 
   return (
-    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative min-h-0 overflow-y-auto">
-      <div className="absolute top-4 right-4 md:top-8 md:right-8 text-right z-10">
-        <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative min-h-0 overflow-y-auto animate-fade-in">
+      <div className="absolute top-4 right-4 md:top-8 md:right-8 text-right z-10 animate-fade-in">
+        <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
           Remaining time
         </div>
-        <div className="text-xl md:text-2xl lg:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+        <div className="text-xl md:text-2xl lg:text-4xl font-roboto-mono transition-all duration-500" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
           {formatTime(remainingTime)}
         </div>
       </div>
 
-      <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0">
+      <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0 animate-fade-in">
         <ProgressBars 
           currentSet={currentSet}
           currentRound={currentRound}
@@ -233,13 +232,13 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <div className="flex justify-between items-end flex-shrink-0 pt-4">
+      <div className="flex justify-between items-end flex-shrink-0 pt-4 animate-fade-in">
         <div>
-          <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+          <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
             Cycles
           </div>
           <div 
-            className="text-xl md:text-2xl lg:text-4xl font-roboto-mono transition-all duration-300"
+            className="text-xl md:text-2xl lg:text-4xl font-roboto-mono transition-all duration-500"
             style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
             key={`cycles-${getCurrentCycleNumber()}`}
           >
@@ -247,7 +246,7 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className="flex gap-2 md:gap-4 items-center transition-all duration-300">
+        <div className="flex gap-2 md:gap-4 items-center transition-all duration-500">
           <Button 
             onClick={toggleFullscreen} 
             size="lg" 
