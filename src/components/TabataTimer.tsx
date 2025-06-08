@@ -119,20 +119,37 @@ const TabataTimer = () => {
     }
     return remaining;
   };
-  return <div className="min-h-screen bg-[#F8F8F8] font-aspekta">
+  return (
+    <div className="min-h-screen bg-[#F8F8F8] font-aspekta">
       <div className="max-w-7xl mx-auto px-8 py-12">
         <TimerHero />
 
         <Card className="overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none">
           <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[600px]">
-            <TimerDisplay currentTime={currentTime} currentRound={currentRound} currentSet={currentSet} timerState={timerState} isRunning={isRunning} totalSets={settings.sets} totalRounds={settings.rounds} onToggleTimer={toggleTimer} onResetTimer={resetTimer} />
+            <TimerDisplay 
+              currentTime={currentTime} 
+              currentRound={currentRound} 
+              currentSet={currentSet} 
+              timerState={timerState} 
+              isRunning={isRunning} 
+              totalSets={settings.sets} 
+              totalRounds={settings.rounds} 
+              remainingTime={getRemainingTime()}
+              onToggleTimer={toggleTimer} 
+              onResetTimer={resetTimer} 
+            />
 
-            <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-6 flex flex-col py-[32px] px-[32px]">
-              <TimerSettingsPanel settings={settings} remainingTime={getRemainingTime()} onSettingsChange={setSettings} />
+            <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-6 flex flex-col px-[32px]">
+              <TimerSettingsPanel 
+                settings={settings} 
+                onSettingsChange={setSettings} 
+              />
             </div>
           </div>
         </Card>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default TabataTimer;
