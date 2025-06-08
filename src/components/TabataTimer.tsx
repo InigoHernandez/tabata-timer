@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -114,10 +115,10 @@ const TabataTimer = () => {
         <div className="w-full max-w-6xl space-y-12">
           {/* Header */}
           <div className="text-left space-y-6">
-            <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">STAY STRONGER</p>
+            <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">HIGH-INTENSITY TRAINING</p>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium leading-tight text-foreground">
-              Das intelligente 
-              <span className="text-muted-foreground/60"> Tabata für den Mittelstand. Strategisch arbeiten – Fokus auf das Wesentliche statt manueller Aufwände. Optimal einkaufen – Kosten einsparen ohne Abstriche bei Qualität und Zeit.</span>
+              The ultimate 
+              <span className="text-muted-foreground/60"> Tabata timer for focused workouts. Train efficiently with precise intervals. Build strength and endurance with customizable rounds and sets.</span>
             </h1>
           </div>
 
@@ -226,14 +227,14 @@ const TabataTimer = () => {
               size="lg" 
               className="px-8 py-4 text-lg font-medium bg-foreground text-background hover:bg-foreground/90 rounded-none"
             >
-              GESPRÄCH VEREINBAREN
+              START TRAINING
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
               className="px-8 py-4 text-lg font-medium border-2 border-foreground text-foreground hover:bg-foreground hover:text-background rounded-none"
             >
-              PRODUKT ANSCHAUEN
+              VIEW WORKOUTS
             </Button>
           </div>
         </div>
@@ -275,3 +276,4 @@ const TabataTimer = () => {
 };
 
 export default TabataTimer;
+
