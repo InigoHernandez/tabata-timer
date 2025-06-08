@@ -153,7 +153,7 @@ const TabataTimer = () => {
           <div className={`grid ${isFullscreen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'} h-full min-h-0 transition-all duration-500 ease-in-out`}>
             <TimerDisplay currentTime={currentTime} currentRound={currentRound} currentSet={currentSet} timerState={timerState} isRunning={isRunning} totalSets={settings.sets} totalRounds={settings.rounds} remainingTime={getRemainingTime()} workTime={settings.workTime} onToggleTimer={toggleTimer} onResetTimer={resetTimer} />
 
-            {!isFullscreen && <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out px-[32px] py-[8px]">
+            {!isFullscreen && <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out px-[32px] py-[4px]">
                 <TimerSettingsPanel settings={settings} onSettingsChange={setSettings} isRunning={isRunning} timerState={timerState} />
               </div>}
           </div>
