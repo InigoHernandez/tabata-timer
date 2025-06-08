@@ -193,15 +193,7 @@ const TabataTimer = () => {
               </Button>
             </Card>}
 
-          {/* Action Buttons */}
-          <div className="flex gap-4">
-            <Button size="lg" className="px-8 py-4 text-lg font-medium bg-foreground text-background hover:bg-foreground/90 rounded-none">
-              START TRAINING
-            </Button>
-            <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-medium border-2 border-foreground text-foreground hover:bg-foreground hover:text-background rounded-none">
-              VIEW WORKOUTS
-            </Button>
-          </div>
+          
         </div>
       </div>
 
@@ -223,4 +215,5 @@ const TabataTimer = () => {
       </div>
     </div>;
 };
+
 export default TabataTimer;
