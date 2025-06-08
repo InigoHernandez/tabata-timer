@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
@@ -100,7 +99,7 @@ const TimerDisplay = ({
           <Button 
             onClick={onToggleTimer} 
             size="lg" 
-            className="w-16 h-16 rounded-full p-0 bg-foreground text-background hover:bg-foreground/90"
+            className="w-16 h-16 rounded-md p-0 bg-foreground text-background hover:bg-foreground/90"
             disabled={timerState === 'finished'}
           >
             {isRunning ? <Pause className="w-8 h-8 fill-current" /> : <Play className="w-8 h-8 fill-current" />}
