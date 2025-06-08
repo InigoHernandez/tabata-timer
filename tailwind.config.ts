@@ -21,7 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				'aspekta': ['Aspekta', 'sans-serif'],
-				'geist-mono': ['Geist Mono', 'monospace'],
+				'roboto-mono': ['Roboto Mono', 'monospace'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
