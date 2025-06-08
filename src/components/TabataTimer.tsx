@@ -114,7 +114,7 @@ const TabataTimer = () => {
         <div className="w-full max-w-4xl space-y-12">
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-6xl md:text-8xl font-light tracking-wide text-foreground">tabat.app</h1>
+            <h1 className="text-3xl md:text-4xl font-light tracking-wide text-foreground">tabat.app</h1>
             <p className="text-muted-foreground text-xl font-light">high-intensity interval training</p>
           </div>
 
