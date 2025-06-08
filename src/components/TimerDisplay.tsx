@@ -40,7 +40,7 @@ const TimerDisplay = ({
       case 'rest':
         return 'Rest';
       case 'setRest':
-        return 'Set Rest';
+        return 'Set rest';
       case 'finished':
         return 'Finished';
       default:
@@ -60,12 +60,12 @@ const TimerDisplay = ({
         totalRounds={totalRounds}
       />
 
-      <div className="flex-1 flex flex-col justify-center">
+      <div className="flex-1 flex items-center">
         <div className="text-left">
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             {getStateText()}
           </div>
-          <div className="text-9xl font-light tracking-tighter font-roboto-mono">
+          <div className="text-[12rem] font-light tracking-tighter font-roboto-mono leading-none">
             {formatTimeDisplay(currentTime)}
           </div>
         </div>
