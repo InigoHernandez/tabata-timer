@@ -35,107 +35,109 @@ const TimerSettingsPanel = ({
   };
 
   return (
-    <div className="flex-1 space-y-10 md:space-y-12 py-8 animate-fade-in">
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
-            Number of tabatas
-          </span>
-          <span className="font-normal text-sm md:text-base">{settings.sets}</span>
+    <div className="flex-1 py-4 md:py-8 animate-fade-in overflow-y-auto">
+      <div className="space-y-8 md:space-y-10">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
+              Number of tabatas
+            </span>
+            <span className="font-normal text-sm md:text-base">{settings.sets}</span>
+          </div>
+          <Slider 
+            value={[settings.sets]} 
+            onValueChange={value => updateSetting('sets', value[0])} 
+            max={8} 
+            min={1} 
+            step={1} 
+            className="w-full" 
+          />
         </div>
-        <Slider 
-          value={[settings.sets]} 
-          onValueChange={value => updateSetting('sets', value[0])} 
-          max={8} 
-          min={1} 
-          step={1} 
-          className="w-full" 
-        />
-      </div>
 
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
-            Rounds per tabatas
-          </span>
-          <span className="font-normal text-sm md:text-base">{settings.rounds}</span>
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
+              Rounds per tabatas
+            </span>
+            <span className="font-normal text-sm md:text-base">{settings.rounds}</span>
+          </div>
+          <Slider 
+            value={[settings.rounds]} 
+            onValueChange={value => updateSetting('rounds', value[0])} 
+            max={12} 
+            min={1} 
+            step={1} 
+            className="w-full" 
+          />
         </div>
-        <Slider 
-          value={[settings.rounds]} 
-          onValueChange={value => updateSetting('rounds', value[0])} 
-          max={12} 
-          min={1} 
-          step={1} 
-          className="w-full" 
-        />
-      </div>
 
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
-            Time on
-          </span>
-          <span className="font-normal text-sm md:text-base">{formatTime(settings.workTime)}</span>
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
+              Work time
+            </span>
+            <span className="font-normal text-sm md:text-base">{formatTime(settings.workTime)}</span>
+          </div>
+          <Slider 
+            value={[settings.workTime]} 
+            onValueChange={value => updateSetting('workTime', value[0])} 
+            max={60} 
+            min={5} 
+            step={5} 
+            className="w-full" 
+          />
         </div>
-        <Slider 
-          value={[settings.workTime]} 
-          onValueChange={value => updateSetting('workTime', value[0])} 
-          max={60} 
-          min={5} 
-          step={5} 
-          className="w-full" 
-        />
-      </div>
 
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
-            Time off
-          </span>
-          <span className="font-normal text-sm md:text-base">{formatTime(settings.restTime)}</span>
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
+              Rest time
+            </span>
+            <span className="font-normal text-sm md:text-base">{formatTime(settings.restTime)}</span>
+          </div>
+          <Slider 
+            value={[settings.restTime]} 
+            onValueChange={value => updateSetting('restTime', value[0])} 
+            max={60} 
+            min={5} 
+            step={5} 
+            className="w-full" 
+          />
         </div>
-        <Slider 
-          value={[settings.restTime]} 
-          onValueChange={value => updateSetting('restTime', value[0])} 
-          max={60} 
-          min={5} 
-          step={5} 
-          className="w-full" 
-        />
-      </div>
 
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
-            Rest between tabatas
-          </span>
-          <span className="font-normal text-sm md:text-base">{formatTime(settings.restBetweenSets)}</span>
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
+              Rest between tabatas
+            </span>
+            <span className="font-normal text-sm md:text-base">{formatTime(settings.restBetweenSets)}</span>
+          </div>
+          <Slider 
+            value={[settings.restBetweenSets]} 
+            onValueChange={value => updateSetting('restBetweenSets', value[0])} 
+            max={180} 
+            min={30} 
+            step={15} 
+            className="w-full" 
+          />
         </div>
-        <Slider 
-          value={[settings.restBetweenSets]} 
-          onValueChange={value => updateSetting('restBetweenSets', value[0])} 
-          max={180} 
-          min={30} 
-          step={15} 
-          className="w-full" 
-        />
-      </div>
 
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
-            Countdown time
-          </span>
-          <span className="font-normal text-sm md:text-base">{settings.countdownTime}s</span>
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
+              Countdown time
+            </span>
+            <span className="font-normal text-sm md:text-base">{settings.countdownTime}s</span>
+          </div>
+          <Slider 
+            value={[settings.countdownTime]} 
+            onValueChange={value => updateSetting('countdownTime', value[0])} 
+            max={10} 
+            min={3} 
+            step={1} 
+            className="w-full" 
+          />
         </div>
-        <Slider 
-          value={[settings.countdownTime]} 
-          onValueChange={value => updateSetting('countdownTime', value[0])} 
-          max={10} 
-          min={3} 
-          step={1} 
-          className="w-full" 
-        />
       </div>
     </div>
   );

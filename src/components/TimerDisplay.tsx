@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, RefreshCcw, Maximize, Minimize } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Play, Pause, RefreshCcw, Maximize, Minimize, CircleDot, Timer } from 'lucide-react';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -14,6 +16,7 @@ interface TimerDisplayProps {
   totalSets: number;
   totalRounds: number;
   remainingTime: number;
+  workTime: number;
   onToggleTimer: () => void;
   onResetTimer: () => void;
 }
@@ -27,6 +30,7 @@ const TimerDisplay = ({
   totalSets, 
   totalRounds,
   remainingTime,
+  workTime,
   onToggleTimer,
   onResetTimer
 }: TimerDisplayProps) => {
@@ -53,40 +57,24 @@ const TimerDisplay = ({
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const getStateText = () => {
+  const getStateInfo = () => {
     if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
-      return 'Paused';
+      return { text: 'Paused', color: 'bg-yellow-500', icon: Pause };
     }
     
     switch (timerState) {
       case 'countdown':
-        return 'Get ready';
+        return { text: 'Get ready', color: 'bg-orange-500', icon: Timer };
       case 'work':
-        return 'Work';
+        return { text: 'Work', color: 'bg-green-500', icon: CircleDot };
       case 'rest':
-        return 'Rest';
+        return { text: 'Rest', color: 'bg-blue-500', icon: CircleDot };
       case 'setRest':
-        return 'Set rest';
+        return { text: 'Set rest', color: 'bg-blue-600', icon: CircleDot };
       case 'finished':
-        return 'Finished';
+        return { text: 'Finished', color: 'bg-purple-500', icon: CircleDot };
       default:
-        return 'Ready';
-    }
-  };
-
-  const getStateColor = () => {
-    switch (timerState) {
-      case 'work':
-        return 'text-green-600';
-      case 'rest':
-      case 'setRest':
-        return 'text-blue-600';
-      case 'countdown':
-        return 'text-[#FF6B35]';
-      case 'finished':
-        return 'text-purple-600';
-      default:
-        return 'text-muted-foreground';
+        return { text: 'Ready', color: 'bg-gray-400', icon: CircleDot };
     }
   };
 
@@ -101,6 +89,17 @@ const TimerDisplay = ({
     }
   };
 
+  // Get the display time - for idle state, show work time instead of current time
+  const getDisplayTime = () => {
+    if (timerState === 'idle') {
+      return workTime;
+    }
+    return timerState === 'countdown' ? currentTime : currentTime;
+  };
+
+  const stateInfo = getStateInfo();
+  const StateIcon = stateInfo.icon;
+
   if (isFullscreen) {
     return (
       <div className="h-screen w-screen bg-white flex flex-col p-8 animate-fade-in overflow-hidden">
@@ -113,7 +112,7 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className="mr-32 md:mr-48">
+        <div className="mr-32 md:mr-48 flex-shrink-0">
           <ProgressBars 
             currentSet={currentSet}
             currentRound={currentRound}
@@ -124,17 +123,18 @@ const TimerDisplay = ({
 
         <div className="flex-1 flex items-center justify-center min-h-0">
           <div className="text-center">
-            <div 
-              className={`text-xl md:text-2xl font-normal mb-6 transition-all duration-300 ${getStateColor()}`}
+            <Badge 
+              className={`${stateInfo.color} text-white mb-6 px-4 py-2 text-lg font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300`}
               key={`${timerState}-${isRunning}`}
             >
-              {getStateText()}
-            </div>
+              <StateIcon className="w-2 h-2" />
+              {stateInfo.text}
+            </Badge>
             <div 
               className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-extralight tracking-tighter font-roboto-mono leading-none animate-fade-in"
               key={`time-${timerState}-transition`}
             >
-              {timerState === 'countdown' ? currentTime : formatTimeDisplay(currentTime)}
+              {formatTimeDisplay(getDisplayTime())}
             </div>
           </div>
         </div>
@@ -207,17 +207,18 @@ const TimerDisplay = ({
 
       <div className="flex-1 flex items-center justify-center min-h-0 py-4">
         <div className="text-left">
-          <div 
-            className={`text-base md:text-lg font-normal mb-4 transition-all duration-300 ${getStateColor()}`}
+          <Badge 
+            className={`${stateInfo.color} text-white mb-4 px-3 py-1 text-sm font-medium flex items-center gap-2 w-fit transition-all duration-300`}
             key={`${timerState}-${isRunning}`}
           >
-            {getStateText()}
-          </div>
+            <StateIcon className="w-2 h-2" />
+            {stateInfo.text}
+          </Badge>
           <div 
             className="text-[6rem] md:text-[10rem] lg:text-[14rem] font-extralight tracking-tighter font-roboto-mono leading-none animate-fade-in"
             key={`time-${timerState}-transition`}
           >
-            {timerState === 'countdown' ? currentTime : formatTimeDisplay(currentTime)}
+            {formatTimeDisplay(getDisplayTime())}
           </div>
         </div>
       </div>

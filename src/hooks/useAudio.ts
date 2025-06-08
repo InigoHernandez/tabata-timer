@@ -39,6 +39,13 @@ export const useAudio = () => {
     createBeepSound(600, 0.2, 0.5);
   };
 
+  const playFinishSound = () => {
+    // Play a celebratory finish sound - ascending tones
+    createBeepSound(523, 0.3, 0.4); // C
+    setTimeout(() => createBeepSound(659, 0.3, 0.4), 200); // E
+    setTimeout(() => createBeepSound(784, 0.4, 0.5), 400); // G
+  };
+
   useEffect(() => {
     return () => {
       if (audioContextRef.current) {
@@ -50,6 +57,7 @@ export const useAudio = () => {
   return {
     playCountdownSound,
     playWarningSound,
-    playStartSound
+    playStartSound,
+    playFinishSound
   };
 };

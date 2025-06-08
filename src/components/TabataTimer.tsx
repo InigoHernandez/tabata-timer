@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -33,7 +34,7 @@ const TabataTimer = () => {
   const [timerState, setTimerState] = useState<TimerState>('idle');
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const { playCountdownSound, playWarningSound, playStartSound } = useAudio();
+  const { playCountdownSound, playWarningSound, playStartSound, playFinishSound } = useAudio();
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -43,6 +44,13 @@ const TabataTimer = () => {
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
+
+  // Update currentTime when settings change and timer is idle
+  useEffect(() => {
+    if (timerState === 'idle') {
+      setCurrentTime(settings.workTime);
+    }
+  }, [settings.workTime, timerState]);
 
   const resetTimer = useCallback(() => {
     setIsRunning(false);
@@ -96,6 +104,7 @@ const TabataTimer = () => {
         } else {
           setTimerState('finished');
           setIsRunning(false);
+          playFinishSound();
         }
       } else if (timerState === 'rest') {
         setTimerState('work');
@@ -110,7 +119,7 @@ const TabataTimer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, playStartSound]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, playStartSound, playFinishSound]);
 
   const getRemainingTime = () => {
     // Calculate total workout time excluding countdown
@@ -155,7 +164,7 @@ const TabataTimer = () => {
     <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in">
       <div className="h-screen flex flex-col p-2 md:p-4 lg:p-8 overflow-hidden">
         <div className="flex-shrink-0">
-          <TimerHero />
+          <TimerHero hideInFullscreen={isFullscreen} />
         </div>
 
         <Card className="flex-1 overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none min-h-0">
@@ -169,6 +178,7 @@ const TabataTimer = () => {
               totalSets={settings.sets} 
               totalRounds={settings.rounds} 
               remainingTime={getRemainingTime()}
+              workTime={settings.workTime}
               onToggleTimer={toggleTimer} 
               onResetTimer={resetTimer} 
             />
