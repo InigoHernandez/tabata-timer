@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
 import TimerDisplay from './TimerDisplay';
 import TimerSettingsPanel from './TimerSettings';
-
 interface TimerSettings {
   workTime: number;
   restTime: number;
@@ -13,9 +11,7 @@ interface TimerSettings {
   restBetweenSets: number;
   countdownTime: number;
 }
-
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
-
 const TabataTimer = () => {
   const [settings, setSettings] = useState<TimerSettings>({
     workTime: 30,
@@ -30,7 +26,6 @@ const TabataTimer = () => {
   const [currentRound, setCurrentRound] = useState(1);
   const [currentSet, setCurrentSet] = useState(1);
   const [timerState, setTimerState] = useState<TimerState>('idle');
-
   const resetTimer = useCallback(() => {
     setIsRunning(false);
     setCurrentTime(settings.workTime);
@@ -38,7 +33,6 @@ const TabataTimer = () => {
     setCurrentSet(1);
     setTimerState('idle');
   }, [settings.workTime]);
-
   const toggleTimer = () => {
     if (timerState === 'idle') {
       setTimerState('countdown');
@@ -46,7 +40,6 @@ const TabataTimer = () => {
     }
     setIsRunning(!isRunning);
   };
-
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isRunning && currentTime > 0) {
@@ -82,12 +75,11 @@ const TabataTimer = () => {
     }
     return () => clearInterval(interval);
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings]);
-
   const getRemainingTime = () => {
     // Calculate total workout time excluding countdown
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     const totalWorkoutTime = settings.sets * timePerSet + (settings.sets - 1) * settings.restBetweenSets;
-    
+
     // When idle or countdown, show total workout time (excluding countdown)
     if (timerState === 'idle' || timerState === 'countdown') {
       return totalWorkoutTime;
@@ -97,9 +89,8 @@ const TabataTimer = () => {
     if (timerState === 'finished') {
       return 0;
     }
-
     let remaining = currentTime;
-    
+
     // Add remaining time in current set
     if (timerState === 'work') {
       // Add remaining rest periods and work periods in current set
@@ -113,12 +104,12 @@ const TabataTimer = () => {
       // Add time for remaining rounds in next set
       remaining += settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     }
-    
+
     // Add remaining complete sets
     if (currentSet < settings.sets) {
       const remainingSets = settings.sets - currentSet;
       remaining += remainingSets * timePerSet;
-      
+
       // Add rest periods between remaining sets
       if (timerState !== 'setRest') {
         remaining += remainingSets * settings.restBetweenSets;
@@ -126,41 +117,22 @@ const TabataTimer = () => {
         remaining += (remainingSets - 1) * settings.restBetweenSets;
       }
     }
-    
     return remaining;
   };
-
-  return (
-    <div className="min-h-screen bg-[#F8F8F8] font-aspekta">
+  return <div className="min-h-screen bg-[#F8F8F8] font-aspekta">
       <div className="max-w-7xl mx-auto px-8 py-12">
         <TimerHero />
 
         <Card className="overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none">
           <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[600px]">
-            <TimerDisplay
-              currentTime={currentTime}
-              currentRound={currentRound}
-              currentSet={currentSet}
-              timerState={timerState}
-              isRunning={isRunning}
-              totalSets={settings.sets}
-              totalRounds={settings.rounds}
-              onToggleTimer={toggleTimer}
-              onResetTimer={resetTimer}
-            />
+            <TimerDisplay currentTime={currentTime} currentRound={currentRound} currentSet={currentSet} timerState={timerState} isRunning={isRunning} totalSets={settings.sets} totalRounds={settings.rounds} onToggleTimer={toggleTimer} onResetTimer={resetTimer} />
 
-            <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-6 flex flex-col">
-              <TimerSettingsPanel
-                settings={settings}
-                remainingTime={getRemainingTime()}
-                onSettingsChange={setSettings}
-              />
+            <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-6 flex flex-col py-[32px] px-[32px]">
+              <TimerSettingsPanel settings={settings} remainingTime={getRemainingTime()} onSettingsChange={setSettings} />
             </div>
           </div>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default TabataTimer;
