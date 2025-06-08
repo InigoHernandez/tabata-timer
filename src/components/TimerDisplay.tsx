@@ -60,7 +60,7 @@ const TimerDisplay = ({
         totalRounds={totalRounds}
       />
 
-      <div className="flex-1 flex items-center">
+      <div className="flex-1 flex items-center justify-center">
         <div className="text-left">
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             {getStateText()}
@@ -71,12 +71,14 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-8">
-        <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
-          Cycles
-        </div>
-        <div className="text-4xl font-light font-roboto-mono">
-          {getCurrentCycleNumber()}/{getTotalCycles()}
+      <div className="flex justify-start">
+        <div>
+          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+            Cycles
+          </div>
+          <div className="text-4xl font-light font-roboto-mono">
+            {getCurrentCycleNumber()}/{getTotalCycles()}
+          </div>
         </div>
       </div>
     </div>
