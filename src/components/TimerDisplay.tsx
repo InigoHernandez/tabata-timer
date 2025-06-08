@@ -4,7 +4,7 @@ import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, RefreshCcw } from 'lucide-react';
 
-type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
+type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
 interface TimerDisplayProps {
   currentTime: number;
@@ -41,6 +41,8 @@ const TimerDisplay = ({
     }
     
     switch (timerState) {
+      case 'countdown':
+        return 'Get ready';
       case 'work':
         return 'Work';
       case 'rest':
@@ -72,7 +74,7 @@ const TimerDisplay = ({
             {getStateText()}
           </div>
           <div className="text-[12rem] font-extralight tracking-tighter font-roboto-mono leading-none">
-            {formatTimeDisplay(currentTime)}
+            {timerState === 'countdown' ? currentTime : formatTimeDisplay(currentTime)}
           </div>
         </div>
       </div>

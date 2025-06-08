@@ -12,9 +12,10 @@ interface TimerSettings {
   rounds: number;
   sets: number;
   restBetweenSets: number;
+  countdownTime: number;
 }
 
-type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
+type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
 const TabataTimer = () => {
   const [settings, setSettings] = useState<TimerSettings>({
@@ -22,7 +23,8 @@ const TabataTimer = () => {
     restTime: 15,
     rounds: 8,
     sets: 4,
-    restBetweenSets: 45
+    restBetweenSets: 45,
+    countdownTime: 5
   });
   const [isRunning, setIsRunning] = useState(false);
   const [currentTime, setCurrentTime] = useState(settings.workTime);
@@ -40,8 +42,8 @@ const TabataTimer = () => {
 
   const toggleTimer = () => {
     if (timerState === 'idle') {
-      setTimerState('work');
-      setCurrentTime(settings.workTime);
+      setTimerState('countdown');
+      setCurrentTime(settings.countdownTime);
     }
     setIsRunning(!isRunning);
   };
@@ -54,7 +56,10 @@ const TabataTimer = () => {
       }, 1000);
     } else if (isRunning && currentTime === 0) {
       // Handle state transitions
-      if (timerState === 'work') {
+      if (timerState === 'countdown') {
+        setTimerState('work');
+        setCurrentTime(settings.workTime);
+      } else if (timerState === 'work') {
         if (currentRound < settings.rounds) {
           setTimerState('rest');
           setCurrentTime(settings.restTime);

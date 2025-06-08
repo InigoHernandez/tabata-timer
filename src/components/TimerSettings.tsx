@@ -9,6 +9,7 @@ interface TimerSettings {
   rounds: number;
   sets: number;
   restBetweenSets: number;
+  countdownTime: number;
 }
 
 interface TimerSettingsProps {
@@ -40,7 +41,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
           max={8}
           min={1}
           step={1}
-          className="w-full"
+          className="w-full [&_.relative]:h-1 [&_.absolute]:h-1"
         />
       </div>
 
@@ -55,7 +56,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
           max={12}
           min={1}
           step={1}
-          className="w-full"
+          className="w-full [&_.relative]:h-1 [&_.absolute]:h-1"
         />
       </div>
 
@@ -70,7 +71,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
           max={60}
           min={5}
           step={5}
-          className="w-full"
+          className="w-full [&_.relative]:h-1 [&_.absolute]:h-1"
         />
       </div>
 
@@ -85,7 +86,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
           max={60}
           min={5}
           step={5}
-          className="w-full"
+          className="w-full [&_.relative]:h-1 [&_.absolute]:h-1"
         />
       </div>
 
@@ -100,7 +101,22 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
           max={180}
           min={30}
           step={15}
-          className="w-full"
+          className="w-full [&_.relative]:h-1 [&_.absolute]:h-1"
+        />
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <span className="text-base font-normal" style={{ color: '#0000004d' }}>Countdown time</span>
+          <span className="font-normal">{settings.countdownTime}s</span>
+        </div>
+        <Slider
+          value={[settings.countdownTime]}
+          onValueChange={value => updateSetting('countdownTime', value[0])}
+          max={10}
+          min={3}
+          step={1}
+          className="w-full [&_.relative]:h-1 [&_.absolute]:h-1"
         />
       </div>
     </div>
