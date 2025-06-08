@@ -1,7 +1,5 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Play, Pause, Square } from 'lucide-react';
 
 type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -14,11 +12,7 @@ interface TimerControlsProps {
 }
 
 const TimerControls = ({ 
-  isRunning, 
-  timerState, 
-  remainingTime, 
-  onToggleTimer, 
-  onResetTimer 
+  remainingTime
 }: TimerControlsProps) => {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -35,26 +29,6 @@ const TimerControls = ({
         <div className="text-2xl font-light font-roboto-mono">
           {formatTime(remainingTime)}
         </div>
-      </div>
-
-      <div className="flex justify-center gap-4">
-        <Button 
-          onClick={onResetTimer} 
-          size="lg" 
-          variant="outline" 
-          className="w-16 h-16 rounded-full p-0"
-        >
-          <Square className="w-8 h-8" />
-        </Button>
-        
-        <Button 
-          onClick={onToggleTimer} 
-          size="lg" 
-          className="w-16 h-16 rounded-full p-0 bg-foreground text-background hover:bg-foreground/90"
-          disabled={timerState === 'finished'}
-        >
-          {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" />}
-        </Button>
       </div>
     </div>
   );
