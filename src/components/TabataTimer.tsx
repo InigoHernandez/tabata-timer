@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
-import { Play, Pause, RotateCcw, Settings } from 'lucide-react';
+import { Play, Pause, RotateCcw, Square } from 'lucide-react';
 
 interface TimerSettings {
   workTime: number;
@@ -16,18 +17,17 @@ type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
 
 const TabataTimer = () => {
   const [settings, setSettings] = useState<TimerSettings>({
-    workTime: 20,
-    restTime: 10,
+    workTime: 30,
+    restTime: 15,
     rounds: 8,
-    sets: 1,
-    restBetweenSets: 60
+    sets: 4,
+    restBetweenSets: 45
   });
   const [isRunning, setIsRunning] = useState(false);
   const [currentTime, setCurrentTime] = useState(settings.workTime);
   const [currentRound, setCurrentRound] = useState(1);
   const [currentSet, setCurrentSet] = useState(1);
   const [timerState, setTimerState] = useState<TimerState>('idle');
-  const [showSettings, setShowSettings] = useState(false);
 
   const resetTimer = useCallback(() => {
     setIsRunning(false);
@@ -84,198 +84,249 @@ const TabataTimer = () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const getStateColor = () => {
-    // If timer is not running and not in idle or finished state, show paused color
-    if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
-      return '#0000004d';
-    }
-    
-    switch (timerState) {
-      case 'work':
-        return '#FE6417';
-      case 'rest':
-        return '#0000004d';
-      case 'setRest':
-        return '#0000004d';
-      case 'finished':
-        return '#FE6417';
-      default:
-        return '#020817';
-    }
+  const formatTimeDisplay = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')} ${secs.toString().padStart(2, '0')}`;
   };
 
   const getStateText = () => {
-    // If timer is not running and not in idle or finished state, show "paused"
     if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
-      return 'paused';
+      return 'PAUSED';
     }
     
     switch (timerState) {
       case 'work':
-        return 'work';
+        return 'WORK';
       case 'rest':
-        return 'rest';
+        return 'REST';
       case 'setRest':
-        return 'set rest';
+        return 'SET REST';
       case 'finished':
-        return 'finished';
+        return 'FINISHED';
       default:
-        return 'ready';
+        return 'READY';
     }
   };
 
-  const handleSettingsClose = () => {
-    setShowSettings(false);
-    resetTimer();
+  const getTotalCycles = () => settings.rounds * settings.sets;
+  const getCurrentCycleNumber = () => (currentSet - 1) * settings.rounds + currentRound;
+
+  const getRemainingTime = () => {
+    let remaining = currentTime;
+    
+    // Add remaining rounds in current set
+    if (timerState === 'work' && currentRound < settings.rounds) {
+      const remainingRoundsInSet = settings.rounds - currentRound;
+      remaining += remainingRoundsInSet * (settings.workTime + settings.restTime);
+    } else if (timerState === 'rest' && currentRound < settings.rounds) {
+      const remainingRoundsInSet = settings.rounds - currentRound - 1;
+      remaining += remainingRoundsInSet * (settings.workTime + settings.restTime) + settings.workTime;
+    }
+    
+    // Add remaining sets
+    if (currentSet < settings.sets) {
+      const remainingSets = settings.sets - currentSet;
+      remaining += remainingSets * (settings.rounds * (settings.workTime + settings.restTime) + settings.restBetweenSets);
+    }
+    
+    return remaining;
+  };
+
+  const renderProgressBars = () => {
+    const bars = [];
+    for (let set = 1; set <= settings.sets; set++) {
+      const setBars = [];
+      for (let round = 1; round <= settings.rounds; round++) {
+        const isActive = set === currentSet && round === currentRound;
+        const isCompleted = set < currentSet || (set === currentSet && round < currentRound);
+        
+        setBars.push(
+          <div
+            key={`${set}-${round}`}
+            className={`w-2 h-8 ${
+              isActive ? 'bg-foreground' : 
+              isCompleted ? 'bg-muted-foreground' : 
+              'bg-border'
+            }`}
+          />
+        );
+      }
+      
+      bars.push(
+        <div key={set} className="flex gap-1">
+          {setBars}
+        </div>
+      );
+      
+      if (set < settings.sets) {
+        bars.push(
+          <div key={`rest-${set}`} className="flex items-center justify-center w-8 h-8">
+            <span className="text-sm font-medium">R</span>
+          </div>
+        );
+      }
+    }
+    
+    return bars;
   };
 
   return (
-    <div className="min-h-screen font-aspekta relative" style={{ backgroundColor: '#F5F5F5' }}>
-      <div className="flex flex-col items-center justify-center p-8 pb-32 relative z-10">
-        <div className="w-full max-w-6xl space-y-16">
-          {/* Header */}
-          <div className="text-left space-y-8">
-            <p className="tracking-wider uppercase text-xs font-medium" style={{ color: '#FE6417' }}>TABAT.APP — HIGH INTENSITY TRAINING</p>
-            <div className="w-8/12">
-              <h1 className="text-2xl md:text-3xl leading-tight font-normal">
-                <span className="text-foreground">Maximum results in minimum time.</span>
-                <br />
-                <span style={{ color: '#0000004d' }}>Train smarter with scientific intervals.</span>
-              </h1>
-            </div>
-          </div>
+    <div className="min-h-screen bg-background p-8">
+      <div className="max-w-7xl mx-auto">
+        <Card className="overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[600px]">
+            {/* Left Panel - Timer */}
+            <div className="lg:col-span-2 p-8 flex flex-col justify-center">
+              {/* Progress Bars */}
+              <div className="mb-8">
+                <div className="flex gap-4 items-center justify-start">
+                  {renderProgressBars()}
+                </div>
+              </div>
 
-          {/* Main Timer Display */}
-          <Card className="p-16 md:p-20 text-center backdrop-blur-md border border-border/20 relative overflow-hidden">
-            {/* Settings Button */}
-            <Button 
-              onClick={() => setShowSettings(!showSettings)} 
-              size="lg" 
-              variant="outline" 
-              className="absolute top-8 right-8 w-12 h-12 rounded-full font-light p-0"
-            >
-              <Settings className="w-5 h-5" />
-            </Button>
-
-            <div className="relative z-10 min-h-[400px] flex flex-col justify-center">
-              {/* Timer Content with Transition */}
-              <div className={`transition-all duration-500 ease-in-out ${showSettings ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
-                <div className="space-y-20">
-                  <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: getStateColor() }}>
+              {/* Timer Display */}
+              <div className="space-y-6">
+                <div className="text-left">
+                  <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
                     {getStateText()}
                   </div>
-                  
-                  <div className="text-[12rem] md:text-[16rem] font-light tabular-nums leading-none">
-                    {formatTime(currentTime)}
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-12 text-center">
-                    <div className="space-y-2">
-                      <div className="text-2xl md:text-3xl font-normal text-foreground">{currentRound}</div>
-                      <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>round</div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="text-2xl md:text-3xl font-normal text-foreground">{currentSet}</div>
-                      <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>set</div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="text-2xl md:text-3xl font-normal text-foreground">{settings.rounds * settings.sets}</div>
-                      <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>total</div>
-                    </div>
+                  <div className="text-9xl font-light tracking-tighter">
+                    {formatTimeDisplay(currentTime)}
                   </div>
                 </div>
-              </div>
 
-              {/* Settings Content with Transition */}
-              <div className={`absolute inset-0 transition-all duration-500 ease-in-out ${showSettings ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-                <div className="h-full flex flex-col justify-center px-4">
-                  <div className="space-y-8 text-left max-w-2xl mx-auto w-full">
-                    <h3 className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">timer settings</h3>
-                    
-                    <div className="grid gap-8">
-                      <div className="space-y-3">
-                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">work time: {settings.workTime}s</label>
-                        <Slider 
-                          value={[settings.workTime]} 
-                          onValueChange={value => setSettings(prev => ({ ...prev, workTime: value[0] }))} 
-                          max={60} 
-                          min={5} 
-                          step={5} 
-                          className="w-full" 
-                        />
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">rest time: {settings.restTime}s</label>
-                        <Slider 
-                          value={[settings.restTime]} 
-                          onValueChange={value => setSettings(prev => ({ ...prev, restTime: value[0] }))} 
-                          max={60} 
-                          min={5} 
-                          step={5} 
-                          className="w-full" 
-                        />
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">rounds: {settings.rounds}</label>
-                        <Slider 
-                          value={[settings.rounds]} 
-                          onValueChange={value => setSettings(prev => ({ ...prev, rounds: value[0] }))} 
-                          max={12} 
-                          min={1} 
-                          step={1} 
-                          className="w-full" 
-                        />
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">sets: {settings.sets}</label>
-                        <Slider 
-                          value={[settings.sets]} 
-                          onValueChange={value => setSettings(prev => ({ ...prev, sets: value[0] }))} 
-                          max={5} 
-                          min={1} 
-                          step={1} 
-                          className="w-full" 
-                        />
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">rest between sets: {settings.restBetweenSets}s</label>
-                        <Slider 
-                          value={[settings.restBetweenSets]} 
-                          onValueChange={value => setSettings(prev => ({ ...prev, restBetweenSets: value[0] }))} 
-                          max={180} 
-                          min={30} 
-                          step={10} 
-                          className="w-full" 
-                        />
-                      </div>
-                    </div>
-
-                    <Button onClick={handleSettingsClose} className="w-full font-normal text-2xl md:text-3xl leading-tight tracking-wide py-6">
-                      apply settings
-                    </Button>
+                {/* Cycles */}
+                <div className="text-left">
+                  <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
+                    CYCLES
+                  </div>
+                  <div className="text-4xl font-light">
+                    {getCurrentCycleNumber()}/{getTotalCycles()}
                   </div>
                 </div>
               </div>
             </div>
-          </Card>
-        </div>
-      </div>
 
-      {/* Fixed Controls - Always Visible */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex justify-center gap-6 backdrop-blur-md border border-border/20 rounded-full p-4">
-          <Button onClick={toggleTimer} size="lg" className="w-16 h-16 rounded-full text-xl font-light" disabled={timerState === 'finished'}>
-            {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" />}
-          </Button>
-          
-          <Button onClick={resetTimer} size="lg" variant="outline" className="w-16 h-16 rounded-full font-light">
-            <RotateCcw className="w-6 h-6" />
-          </Button>
-        </div>
+            {/* Right Panel - Settings & Controls */}
+            <div className="border-l border-border p-6 flex flex-col">
+              {/* Settings */}
+              <div className="flex-1 space-y-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">Number of tabatas</span>
+                    <span className="font-medium">{settings.sets}</span>
+                  </div>
+                  <Slider
+                    value={[settings.sets]}
+                    onValueChange={value => setSettings(prev => ({ ...prev, sets: value[0] }))}
+                    max={8}
+                    min={1}
+                    step={1}
+                    className="w-full"
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">Rounds per tabatas</span>
+                    <span className="font-medium">{settings.rounds}</span>
+                  </div>
+                  <Slider
+                    value={[settings.rounds]}
+                    onValueChange={value => setSettings(prev => ({ ...prev, rounds: value[0] }))}
+                    max={12}
+                    min={1}
+                    step={1}
+                    className="w-full"
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">Time on</span>
+                    <span className="font-medium">{formatTime(settings.workTime)}</span>
+                  </div>
+                  <Slider
+                    value={[settings.workTime]}
+                    onValueChange={value => setSettings(prev => ({ ...prev, workTime: value[0] }))}
+                    max={60}
+                    min={5}
+                    step={5}
+                    className="w-full"
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">Time off</span>
+                    <span className="font-medium">{formatTime(settings.restTime)}</span>
+                  </div>
+                  <Slider
+                    value={[settings.restTime]}
+                    onValueChange={value => setSettings(prev => ({ ...prev, restTime: value[0] }))}
+                    max={60}
+                    min={5}
+                    step={5}
+                    className="w-full"
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">Rest between tabatas</span>
+                    <span className="font-medium">{formatTime(settings.restBetweenSets)}</span>
+                  </div>
+                  <Slider
+                    value={[settings.restBetweenSets]}
+                    onValueChange={value => setSettings(prev => ({ ...prev, restBetweenSets: value[0] }))}
+                    max={180}
+                    min={30}
+                    step={15}
+                    className="w-full"
+                  />
+                </div>
+
+                <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
+                  SAVE
+                </Button>
+              </div>
+
+              {/* Remaining Time & Controls */}
+              <div className="space-y-6 pt-6 border-t border-border">
+                <div className="text-center">
+                  <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
+                    REMAINING
+                  </div>
+                  <div className="text-2xl font-light">
+                    {formatTime(getRemainingTime())}
+                  </div>
+                </div>
+
+                {/* Control Buttons */}
+                <div className="flex justify-center gap-4">
+                  <Button 
+                    onClick={resetTimer} 
+                    size="lg" 
+                    variant="outline" 
+                    className="w-12 h-12 rounded-full p-0"
+                  >
+                    <Square className="w-5 h-5" />
+                  </Button>
+                  
+                  <Button 
+                    onClick={toggleTimer} 
+                    size="lg" 
+                    className="w-16 h-16 rounded-full p-0 bg-foreground text-background hover:bg-foreground/90"
+                    disabled={timerState === 'finished'}
+                  >
+                    {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" />}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
       </div>
     </div>
   );
