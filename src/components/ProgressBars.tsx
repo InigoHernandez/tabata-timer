@@ -50,7 +50,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
 
   return (
     <div className="mb-8">
-      <div className="flex gap-2 items-center justify-start overflow-x-auto">
+      <div className="flex gap-2 items-center justify-start overflow-x-auto flex-wrap">
         {renderProgressBars()}
       </div>
     </div>
