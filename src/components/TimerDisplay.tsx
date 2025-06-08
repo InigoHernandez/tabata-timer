@@ -111,7 +111,7 @@ const TimerDisplay = ({
 
   if (isFullscreen) {
     return (
-      <div className="h-screen w-screen bg-white flex flex-col p-8 animate-fade-in overflow-hidden">
+      <div className="fixed inset-0 bg-white flex flex-col p-8 animate-fade-in overflow-hidden z-50">
         <div className="absolute top-8 right-8 text-right z-10">
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Remaining time
@@ -136,7 +136,7 @@ const TimerDisplay = ({
               className={`${stateInfo.color} text-white mb-6 px-4 py-2 text-lg font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-lg`}
               key={`${timerState}-${isRunning}`}
             >
-              <StateIcon className="w-3 h-3 fill-current" />
+              <StateIcon className="w-4 h-4 fill-current" />
               {stateInfo.text}
             </Badge>
             <div 
@@ -148,7 +148,7 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className="flex justify-between items-end flex-shrink-0">
+        <div className="flex justify-between items-end flex-shrink-0 pb-8">
           <div>
             <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
               Cycles
@@ -220,7 +220,7 @@ const TimerDisplay = ({
             className={`${stateInfo.color} text-white mb-4 px-3 py-1 text-sm font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-lg`}
             key={`${timerState}-${isRunning}`}
           >
-            <StateIcon className="w-3 h-3 fill-current" />
+            <StateIcon className="w-4 h-4 fill-current" />
             {stateInfo.text}
           </Badge>
           <div 

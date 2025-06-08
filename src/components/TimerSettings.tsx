@@ -35,9 +35,9 @@ const TimerSettingsPanel = ({
   };
 
   return (
-    <div className="flex-1 py-4 md:py-6 animate-fade-in overflow-y-auto">
-      <div className="space-y-6 md:space-y-8">
-        <div className="space-y-4">
+    <div className="flex-1 py-4 md:py-6 animate-fade-in">
+      <div className="space-y-4 md:space-y-5">
+        <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
               Number of tabatas
@@ -54,7 +54,7 @@ const TimerSettingsPanel = ({
           />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
               Rounds per tabatas
@@ -71,7 +71,7 @@ const TimerSettingsPanel = ({
           />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
               Work time
@@ -88,7 +88,7 @@ const TimerSettingsPanel = ({
           />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
               Rest time
@@ -105,7 +105,7 @@ const TimerSettingsPanel = ({
           />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
               Rest between tabatas
@@ -122,7 +122,7 @@ const TimerSettingsPanel = ({
           />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-sm md:text-base font-normal" style={{ color: '#0000004d' }}>
               Countdown time

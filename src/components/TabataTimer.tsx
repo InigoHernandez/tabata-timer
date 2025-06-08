@@ -184,7 +184,7 @@ const TabataTimer = () => {
             />
 
             {!isFullscreen && (
-              <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col overflow-y-auto">
+              <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col">
                 <TimerSettingsPanel 
                   settings={settings} 
                   onSettingsChange={setSettings} 
