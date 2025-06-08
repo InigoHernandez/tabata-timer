@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -126,10 +125,10 @@ const TabataTimer = () => {
   };
 
   return <div className="min-h-screen font-aspekta" style={{ backgroundColor: '#F5F5F5' }}>
-      <div className="flex flex-col items-center justify-center p-4 pb-32">
-        <div className="w-full max-w-6xl space-y-12">
+      <div className="flex flex-col items-center justify-center p-8 pb-32">
+        <div className="w-full max-w-6xl space-y-16">
           {/* Header */}
-          <div className="text-left space-y-6">
+          <div className="text-left space-y-8">
             <p className="tracking-wider uppercase text-xs font-medium" style={{ color: '#FE6417' }}>TABAT.APP — HIGH INTENSITY TRAINING</p>
             <div className="w-8/12">
               <h1 className="text-2xl md:text-3xl leading-tight text-foreground font-normal">
@@ -141,7 +140,7 @@ const TabataTimer = () => {
           </div>
 
           {/* Main Timer Display */}
-          <Card className="p-12 md:p-16 text-center space-y-8 backdrop-blur-md border border-border/20">
+          <Card className="p-16 md:p-20 text-center space-y-12 backdrop-blur-md border border-border/20">
             <div className="text-3xl font-light tracking-wider" style={{ color: getStateColor() }}>
               {getStateText()}
             </div>
@@ -150,16 +149,16 @@ const TabataTimer = () => {
               {formatTime(currentTime)}
             </div>
 
-            <div className="grid grid-cols-3 gap-8 text-center">
-              <div className="space-y-2">
+            <div className="grid grid-cols-3 gap-12 text-center">
+              <div className="space-y-3">
                 <div className="text-4xl font-light text-foreground">{currentRound}</div>
                 <div className="text-lg font-light text-muted-foreground tracking-wide">round</div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <div className="text-4xl font-light text-foreground">{currentSet}</div>
                 <div className="text-lg font-light text-muted-foreground tracking-wide">set</div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <div className="text-4xl font-light text-foreground">{settings.rounds * settings.sets}</div>
                 <div className="text-lg font-light text-muted-foreground tracking-wide">total</div>
               </div>
@@ -167,10 +166,10 @@ const TabataTimer = () => {
           </Card>
 
           {/* Settings Panel */}
-          {showSettings && <Card className="p-8 space-y-8 backdrop-blur-md border border-border/20">
+          {showSettings && <Card className="p-12 space-y-12 backdrop-blur-md border border-border/20">
               <h3 className="text-2xl font-normal tracking-wide">timer settings</h3>
               
-              <div className="grid gap-8">
+              <div className="grid gap-12">
                 <div className="space-y-3">
                   <label className="text-lg font-light tracking-wide">work time: {settings.workTime}s</label>
                   <Slider value={[settings.workTime]} onValueChange={value => setSettings(prev => ({
