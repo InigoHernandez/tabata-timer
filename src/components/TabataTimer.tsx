@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -153,7 +152,7 @@ const TabataTimer = () => {
               onClick={() => setShowSettings(!showSettings)} 
               size="lg" 
               variant="outline" 
-              className="absolute top-8 right-8 w-12 h-12 rounded-full font-light"
+              className="absolute top-8 right-8 w-12 h-12 rounded-full font-light p-0"
             >
               <Settings className="w-5 h-5" />
             </Button>
@@ -171,15 +170,15 @@ const TabataTimer = () => {
                   </div>
 
                   <div className="grid grid-cols-3 gap-12 text-center">
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                       <div className="text-2xl md:text-3xl font-normal text-foreground">{currentRound}</div>
                       <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>round</div>
                     </div>
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                       <div className="text-2xl md:text-3xl font-normal text-foreground">{currentSet}</div>
                       <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>set</div>
                     </div>
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                       <div className="text-2xl md:text-3xl font-normal text-foreground">{settings.rounds * settings.sets}</div>
                       <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>total</div>
                     </div>
@@ -189,74 +188,76 @@ const TabataTimer = () => {
 
               {/* Settings Content with Transition */}
               <div className={`absolute inset-0 transition-all duration-500 ease-in-out ${showSettings ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-                <div className="space-y-12 text-left p-4">
-                  <h3 className="text-2xl font-normal tracking-wide">timer settings</h3>
-                  
-                  <div className="grid gap-12">
-                    <div className="space-y-3">
-                      <label className="text-lg font-light tracking-wide">work time: {settings.workTime}s</label>
-                      <Slider 
-                        value={[settings.workTime]} 
-                        onValueChange={value => setSettings(prev => ({ ...prev, workTime: value[0] }))} 
-                        max={60} 
-                        min={5} 
-                        step={5} 
-                        className="w-full" 
-                      />
+                <div className="h-full flex flex-col justify-center px-4">
+                  <div className="space-y-8 text-left max-w-2xl mx-auto w-full">
+                    <h3 className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">timer settings</h3>
+                    
+                    <div className="grid gap-8">
+                      <div className="space-y-3">
+                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">work time: {settings.workTime}s</label>
+                        <Slider 
+                          value={[settings.workTime]} 
+                          onValueChange={value => setSettings(prev => ({ ...prev, workTime: value[0] }))} 
+                          max={60} 
+                          min={5} 
+                          step={5} 
+                          className="w-full" 
+                        />
+                      </div>
+
+                      <div className="space-y-3">
+                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">rest time: {settings.restTime}s</label>
+                        <Slider 
+                          value={[settings.restTime]} 
+                          onValueChange={value => setSettings(prev => ({ ...prev, restTime: value[0] }))} 
+                          max={60} 
+                          min={5} 
+                          step={5} 
+                          className="w-full" 
+                        />
+                      </div>
+
+                      <div className="space-y-3">
+                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">rounds: {settings.rounds}</label>
+                        <Slider 
+                          value={[settings.rounds]} 
+                          onValueChange={value => setSettings(prev => ({ ...prev, rounds: value[0] }))} 
+                          max={12} 
+                          min={1} 
+                          step={1} 
+                          className="w-full" 
+                        />
+                      </div>
+
+                      <div className="space-y-3">
+                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">sets: {settings.sets}</label>
+                        <Slider 
+                          value={[settings.sets]} 
+                          onValueChange={value => setSettings(prev => ({ ...prev, sets: value[0] }))} 
+                          max={5} 
+                          min={1} 
+                          step={1} 
+                          className="w-full" 
+                        />
+                      </div>
+
+                      <div className="space-y-3">
+                        <label className="text-2xl md:text-3xl font-normal leading-tight tracking-wide text-foreground">rest between sets: {settings.restBetweenSets}s</label>
+                        <Slider 
+                          value={[settings.restBetweenSets]} 
+                          onValueChange={value => setSettings(prev => ({ ...prev, restBetweenSets: value[0] }))} 
+                          max={180} 
+                          min={30} 
+                          step={10} 
+                          className="w-full" 
+                        />
+                      </div>
                     </div>
 
-                    <div className="space-y-3">
-                      <label className="text-lg font-light tracking-wide">rest time: {settings.restTime}s</label>
-                      <Slider 
-                        value={[settings.restTime]} 
-                        onValueChange={value => setSettings(prev => ({ ...prev, restTime: value[0] }))} 
-                        max={60} 
-                        min={5} 
-                        step={5} 
-                        className="w-full" 
-                      />
-                    </div>
-
-                    <div className="space-y-3">
-                      <label className="text-lg font-light tracking-wide">rounds: {settings.rounds}</label>
-                      <Slider 
-                        value={[settings.rounds]} 
-                        onValueChange={value => setSettings(prev => ({ ...prev, rounds: value[0] }))} 
-                        max={12} 
-                        min={1} 
-                        step={1} 
-                        className="w-full" 
-                      />
-                    </div>
-
-                    <div className="space-y-3">
-                      <label className="text-lg font-light tracking-wide">sets: {settings.sets}</label>
-                      <Slider 
-                        value={[settings.sets]} 
-                        onValueChange={value => setSettings(prev => ({ ...prev, sets: value[0] }))} 
-                        max={5} 
-                        min={1} 
-                        step={1} 
-                        className="w-full" 
-                      />
-                    </div>
-
-                    <div className="space-y-3">
-                      <label className="text-lg font-light tracking-wide">rest between sets: {settings.restBetweenSets}s</label>
-                      <Slider 
-                        value={[settings.restBetweenSets]} 
-                        onValueChange={value => setSettings(prev => ({ ...prev, restBetweenSets: value[0] }))} 
-                        max={180} 
-                        min={30} 
-                        step={10} 
-                        className="w-full" 
-                      />
-                    </div>
+                    <Button onClick={handleSettingsClose} className="w-full font-normal text-2xl md:text-3xl leading-tight tracking-wide py-6">
+                      apply settings
+                    </Button>
                   </div>
-
-                  <Button onClick={handleSettingsClose} className="w-full font-light text-lg">
-                    apply settings
-                  </Button>
                 </div>
               </div>
             </div>
