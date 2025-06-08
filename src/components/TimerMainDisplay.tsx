@@ -1,0 +1,68 @@
+
+import React from 'react';
+import { Badge } from '@/components/ui/badge';
+import { formatTimeDisplay, getStateInfo } from '@/utils/timerUtils';
+
+type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
+
+interface TimerMainDisplayProps {
+  currentTime: number;
+  timerState: TimerState;
+  isRunning: boolean;
+  workTime: number;
+  isFullscreen: boolean;
+}
+
+const TimerMainDisplay = ({
+  currentTime,
+  timerState,
+  isRunning,
+  workTime,
+  isFullscreen
+}: TimerMainDisplayProps) => {
+  const stateInfo = getStateInfo(isRunning, timerState);
+
+  const getDisplayTime = () => {
+    if (timerState === 'idle') {
+      return workTime;
+    }
+    return timerState === 'countdown' ? currentTime : currentTime;
+  };
+
+  const badgeClasses = isFullscreen
+    ? "mb-6 px-4 py-2 text-lg"
+    : "mb-4 px-3 py-1 text-sm";
+
+  const timeClasses = isFullscreen
+    ? "text-[8rem] md:text-[16rem] lg:text-[20rem]"
+    : "text-[6rem] md:text-[10rem] lg:text-[14rem]";
+
+  // Solid dot component (4px circle)
+  const SolidDot = () => (
+    <div className="w-1 h-1 bg-black rounded-full" />
+  );
+
+  return (
+    <div className={`${isFullscreen ? 'flex-1 flex items-center justify-center min-h-0 -mt-20' : 'flex-1 flex items-center justify-center min-h-0 py-4 -mt-16'} animate-fade-in`}>
+      <div className="text-center">
+        <Badge 
+          className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
+          style={{ fontWeight: '400' }}
+          key={`${timerState}-${isRunning}`}
+        >
+          <SolidDot />
+          {stateInfo.text}
+        </Badge>
+        <div 
+          className={`${timeClasses} font-roboto-mono leading-none transition-all duration-500`}
+          style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
+          key={`time-${timerState}-transition`}
+        >
+          {formatTimeDisplay(getDisplayTime())}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TimerMainDisplay;

@@ -1,0 +1,59 @@
+
+import React from 'react';
+import { formatTime, getCurrentCycleNumber, getTotalCycles } from '@/utils/timerUtils';
+
+interface TimerInfoProps {
+  remainingTime: number;
+  currentSet: number;
+  currentRound: number;
+  totalSets: number;
+  totalRounds: number;
+  isFullscreen: boolean;
+}
+
+const TimerInfo = ({
+  remainingTime,
+  currentSet,
+  currentRound,
+  totalSets,
+  totalRounds,
+  isFullscreen
+}: TimerInfoProps) => {
+  const textSizes = isFullscreen
+    ? "text-base md:text-4xl"
+    : "text-sm md:text-base lg:text-4xl";
+
+  const timeSizes = isFullscreen
+    ? "text-2xl md:text-4xl"
+    : "text-xl md:text-2xl lg:text-4xl";
+
+  return (
+    <>
+      {/* Remaining Time */}
+      <div className={`absolute ${isFullscreen ? 'top-8 right-8' : 'top-4 right-4 md:top-8 md:right-8'} text-right z-10 animate-fade-in`}>
+        <div className={`${textSizes} font-normal mb-2 transition-all duration-500`} style={{ color: '#0000004d' }}>
+          Remaining time
+        </div>
+        <div className={`${timeSizes} font-roboto-mono transition-all duration-500`} style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+          {formatTime(remainingTime)}
+        </div>
+      </div>
+
+      {/* Cycles Counter */}
+      <div>
+        <div className={`${textSizes} font-normal mb-2 transition-all duration-500`} style={{ color: '#0000004d' }}>
+          Cycles
+        </div>
+        <div 
+          className={`${timeSizes} font-roboto-mono transition-all duration-500`}
+          style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
+          key={`cycles-${getCurrentCycleNumber(currentSet, totalRounds, currentRound)}`}
+        >
+          {getCurrentCycleNumber(currentSet, totalRounds, currentRound)}/{getTotalCycles(totalRounds, totalSets)}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default TimerInfo;
