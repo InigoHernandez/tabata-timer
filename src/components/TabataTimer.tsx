@@ -143,7 +143,7 @@ const TabataTimer = () => {
 
           {/* Main Timer Display */}
           <Card className="p-16 md:p-20 text-center space-y-12 backdrop-blur-md border border-border/20 relative overflow-hidden">
-            <OvalsBackground />
+            <OvalsBackground isRunning={isRunning} timerState={timerState} />
             <div className="relative z-10">
               <div className="text-3xl font-light tracking-wider" style={{ color: getStateColor() }}>
                 {getStateText()}
