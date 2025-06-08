@@ -34,15 +34,28 @@ const TimerDisplay = ({
   onResetTimer
 }: TimerDisplayProps) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      const newFullscreenState = !!document.fullscreenElement;
+      
+      if (newFullscreenState !== isFullscreen) {
+        setIsTransitioning(true);
+        
+        // Start transition immediately
+        setIsFullscreen(newFullscreenState);
+        
+        // Reset transition state after animation completes
+        setTimeout(() => {
+          setIsTransitioning(false);
+        }, 500);
+      }
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
+  }, [isFullscreen]);
 
   const formatTimeDisplay = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -90,7 +103,6 @@ const TimerDisplay = ({
     }
   };
 
-  // Get the display time - for idle state, show work time instead of current time
   const getDisplayTime = () => {
     if (timerState === 'idle') {
       return workTime;
@@ -107,8 +119,12 @@ const TimerDisplay = ({
 
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 bg-white flex flex-col p-8 pb-8 animate-fade-in overflow-hidden z-50 transition-all duration-500 ease-in-out">
-        <div className="absolute top-8 right-8 text-right z-10 transition-all duration-300">
+      <div className={`fixed inset-0 bg-white flex flex-col p-8 pb-8 overflow-hidden z-50 transition-all duration-500 ease-in-out ${
+        isTransitioning ? 'animate-fade-in' : ''
+      }`}>
+        <div className={`absolute top-8 right-8 text-right z-10 transition-all duration-500 ease-in-out ${
+          isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+        }`}>
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Remaining time
           </div>
@@ -117,7 +133,9 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className="mr-32 md:mr-48 flex-shrink-0 transition-all duration-300">
+        <div className={`mr-32 md:mr-48 flex-shrink-0 transition-all duration-500 ease-in-out ${
+          isTransitioning ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'
+        }`}>
           <ProgressBars 
             currentSet={currentSet}
             currentRound={currentRound}
@@ -126,10 +144,12 @@ const TimerDisplay = ({
           />
         </div>
 
-        <div className="flex-1 flex items-center justify-center min-h-0 -mt-20 transition-all duration-300">
+        <div className={`flex-1 flex items-center justify-center min-h-0 -mt-20 transition-all duration-500 ease-in-out ${
+          isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+        }`}>
           <div className="text-center">
             <Badge 
-              className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-[4px]`}
+              className={`${stateInfo.color} text-black mb-6 px-4 py-2 text-lg font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
               style={{ fontWeight: '400' }}
               key={`${timerState}-${isRunning}`}
             >
@@ -137,7 +157,7 @@ const TimerDisplay = ({
               {stateInfo.text}
             </Badge>
             <div 
-              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-roboto-mono leading-none animate-fade-in"
+              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-roboto-mono leading-none"
               style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
               key={`time-${timerState}-transition`}
             >
@@ -146,7 +166,9 @@ const TimerDisplay = ({
           </div>
         </div>
 
-        <div className="flex justify-between items-end flex-shrink-0 transition-all duration-300">
+        <div className={`flex justify-between items-end flex-shrink-0 transition-all duration-500 ease-in-out ${
+          isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+        }`}>
           <div>
             <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
               Cycles
@@ -194,8 +216,12 @@ const TimerDisplay = ({
   }
 
   return (
-    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative animate-fade-in min-h-0 overflow-y-auto transition-all duration-500 ease-in-out">
-      <div className="absolute top-4 right-4 md:top-8 md:right-8 text-right z-10 transition-all duration-300">
+    <div className={`lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative min-h-0 overflow-y-auto transition-all duration-500 ease-in-out ${
+      isTransitioning ? 'animate-fade-in' : ''
+    }`}>
+      <div className={`absolute top-4 right-4 md:top-8 md:right-8 text-right z-10 transition-all duration-500 ease-in-out ${
+        isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+      }`}>
         <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining time
         </div>
@@ -204,7 +230,9 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0 transition-all duration-300">
+      <div className={`mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0 transition-all duration-500 ease-in-out ${
+        isTransitioning ? 'opacity-0 -translate-y-4' : 'opacity-100 translate-y-0'
+      }`}>
         <ProgressBars 
           currentSet={currentSet}
           currentRound={currentRound}
@@ -213,10 +241,12 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-16 transition-all duration-300">
+      <div className={`flex-1 flex items-center justify-center min-h-0 py-4 -mt-16 transition-all duration-500 ease-in-out ${
+        isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+      }`}>
         <div className="text-center">
           <Badge 
-            className={`${stateInfo.color} text-black mb-4 px-3 py-1 text-sm font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-[4px]`}
+            className={`${stateInfo.color} text-black mb-4 px-3 py-1 text-sm font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
             style={{ fontWeight: '400' }}
             key={`${timerState}-${isRunning}`}
           >
@@ -224,7 +254,7 @@ const TimerDisplay = ({
             {stateInfo.text}
           </Badge>
           <div 
-            className="text-[6rem] md:text-[10rem] lg:text-[14rem] font-roboto-mono leading-none animate-fade-in"
+            className="text-[6rem] md:text-[10rem] lg:text-[14rem] font-roboto-mono leading-none"
             style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
             key={`time-${timerState}-transition`}
           >
@@ -233,7 +263,9 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <div className="flex justify-between items-end flex-shrink-0 pt-4 transition-all duration-300">
+      <div className={`flex justify-between items-end flex-shrink-0 pt-4 transition-all duration-500 ease-in-out ${
+        isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+      }`}>
         <div>
           <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Cycles
