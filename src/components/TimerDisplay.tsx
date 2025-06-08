@@ -1,8 +1,8 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, RefreshCcw, Maximize } from 'lucide-react';
+import { Play, Pause, RefreshCcw, Maximize, Minimize } from 'lucide-react';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -31,6 +31,17 @@ const TimerDisplay = ({
   onToggleTimer,
   onResetTimer
 }: TimerDisplayProps) => {
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
   const formatTimeDisplay = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -91,20 +102,108 @@ const TimerDisplay = ({
     }
   };
 
+  if (isFullscreen) {
+    return (
+      <div className="h-screen w-screen bg-white flex flex-col p-8 animate-fade-in">
+        {/* Remaining time in top right */}
+        <div className="absolute top-8 right-8 text-right z-10">
+          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+            Remaining time
+          </div>
+          <div className="text-2xl md:text-4xl font-light font-roboto-mono">
+            {formatTime(remainingTime)}
+          </div>
+        </div>
+
+        {/* Progress bars */}
+        <div className="mr-32 md:mr-48">
+          <ProgressBars 
+            currentSet={currentSet}
+            currentRound={currentRound}
+            totalSets={totalSets}
+            totalRounds={totalRounds}
+          />
+        </div>
+
+        {/* Main timer display */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <div 
+              className={`text-xl md:text-2xl font-normal mb-6 transition-all duration-300 ${getStateColor()}`}
+              key={`${timerState}-${isRunning}`}
+            >
+              {getStateText()}
+            </div>
+            <div 
+              className="text-[8rem] md:text-[16rem] lg:text-[20rem] font-extralight tracking-tighter font-roboto-mono leading-none animate-fade-in"
+              key={`time-${timerState}-transition`}
+            >
+              {timerState === 'countdown' ? currentTime : formatTimeDisplay(currentTime)}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom controls */}
+        <div className="flex justify-between items-end">
+          <div>
+            <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+              Cycles
+            </div>
+            <div 
+              className="text-2xl md:text-4xl font-light font-roboto-mono transition-all duration-300"
+              key={`cycles-${getCurrentCycleNumber()}`}
+            >
+              {getCurrentCycleNumber()}/{getTotalCycles()}
+            </div>
+          </div>
+
+          <div className="flex gap-4 items-center">
+            <Button 
+              onClick={toggleFullscreen} 
+              size="lg" 
+              variant="outline" 
+              className="w-12 h-12 md:w-16 md:h-16 rounded-md p-0 active:scale-95 transition-transform duration-100"
+            >
+              <Minimize className="w-6 h-6 md:w-8 md:h-8" />
+            </Button>
+            
+            <Button 
+              onClick={onResetTimer} 
+              size="lg" 
+              variant="outline" 
+              className="w-12 h-12 md:w-16 md:h-16 rounded-md p-0 active:scale-95 transition-transform duration-100"
+            >
+              <RefreshCcw className="w-6 h-6 md:w-8 md:h-8" />
+            </Button>
+            
+            <Button 
+              onClick={onToggleTimer} 
+              size="lg" 
+              className="w-12 h-12 md:w-16 md:h-16 rounded-md p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-transform duration-100"
+              disabled={timerState === 'finished'}
+            >
+              {isRunning ? <Pause className="w-6 h-6 md:w-8 md:h-8 fill-current" /> : <Play className="w-6 h-6 md:w-8 md:h-8 fill-current" />}
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="lg:col-span-2 p-8 flex flex-col bg-white relative">
+    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative animate-fade-in">
       {/* Remaining time in top right with proper spacing */}
-      <div className="absolute top-8 right-8 text-right z-10">
-        <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+      <div className="absolute top-4 right-4 md:top-8 md:right-8 text-right z-10">
+        <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining time
         </div>
-        <div className="text-4xl font-light font-roboto-mono">
+        <div className="text-2xl md:text-4xl font-light font-roboto-mono">
           {formatTime(remainingTime)}
         </div>
       </div>
 
       {/* Progress bars with proper margin to avoid overlap */}
-      <div className="mr-48">
+      <div className="mr-24 md:mr-48 mb-4">
         <ProgressBars 
           currentSet={currentSet}
           currentRound={currentRound}
@@ -113,16 +212,16 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className="flex-1 flex items-center justify-center -mt-10">
+      <div className="flex-1 flex items-center justify-center -mt-4 md:-mt-10">
         <div className="text-left">
           <div 
-            className={`text-lg font-normal mb-4 transition-all duration-300 ${getStateColor()}`}
+            className={`text-base md:text-lg font-normal mb-4 transition-all duration-300 ${getStateColor()}`}
             key={`${timerState}-${isRunning}`}
           >
             {getStateText()}
           </div>
           <div 
-            className="text-[14rem] font-extralight tracking-tighter font-roboto-mono leading-none animate-fade-in"
+            className="text-[8rem] md:text-[14rem] font-extralight tracking-tighter font-roboto-mono leading-none animate-fade-in"
             key={`time-${timerState}-transition`}
           >
             {timerState === 'countdown' ? currentTime : formatTimeDisplay(currentTime)}
@@ -132,43 +231,43 @@ const TimerDisplay = ({
 
       <div className="flex justify-between items-end">
         <div>
-          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+          <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Cycles
           </div>
           <div 
-            className="text-4xl font-light font-roboto-mono transition-all duration-300"
+            className="text-2xl md:text-4xl font-light font-roboto-mono transition-all duration-300"
             key={`cycles-${getCurrentCycleNumber()}`}
           >
             {getCurrentCycleNumber()}/{getTotalCycles()}
           </div>
         </div>
 
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-2 md:gap-4 items-center">
           <Button 
             onClick={toggleFullscreen} 
             size="lg" 
             variant="outline" 
-            className="w-16 h-16 rounded-md p-0 active:scale-95 transition-transform duration-100"
+            className="w-12 h-12 md:w-16 md:h-16 rounded-md p-0 active:scale-95 transition-transform duration-100"
           >
-            <Maximize className="w-8 h-8" />
+            <Maximize className="w-6 h-6 md:w-8 md:h-8" />
           </Button>
           
           <Button 
             onClick={onResetTimer} 
             size="lg" 
             variant="outline" 
-            className="w-16 h-16 rounded-md p-0 active:scale-95 transition-transform duration-100"
+            className="w-12 h-12 md:w-16 md:h-16 rounded-md p-0 active:scale-95 transition-transform duration-100"
           >
-            <RefreshCcw className="w-8 h-8" />
+            <RefreshCcw className="w-6 h-6 md:w-8 md:h-8" />
           </Button>
           
           <Button 
             onClick={onToggleTimer} 
             size="lg" 
-            className="w-16 h-16 rounded-md p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-transform duration-100"
+            className="w-12 h-12 md:w-16 md:h-16 rounded-md p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-transform duration-100"
             disabled={timerState === 'finished'}
           >
-            {isRunning ? <Pause className="w-8 h-8 fill-current" /> : <Play className="w-8 h-8 fill-current" />}
+            {isRunning ? <Pause className="w-6 h-6 md:w-8 md:h-8 fill-current" /> : <Play className="w-6 h-6 md:w-8 md:h-8 fill-current" />}
           </Button>
         </div>
       </div>

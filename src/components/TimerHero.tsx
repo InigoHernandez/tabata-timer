@@ -1,18 +1,23 @@
+
 import React from 'react';
+
 const TimerHero = () => {
-  return <div className="text-left mb-12">
-      <div className="text-[#FF6B35] text-xs font-medium tracking-wider mb-4">
-        TABAT.APP — HIGH INTENSITY TRAINING
+  return (
+    <div className="flex justify-between items-start mb-6 md:mb-12 animate-fade-in">
+      <div className="text-left">
+        <div className="text-[#FF6B35] text-xs font-medium tracking-wider mb-4">
+          TABAT.APP — HIGH INTENSITY TRAINING
+        </div>
       </div>
-      <h1 className="text-4xl md:text-7xl font-light text-black mb-6 leading-tight">
-        <p className="font-light text-2xl">
-          Maximum results in minimum time.
+      <div className="text-right max-w-md">
+        <p className="font-light text-lg md:text-2xl leading-relaxed">
+          Effective intervals for busy lives.
           <br />
-          <span style={{
-          color: '#0000004d'
-        }}>Train smarter with scientific intervals.</span>
+          <span style={{ color: '#0000004d' }}>Train smart, see results fast.</span>
         </p>
-      </h1>
-    </div>;
+      </div>
+    </div>
+  );
 };
+
 export default TimerHero;
