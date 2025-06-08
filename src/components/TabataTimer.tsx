@@ -84,31 +84,47 @@ const TabataTimer = () => {
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings]);
 
   const getRemainingTime = () => {
-    // Calculate total workout time: each set has (rounds * workTime) + ((rounds - 1) * restTime)
-    // Plus rest between sets for all sets except the last one
+    // Calculate total workout time excluding countdown
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     const totalWorkoutTime = settings.sets * timePerSet + (settings.sets - 1) * settings.restBetweenSets;
     
-    // When idle or in countdown, always show the total workout time
+    // When idle or countdown, show total workout time (excluding countdown)
     if (timerState === 'idle' || timerState === 'countdown') {
       return totalWorkoutTime;
     }
 
+    // When finished, return 0
+    if (timerState === 'finished') {
+      return 0;
+    }
+
     let remaining = currentTime;
     
-    // Add remaining rounds in current set
-    if (timerState === 'work' && currentRound < settings.rounds) {
+    // Add remaining time in current set
+    if (timerState === 'work') {
+      // Add remaining rest periods and work periods in current set
       const remainingRoundsInSet = settings.rounds - currentRound;
       remaining += remainingRoundsInSet * (settings.workTime + settings.restTime);
-    } else if (timerState === 'rest' && currentRound < settings.rounds) {
-      const remainingRoundsInSet = settings.rounds - currentRound - 1;
-      remaining += remainingRoundsInSet * (settings.workTime + settings.restTime) + settings.workTime;
+    } else if (timerState === 'rest') {
+      // Add remaining work periods and rest periods in current set
+      const remainingRoundsInSet = settings.rounds - currentRound;
+      remaining += remainingRoundsInSet * (settings.workTime + settings.restTime);
+    } else if (timerState === 'setRest') {
+      // Add time for remaining rounds in next set
+      remaining += settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     }
     
-    // Add remaining sets
+    // Add remaining complete sets
     if (currentSet < settings.sets) {
       const remainingSets = settings.sets - currentSet;
-      remaining += remainingSets * (settings.rounds * (settings.workTime + settings.restTime) + settings.restBetweenSets);
+      remaining += remainingSets * timePerSet;
+      
+      // Add rest periods between remaining sets
+      if (timerState !== 'setRest') {
+        remaining += remainingSets * settings.restBetweenSets;
+      } else {
+        remaining += (remainingSets - 1) * settings.restBetweenSets;
+      }
     }
     
     return remaining;
