@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -187,7 +186,9 @@ const TabataTimer = () => {
               <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out">
                 <TimerSettingsPanel 
                   settings={settings} 
-                  onSettingsChange={setSettings} 
+                  onSettingsChange={setSettings}
+                  isRunning={isRunning}
+                  timerState={timerState}
                 />
               </div>
             )}
