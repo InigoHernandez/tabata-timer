@@ -11,7 +11,7 @@ const TimerHero = () => {
         <p>
           Maximum results in minimum time.
           <br />
-          Train smarter with scientific intervals.
+          <span style={{ color: '#0000004d' }}>Train smarter with scientific intervals.</span>
         </p>
       </h1>
     </div>
