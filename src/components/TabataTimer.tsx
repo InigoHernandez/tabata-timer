@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -84,15 +83,12 @@ const TabataTimer = () => {
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings]);
 
   const getRemainingTime = () => {
-    // Calculate total remaining time based on current state
-    if (timerState === 'idle') {
-      // When idle, show the total workout time (excluding countdown)
-      return settings.sets * settings.rounds * (settings.workTime + settings.restTime) + (settings.sets - 1) * settings.restBetweenSets;
-    }
+    // Always calculate the total workout time consistently (excluding countdown)
+    const totalWorkoutTime = settings.sets * settings.rounds * (settings.workTime + settings.restTime) + (settings.sets - 1) * settings.restBetweenSets;
     
-    // Don't include countdown time in remaining time calculation
-    if (timerState === 'countdown') {
-      return settings.sets * settings.rounds * (settings.workTime + settings.restTime) + (settings.sets - 1) * settings.restBetweenSets;
+    // When idle or in countdown, show the total workout time
+    if (timerState === 'idle' || timerState === 'countdown') {
+      return totalWorkoutTime;
     }
 
     let remaining = currentTime;
