@@ -21,7 +21,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
         setBars.push(
           <div
             key={`${set}-${round}`}
-            className={`h-4 w-[2px] ${
+            className={`h-6 w-[2px] ${
               isActive ? 'bg-foreground' : 
               isCompleted ? 'bg-muted-foreground' : 
               'bg-border'
@@ -38,7 +38,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
       
       if (set < totalSets) {
         bars.push(
-          <div key={`rest-${set}`} className="flex items-center justify-center w-2 h-4 flex-shrink-0">
+          <div key={`rest-${set}`} className="flex items-center justify-center w-2 h-6 flex-shrink-0">
             <span className="text-xs font-medium">R</span>
           </div>
         );
