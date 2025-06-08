@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Play, Pause, RefreshCcw, Maximize, Minimize, Hourglass, Dumbbell, Coffee } from 'lucide-react';
+import { Play, Pause, RefreshCcw, Maximize, Minimize, Hourglass, Dumbbell } from 'lucide-react';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -63,20 +63,29 @@ const TimerDisplay = ({
     }
     
     switch (timerState) {
+      case 'idle':
+        return { text: 'READY', color: 'bg-gray-400', icon: Hourglass };
       case 'countdown':
-        return { text: 'GET READY', color: 'bg-orange-500', icon: Hourglass };
+        return { text: 'GET READY', color: 'bg-orange-500', icon: Bolt };
       case 'work':
         return { text: 'WORK', color: 'bg-green-500', icon: Dumbbell };
       case 'rest':
-        return { text: 'REST', color: 'bg-blue-500', icon: Coffee };
+        return { text: 'REST', color: 'bg-blue-500', icon: Pause };
       case 'setRest':
-        return { text: 'SET REST', color: 'bg-blue-600', icon: Coffee };
+        return { text: 'SET REST', color: 'bg-blue-600', icon: Pause };
       case 'finished':
-        return { text: 'FINISHED', color: 'bg-purple-500', icon: Hourglass };
+        return { text: 'FINISHED', color: 'bg-purple-500', icon: Bolt };
       default:
         return { text: 'READY', color: 'bg-gray-400', icon: Hourglass };
     }
   };
+
+  // Import Bolt icon for countdown and finished states
+  const Bolt = ({ className }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M11.5 2L4.5 11h5v9l7-9h-5V2z"/>
+    </svg>
+  );
 
   const getCurrentCycleNumber = () => (currentSet - 1) * totalRounds + currentRound;
   const getTotalCycles = () => totalRounds * totalSets;
@@ -121,13 +130,13 @@ const TimerDisplay = ({
           />
         </div>
 
-        <div className="flex-1 flex items-center justify-center min-h-0 -mt-16">
+        <div className="flex-1 flex items-center justify-center min-h-0 -mt-8">
           <div className="text-center">
             <Badge 
-              className={`${stateInfo.color} text-white mb-6 px-4 py-2 text-lg font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-md`}
+              className={`${stateInfo.color} text-white mb-6 px-4 py-2 text-lg font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-lg`}
               key={`${timerState}-${isRunning}`}
             >
-              <StateIcon className="w-3 h-3" />
+              <StateIcon className="w-3 h-3 fill-current" />
               {stateInfo.text}
             </Badge>
             <div 
@@ -205,13 +214,13 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-8">
+      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-4">
         <div className="text-center">
           <Badge 
-            className={`${stateInfo.color} text-white mb-4 px-3 py-1 text-sm font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-md`}
+            className={`${stateInfo.color} text-white mb-4 px-3 py-1 text-sm font-medium flex items-center gap-2 mx-auto w-fit transition-all duration-300 rounded-lg`}
             key={`${timerState}-${isRunning}`}
           >
-            <StateIcon className="w-3 h-3" />
+            <StateIcon className="w-3 h-3 fill-current" />
             {stateInfo.text}
           </Badge>
           <div 
