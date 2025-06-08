@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -132,9 +133,9 @@ const TabataTimer = () => {
             <p className="tracking-wider uppercase text-xs font-medium" style={{ color: '#FE6417' }}>TABAT.APP — HIGH INTENSITY TRAINING</p>
             <div className="w-8/12">
               <h1 className="text-2xl md:text-3xl leading-tight text-foreground font-normal">
-                Tabata timer for focused workouts.
+                Maximum results in minimum time.
                 <br />
-                <span style={{ color: '#0000004d' }}>Train efficiently with precise intervals.</span>
+                <span style={{ color: '#0000004d' }}>Train smarter with scientific intervals.</span>
               </h1>
             </div>
           </div>
