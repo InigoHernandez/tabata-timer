@@ -11,8 +11,6 @@ interface ProgressBarsProps {
 const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: ProgressBarsProps) => {
   const renderProgressBars = () => {
     const bars = [];
-    const totalElements = totalSets * totalRounds + (totalSets - 1); // rounds + rest indicators
-    const maxBarWidth = Math.max(2, Math.floor((100 - (totalSets - 1) * 2) / totalElements)); // Responsive width with minimum
     
     for (let set = 1; set <= totalSets; set++) {
       const setBars = [];
@@ -23,12 +21,11 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
         setBars.push(
           <div
             key={`${set}-${round}`}
-            className={`h-8 ${
+            className={`h-8 w-[3px] ${
               isActive ? 'bg-foreground' : 
               isCompleted ? 'bg-muted-foreground' : 
               'bg-border'
             }`}
-            style={{ width: `${maxBarWidth}px`, minWidth: '2px' }}
           />
         );
       }
@@ -41,8 +38,8 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
       
       if (set < totalSets) {
         bars.push(
-          <div key={`rest-${set}`} className="flex items-center justify-center w-4 h-8 flex-shrink-0">
-            <span className="text-sm font-medium">R</span>
+          <div key={`rest-${set}`} className="flex items-center justify-center w-2 h-8 flex-shrink-0">
+            <span className="text-xs font-medium">R</span>
           </div>
         );
       }
@@ -53,7 +50,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
 
   return (
     <div className="mb-8">
-      <div className="flex gap-4 items-center justify-start overflow-x-auto">
+      <div className="flex gap-2 items-center justify-start overflow-x-auto">
         {renderProgressBars()}
       </div>
     </div>
