@@ -52,7 +52,7 @@ const TimerDisplay = ({
   const getTotalCycles = () => totalRounds * totalSets;
 
   return (
-    <div className="lg:col-span-2 p-8 flex flex-col justify-center">
+    <div className="lg:col-span-2 p-8 flex flex-col">
       <ProgressBars 
         currentSet={currentSet}
         currentRound={currentRound}
@@ -60,7 +60,7 @@ const TimerDisplay = ({
         totalRounds={totalRounds}
       />
 
-      <div className="space-y-6">
+      <div className="space-y-6 flex-1 flex flex-col justify-center">
         <div className="text-left">
           <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
             {getStateText()}

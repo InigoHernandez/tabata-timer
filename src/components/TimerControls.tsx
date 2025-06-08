@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Square } from 'lucide-react';
@@ -41,9 +42,9 @@ const TimerControls = ({
           onClick={onResetTimer} 
           size="lg" 
           variant="outline" 
-          className="w-12 h-12 rounded-full p-0"
+          className="w-16 h-16 rounded-full p-0"
         >
-          <Square className="w-5 h-5" />
+          <Square className="w-8 h-8" />
         </Button>
         
         <Button 
