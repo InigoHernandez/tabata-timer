@@ -26,7 +26,7 @@ const TimerControls = ({
         <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining
         </div>
-        <div className="text-2xl font-light font-roboto-mono">
+        <div className="text-4xl font-light font-roboto-mono">
           {formatTime(remainingTime)}
         </div>
       </div>
