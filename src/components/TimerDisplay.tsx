@@ -92,7 +92,7 @@ const TimerDisplay = ({
             onClick={onResetTimer} 
             size="lg" 
             variant="outline" 
-            className="w-16 h-16 rounded-full p-0"
+            className="w-16 h-16 rounded-md p-0"
           >
             <RefreshCcw className="w-8 h-8" />
           </Button>

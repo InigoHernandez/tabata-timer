@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -103,10 +102,6 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
           className="w-full"
         />
       </div>
-
-      <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
-        SAVE
-      </Button>
     </div>
   );
 };
