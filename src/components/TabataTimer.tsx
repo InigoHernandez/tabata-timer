@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -99,11 +100,11 @@ const TabataTimer = () => {
 
   const getStateText = () => {
     switch (timerState) {
-      case 'work': return 'WORK';
-      case 'rest': return 'REST';
-      case 'setRest': return 'SET REST';
-      case 'finished': return 'FINISHED';
-      default: return 'READY';
+      case 'work': return 'work';
+      case 'rest': return 'rest';
+      case 'setRest': return 'set rest';
+      case 'finished': return 'finished';
+      default: return 'ready';
     }
   };
 
@@ -113,8 +114,8 @@ const TabataTimer = () => {
         <div className="w-full max-w-4xl space-y-12">
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-6xl md:text-8xl font-light tracking-wide text-foreground">TABATA</h1>
-            <p className="text-muted-foreground text-xl font-light">High-intensity interval training</p>
+            <h1 className="text-6xl md:text-8xl font-light tracking-wide text-foreground">tabat.app</h1>
+            <p className="text-muted-foreground text-xl font-light">high-intensity interval training</p>
           </div>
 
           {/* Main Timer Display */}
@@ -130,15 +131,15 @@ const TabataTimer = () => {
             <div className="grid grid-cols-3 gap-8 text-center">
               <div className="space-y-2">
                 <div className="text-4xl font-light text-foreground">{currentRound}</div>
-                <div className="text-lg font-light text-muted-foreground tracking-wide">ROUND</div>
+                <div className="text-lg font-light text-muted-foreground tracking-wide">round</div>
               </div>
               <div className="space-y-2">
                 <div className="text-4xl font-light text-foreground">{currentSet}</div>
-                <div className="text-lg font-light text-muted-foreground tracking-wide">SET</div>
+                <div className="text-lg font-light text-muted-foreground tracking-wide">set</div>
               </div>
               <div className="space-y-2">
                 <div className="text-4xl font-light text-foreground">{settings.rounds * settings.sets}</div>
-                <div className="text-lg font-light text-muted-foreground tracking-wide">TOTAL</div>
+                <div className="text-lg font-light text-muted-foreground tracking-wide">total</div>
               </div>
             </div>
           </Card>
@@ -146,11 +147,11 @@ const TabataTimer = () => {
           {/* Settings Panel */}
           {showSettings && (
             <Card className="p-8 space-y-8 bg-card/30 backdrop-blur-sm border-border/30">
-              <h3 className="text-2xl font-light tracking-wide">Timer Settings</h3>
+              <h3 className="text-2xl font-light tracking-wide">timer settings</h3>
               
               <div className="grid gap-8">
                 <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">Work Time: {settings.workTime}s</label>
+                  <label className="text-lg font-light tracking-wide">work time: {settings.workTime}s</label>
                   <Slider
                     value={[settings.workTime]}
                     onValueChange={(value) => setSettings(prev => ({ ...prev, workTime: value[0] }))}
@@ -162,7 +163,7 @@ const TabataTimer = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">Rest Time: {settings.restTime}s</label>
+                  <label className="text-lg font-light tracking-wide">rest time: {settings.restTime}s</label>
                   <Slider
                     value={[settings.restTime]}
                     onValueChange={(value) => setSettings(prev => ({ ...prev, restTime: value[0] }))}
@@ -174,7 +175,7 @@ const TabataTimer = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">Rounds: {settings.rounds}</label>
+                  <label className="text-lg font-light tracking-wide">rounds: {settings.rounds}</label>
                   <Slider
                     value={[settings.rounds]}
                     onValueChange={(value) => setSettings(prev => ({ ...prev, rounds: value[0] }))}
@@ -186,7 +187,7 @@ const TabataTimer = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">Sets: {settings.sets}</label>
+                  <label className="text-lg font-light tracking-wide">sets: {settings.sets}</label>
                   <Slider
                     value={[settings.sets]}
                     onValueChange={(value) => setSettings(prev => ({ ...prev, sets: value[0] }))}
@@ -198,7 +199,7 @@ const TabataTimer = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">Rest Between Sets: {settings.restBetweenSets}s</label>
+                  <label className="text-lg font-light tracking-wide">rest between sets: {settings.restBetweenSets}s</label>
                   <Slider
                     value={[settings.restBetweenSets]}
                     onValueChange={(value) => setSettings(prev => ({ ...prev, restBetweenSets: value[0] }))}
@@ -211,7 +212,7 @@ const TabataTimer = () => {
               </div>
 
               <Button onClick={resetTimer} className="w-full font-light text-lg">
-                Apply Settings
+                apply settings
               </Button>
             </Card>
           )}
