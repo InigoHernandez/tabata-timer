@@ -43,23 +43,21 @@ const TimerMainDisplay = ({
   );
 
   return (
-    <div className={`${isFullscreen ? 'text-center' : 'flex-1 flex items-center justify-center min-h-0 py-4 -mt-16'} animate-fade-in`}>
-      <div className="text-center">
-        <Badge 
-          className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
-          style={{ fontWeight: '400' }}
-          key={`${timerState}-${isRunning}`}
-        >
-          <SolidDot />
-          {stateInfo.text}
-        </Badge>
-        <div 
-          className={`${timeClasses} font-roboto-mono leading-none transition-all duration-500`}
-          style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
-          key={`time-${timerState}-transition`}
-        >
-          {formatTimeDisplay(getDisplayTime())}
-        </div>
+    <div className="text-center animate-fade-in">
+      <Badge 
+        className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
+        style={{ fontWeight: '400' }}
+        key={`${timerState}-${isRunning}`}
+      >
+        <SolidDot />
+        {stateInfo.text}
+      </Badge>
+      <div 
+        className={`${timeClasses} font-roboto-mono leading-none transition-all duration-500`}
+        style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
+        key={`time-${timerState}-transition`}
+      >
+        {formatTimeDisplay(getDisplayTime())}
       </div>
     </div>
   );
