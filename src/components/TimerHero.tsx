@@ -5,7 +5,7 @@ const TimerHero = () => {
         TABAT.APP — HIGH INTENSITY TRAINING
       </div>
       <h1 className="text-4xl md:text-7xl font-light text-black mb-6 leading-tight">
-        <p className="font-light text-4xl">
+        <p className="font-light text-2xl">
           Maximum results in minimum time.
           <br />
           <span style={{
