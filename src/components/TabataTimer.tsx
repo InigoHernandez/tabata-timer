@@ -109,11 +109,12 @@ const TabataTimer = () => {
         <div className="w-full max-w-6xl space-y-12">
           {/* Header */}
           <div className="text-left space-y-6">
-            <p className="tracking-wider uppercase text-xs text-orange-600 font-medium">HIGH-INTENSITY TRAINING</p>
-            <h1 className="text-4xl md:text-6xl leading-tight text-foreground font-normal lg:text-2xl">
-              The ultimate 
-              <span className="text-muted-foreground/60"> Tabata timer for focused workouts. Train efficiently with precise intervals. Build strength and endurance with customizable rounds and sets.</span>
-            </h1>
+            <p className="tracking-wider uppercase text-xs text-orange-600 font-medium">TABAT.APP — HIGH INTENSITY TRAINING</p>
+            <div className="w-8/12">
+              <h1 className="text-4xl md:text-6xl leading-tight text-foreground font-normal lg:text-2xl">
+                Tabata timer for focused workouts. Train efficiently with precise intervals.
+              </h1>
+            </div>
           </div>
 
           {/* Main Timer Display */}
