@@ -90,7 +90,7 @@ const TimerDisplay = ({
 
         <div className="flex justify-between items-end flex-shrink-0 animate-fade-in">
           <div>
-            <div className="text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
+            <div className="text-base md:text-4xl font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
               Cycles
             </div>
             <div 
@@ -147,7 +147,7 @@ const TimerDisplay = ({
 
       <div className="flex justify-between items-end flex-shrink-0 pt-4 animate-fade-in">
         <div>
-          <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
+          <div className="text-sm md:text-base lg:text-4xl font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
             Cycles
           </div>
           <div 
