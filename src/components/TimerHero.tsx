@@ -1,9 +1,6 @@
-
 import React from 'react';
-
 const TimerHero = () => {
-  return (
-    <div className="text-left mb-6">
+  return <div className="text-left mb-12">
       <div className="text-[#FF6B35] text-xs font-medium tracking-wider mb-4">
         TABAT.APP — HIGH INTENSITY TRAINING
       </div>
@@ -11,11 +8,11 @@ const TimerHero = () => {
         <p className="font-light text-2xl">
           Maximum results in minimum time.
           <br />
-          <span style={{color: '#0000004d'}}>Train smarter with scientific intervals.</span>
+          <span style={{
+          color: '#0000004d'
+        }}>Train smarter with scientific intervals.</span>
         </p>
       </h1>
-    </div>
-  );
+    </div>;
 };
-
 export default TimerHero;

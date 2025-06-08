@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -101,7 +102,7 @@ const TabataTimer = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F8F8] font-aspekta">
-      <div className="max-w-7xl mx-auto px-8 py-6">
+      <div className="max-w-7xl mx-auto px-8 py-12">
         <TimerHero />
 
         <Card className="overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none">
