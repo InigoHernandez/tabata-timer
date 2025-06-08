@@ -84,6 +84,11 @@ const TabataTimer = () => {
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings]);
 
   const getRemainingTime = () => {
+    // Don't include countdown time in remaining time calculation
+    if (timerState === 'countdown') {
+      return settings.sets * settings.rounds * (settings.workTime + settings.restTime) + (settings.sets - 1) * settings.restBetweenSets;
+    }
+
     let remaining = currentTime;
     
     // Add remaining rounds in current set
