@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
@@ -21,7 +20,7 @@ const TimerControls = ({
   };
 
   return (
-    <div className="space-y-6 pt-8 border-t border-[#E8E8E8]">
+    <div className="space-y-6 py-8 border-t border-[#E8E8E8]">
       <div className="text-center">
         <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
           Remaining
