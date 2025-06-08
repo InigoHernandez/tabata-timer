@@ -1,24 +1,30 @@
+
 import React from 'react';
+
 interface TimerHeroProps {
   hideInFullscreen?: boolean;
 }
+
 const TimerHero = ({
   hideInFullscreen = false
 }: TimerHeroProps) => {
   if (hideInFullscreen) return null;
-  return <div className="flex justify-between items-start mb-2 md:mb-4 animate-fade-in">
+  
+  return (
+    <div className="flex justify-between items-start mb-2 md:mb-4 animate-fade-in">
       <div className="text-left max-w-md">
         <p className="font-light text-lg leading-relaxed md:text-xl">
-          tabat.app
-          <br />
-          <span style={{
-          color: '#0000004d'
-        }}>high intensity training timer</span>
+          tabat.app{' '}
+          <span style={{ color: '#0000004d' }}>
+            high intensity training timer
+          </span>
         </p>
       </div>
       <div className="text-left">
         
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default TimerHero;
