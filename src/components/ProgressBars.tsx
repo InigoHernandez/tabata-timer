@@ -21,10 +21,10 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
         setBars.push(
           <div
             key={`${set}-${round}`}
-            className={`h-4 md:h-6 w-[2px] transition-all duration-300 ease-in-out transform ${
-              isActive ? 'bg-foreground scale-110' : 
-              isCompleted ? 'bg-muted-foreground scale-100' : 
-              'bg-border scale-100 opacity-50'
+            className={`h-4 md:h-6 w-[2px] transition-all duration-500 ease-in-out transform ${
+              isActive ? 'bg-foreground scale-110 opacity-100' : 
+              isCompleted ? 'bg-muted-foreground scale-100 opacity-100' : 
+              'bg-[#ABABAB] scale-100 opacity-100'
             }`}
             style={{
               transitionDelay: `${(set - 1) * totalRounds + (round - 1) * 50}ms`
@@ -34,14 +34,14 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
       }
       
       bars.push(
-        <div key={set} className="flex gap-1 transition-all duration-300 ease-in-out">
+        <div key={set} className="flex gap-1 transition-all duration-500 ease-in-out opacity-100 transform">
           {setBars}
         </div>
       );
       
       if (set < totalSets) {
         bars.push(
-          <div key={`rest-${set}`} className="flex items-center justify-center w-2 h-4 md:h-6 flex-shrink-0 transition-all duration-300 ease-in-out">
+          <div key={`rest-${set}`} className="flex items-center justify-center w-2 h-4 md:h-6 flex-shrink-0 transition-all duration-500 ease-in-out opacity-100">
             <span className="text-xs font-medium opacity-60">R</span>
           </div>
         );
@@ -52,8 +52,8 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
   };
 
   return (
-    <div className="mb-4 md:mb-8 h-12 md:h-14 flex items-start overflow-hidden">
-      <div className="flex gap-1 md:gap-2 items-start justify-start flex-wrap transition-all duration-300 ease-in-out">
+    <div className="mb-4 md:mb-8 h-16 md:h-18 flex items-start overflow-hidden">
+      <div className="flex gap-1 md:gap-2 items-start justify-start flex-wrap transition-all duration-500 ease-in-out max-h-16 md:max-h-18">
         {renderProgressBars()}
       </div>
     </div>
