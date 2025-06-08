@@ -125,7 +125,13 @@ const TabataTimer = () => {
     }
   };
 
-  return <div className="min-h-screen font-aspekta relative" style={{ backgroundColor: '#F5F5F5' }}>
+  const handleSettingsClose = () => {
+    setShowSettings(false);
+    resetTimer();
+  };
+
+  return (
+    <div className="min-h-screen font-aspekta relative" style={{ backgroundColor: '#F5F5F5' }}>
       <div className="flex flex-col items-center justify-center p-8 pb-32 relative z-10">
         <div className="w-full max-w-6xl space-y-16">
           {/* Header */}
@@ -141,85 +147,120 @@ const TabataTimer = () => {
           </div>
 
           {/* Main Timer Display */}
-          <Card className="p-16 md:p-20 text-center space-y-20 backdrop-blur-md border border-border/20 relative overflow-hidden">
-            <div className="relative z-10">
-              <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: getStateColor() }}>
-                {getStateText()}
-              </div>
-              
-              <div className="text-[12rem] md:text-[16rem] font-light tabular-nums leading-none">
-                {formatTime(currentTime)}
+          <Card className="p-16 md:p-20 text-center backdrop-blur-md border border-border/20 relative overflow-hidden">
+            {/* Settings Button */}
+            <Button 
+              onClick={() => setShowSettings(!showSettings)} 
+              size="lg" 
+              variant="outline" 
+              className="absolute top-8 right-8 w-12 h-12 rounded-full font-light"
+            >
+              <Settings className="w-5 h-5" />
+            </Button>
+
+            <div className="relative z-10 min-h-[400px] flex flex-col justify-center">
+              {/* Timer Content with Transition */}
+              <div className={`transition-all duration-500 ease-in-out ${showSettings ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
+                <div className="space-y-20">
+                  <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: getStateColor() }}>
+                    {getStateText()}
+                  </div>
+                  
+                  <div className="text-[12rem] md:text-[16rem] font-light tabular-nums leading-none">
+                    {formatTime(currentTime)}
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-12 text-center">
+                    <div className="space-y-1">
+                      <div className="text-2xl md:text-3xl font-normal text-foreground">{currentRound}</div>
+                      <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>round</div>
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-2xl md:text-3xl font-normal text-foreground">{currentSet}</div>
+                      <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>set</div>
+                    </div>
+                    <div className="space-y-1">
+                      <div className="text-2xl md:text-3xl font-normal text-foreground">{settings.rounds * settings.sets}</div>
+                      <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>total</div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-12 text-center">
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-normal text-foreground">{currentRound}</div>
-                  <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>round</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-normal text-foreground">{currentSet}</div>
-                  <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>set</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-2xl md:text-3xl font-normal text-foreground">{settings.rounds * settings.sets}</div>
-                  <div className="text-2xl md:text-3xl font-normal leading-tight tracking-wide" style={{ color: '#0000004d' }}>total</div>
+              {/* Settings Content with Transition */}
+              <div className={`absolute inset-0 transition-all duration-500 ease-in-out ${showSettings ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+                <div className="space-y-12 text-left p-4">
+                  <h3 className="text-2xl font-normal tracking-wide">timer settings</h3>
+                  
+                  <div className="grid gap-12">
+                    <div className="space-y-3">
+                      <label className="text-lg font-light tracking-wide">work time: {settings.workTime}s</label>
+                      <Slider 
+                        value={[settings.workTime]} 
+                        onValueChange={value => setSettings(prev => ({ ...prev, workTime: value[0] }))} 
+                        max={60} 
+                        min={5} 
+                        step={5} 
+                        className="w-full" 
+                      />
+                    </div>
+
+                    <div className="space-y-3">
+                      <label className="text-lg font-light tracking-wide">rest time: {settings.restTime}s</label>
+                      <Slider 
+                        value={[settings.restTime]} 
+                        onValueChange={value => setSettings(prev => ({ ...prev, restTime: value[0] }))} 
+                        max={60} 
+                        min={5} 
+                        step={5} 
+                        className="w-full" 
+                      />
+                    </div>
+
+                    <div className="space-y-3">
+                      <label className="text-lg font-light tracking-wide">rounds: {settings.rounds}</label>
+                      <Slider 
+                        value={[settings.rounds]} 
+                        onValueChange={value => setSettings(prev => ({ ...prev, rounds: value[0] }))} 
+                        max={12} 
+                        min={1} 
+                        step={1} 
+                        className="w-full" 
+                      />
+                    </div>
+
+                    <div className="space-y-3">
+                      <label className="text-lg font-light tracking-wide">sets: {settings.sets}</label>
+                      <Slider 
+                        value={[settings.sets]} 
+                        onValueChange={value => setSettings(prev => ({ ...prev, sets: value[0] }))} 
+                        max={5} 
+                        min={1} 
+                        step={1} 
+                        className="w-full" 
+                      />
+                    </div>
+
+                    <div className="space-y-3">
+                      <label className="text-lg font-light tracking-wide">rest between sets: {settings.restBetweenSets}s</label>
+                      <Slider 
+                        value={[settings.restBetweenSets]} 
+                        onValueChange={value => setSettings(prev => ({ ...prev, restBetweenSets: value[0] }))} 
+                        max={180} 
+                        min={30} 
+                        step={10} 
+                        className="w-full" 
+                      />
+                    </div>
+                  </div>
+
+                  <Button onClick={handleSettingsClose} className="w-full font-light text-lg">
+                    apply settings
+                  </Button>
                 </div>
               </div>
             </div>
           </Card>
-
-          {/* Settings Panel */}
-          {showSettings && <Card className="p-12 space-y-12 backdrop-blur-md border border-border/20">
-              <h3 className="text-2xl font-normal tracking-wide">timer settings</h3>
-              
-              <div className="grid gap-12">
-                <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">work time: {settings.workTime}s</label>
-                  <Slider value={[settings.workTime]} onValueChange={value => setSettings(prev => ({
-                ...prev,
-                workTime: value[0]
-              }))} max={60} min={5} step={5} className="w-full" />
-                </div>
-
-                <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">rest time: {settings.restTime}s</label>
-                  <Slider value={[settings.restTime]} onValueChange={value => setSettings(prev => ({
-                ...prev,
-                restTime: value[0]
-              }))} max={60} min={5} step={5} className="w-full" />
-                </div>
-
-                <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">rounds: {settings.rounds}</label>
-                  <Slider value={[settings.rounds]} onValueChange={value => setSettings(prev => ({
-                ...prev,
-                rounds: value[0]
-              }))} max={12} min={1} step={1} className="w-full" />
-                </div>
-
-                <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">sets: {settings.sets}</label>
-                  <Slider value={[settings.sets]} onValueChange={value => setSettings(prev => ({
-                ...prev,
-                sets: value[0]
-              }))} max={5} min={1} step={1} className="w-full" />
-                </div>
-
-                <div className="space-y-3">
-                  <label className="text-lg font-light tracking-wide">rest between sets: {settings.restBetweenSets}s</label>
-                  <Slider value={[settings.restBetweenSets]} onValueChange={value => setSettings(prev => ({
-                ...prev,
-                restBetweenSets: value[0]
-              }))} max={180} min={30} step={10} className="w-full" />
-                </div>
-              </div>
-
-              <Button onClick={resetTimer} className="w-full font-light text-lg">
-                apply settings
-              </Button>
-            </Card>}
-
-          
         </div>
       </div>
 
@@ -233,13 +274,10 @@ const TabataTimer = () => {
           <Button onClick={resetTimer} size="lg" variant="outline" className="w-16 h-16 rounded-full font-light">
             <RotateCcw className="w-6 h-6" />
           </Button>
-
-          <Button onClick={() => setShowSettings(!showSettings)} size="lg" variant="outline" className="w-16 h-16 rounded-full font-light">
-            <Settings className="w-6 h-6" />
-          </Button>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default TabataTimer;
