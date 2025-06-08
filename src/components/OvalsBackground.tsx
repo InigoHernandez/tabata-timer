@@ -86,7 +86,7 @@ const OvalsBackground: React.FC<OvalsBackgroundProps> = ({ isRunning = false, ti
         }}
       />
 
-      <style jsx>{`
+      <style>{`
         @keyframes flow1 {
           0%, 100% {
             transform: rotate(-15deg) scale(1) translateX(0) translateY(0);
