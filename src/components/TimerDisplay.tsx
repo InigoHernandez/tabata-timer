@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
@@ -79,6 +80,29 @@ const TimerDisplay = ({
     }
   };
 
+  const getBackgroundColor = () => {
+    if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
+      return 'rgba(255, 235, 71, 0.3)'; // PAUSED - yellow with 30% opacity
+    }
+    
+    switch (timerState) {
+      case 'idle':
+        return 'white'; // READY - keep white background
+      case 'countdown':
+        return 'rgba(255, 139, 71, 0.3)'; // GET READY - orange with 30% opacity
+      case 'work':
+        return 'rgba(91, 255, 114, 0.3)'; // WORK - green with 30% opacity
+      case 'rest':
+        return 'rgba(91, 168, 255, 0.3)'; // REST - blue with 30% opacity
+      case 'setRest':
+        return 'rgba(91, 237, 219, 0.3)'; // SET REST - cyan with 30% opacity
+      case 'finished':
+        return 'rgba(255, 139, 71, 0.3)'; // FINISHED - orange with 30% opacity
+      default:
+        return 'white';
+    }
+  };
+
   const getCurrentCycleNumber = () => (currentSet - 1) * totalRounds + currentRound;
   const getTotalCycles = () => totalRounds * totalSets;
 
@@ -106,7 +130,10 @@ const TimerDisplay = ({
 
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 bg-white flex flex-col p-8 pb-8 overflow-hidden z-50 animate-fade-in">
+      <div 
+        className="fixed inset-0 flex flex-col p-8 pb-8 overflow-hidden z-50 animate-fade-in transition-colors duration-500"
+        style={{ backgroundColor: getBackgroundColor() }}
+      >
         <div className="absolute top-8 right-8 text-right z-10 animate-fade-in">
           <div className="text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
             Remaining time
@@ -193,7 +220,10 @@ const TimerDisplay = ({
   }
 
   return (
-    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col bg-white relative min-h-0 overflow-y-auto animate-fade-in">
+    <div 
+      className="lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto animate-fade-in transition-colors duration-500"
+      style={{ backgroundColor: getBackgroundColor() }}
+    >
       <div className="absolute top-4 right-4 md:top-8 md:right-8 text-right z-10 animate-fade-in">
         <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
           Remaining time
