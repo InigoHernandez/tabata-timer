@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -126,7 +127,6 @@ const TabataTimer = () => {
   };
 
   return <div className="min-h-screen font-aspekta relative" style={{ backgroundColor: '#F5F5F5' }}>
-      <OvalsBackground />
       <div className="flex flex-col items-center justify-center p-8 pb-32 relative z-10">
         <div className="w-full max-w-6xl space-y-16">
           {/* Header */}
@@ -142,27 +142,30 @@ const TabataTimer = () => {
           </div>
 
           {/* Main Timer Display */}
-          <Card className="p-16 md:p-20 text-center space-y-12 backdrop-blur-md border border-border/20">
-            <div className="text-3xl font-light tracking-wider" style={{ color: getStateColor() }}>
-              {getStateText()}
-            </div>
-            
-            <div className="text-[12rem] md:text-[16rem] font-light tabular-nums leading-none">
-              {formatTime(currentTime)}
-            </div>
+          <Card className="p-16 md:p-20 text-center space-y-12 backdrop-blur-md border border-border/20 relative overflow-hidden">
+            <OvalsBackground />
+            <div className="relative z-10">
+              <div className="text-3xl font-light tracking-wider" style={{ color: getStateColor() }}>
+                {getStateText()}
+              </div>
+              
+              <div className="text-[12rem] md:text-[16rem] font-light tabular-nums leading-none">
+                {formatTime(currentTime)}
+              </div>
 
-            <div className="grid grid-cols-3 gap-12 text-center">
-              <div className="space-y-3">
-                <div className="text-4xl font-light text-foreground">{currentRound}</div>
-                <div className="text-lg font-light text-muted-foreground tracking-wide">round</div>
-              </div>
-              <div className="space-y-3">
-                <div className="text-4xl font-light text-foreground">{currentSet}</div>
-                <div className="text-lg font-light text-muted-foreground tracking-wide">set</div>
-              </div>
-              <div className="space-y-3">
-                <div className="text-4xl font-light text-foreground">{settings.rounds * settings.sets}</div>
-                <div className="text-lg font-light text-muted-foreground tracking-wide">total</div>
+              <div className="grid grid-cols-3 gap-12 text-center">
+                <div className="space-y-3">
+                  <div className="text-4xl font-light text-foreground">{currentRound}</div>
+                  <div className="text-lg font-light text-muted-foreground tracking-wide">round</div>
+                </div>
+                <div className="space-y-3">
+                  <div className="text-4xl font-light text-foreground">{currentSet}</div>
+                  <div className="text-lg font-light text-muted-foreground tracking-wide">set</div>
+                </div>
+                <div className="space-y-3">
+                  <div className="text-4xl font-light text-foreground">{settings.rounds * settings.sets}</div>
+                  <div className="text-lg font-light text-muted-foreground tracking-wide">total</div>
+                </div>
               </div>
             </div>
           </Card>
