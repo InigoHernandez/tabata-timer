@@ -105,7 +105,7 @@ const TabataTimer = () => {
       <div className="max-w-7xl mx-auto px-8 py-12">
         <TimerHero />
 
-        <Card className="overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl">
+        <Card className="overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none">
           <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[600px]">
             <TimerDisplay
               currentTime={currentTime}
