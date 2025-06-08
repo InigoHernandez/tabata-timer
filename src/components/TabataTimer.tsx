@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Play, Pause, RotateCcw, Settings } from 'lucide-react';
+import OvalsBackground from './OvalsBackground';
 
 interface TimerSettings {
   workTime: number;
@@ -124,7 +125,8 @@ const TabataTimer = () => {
     }
   };
 
-  return <div className="min-h-screen font-aspekta" style={{ backgroundColor: '#F5F5F5' }}>
+  return <div className="min-h-screen font-aspekta relative" style={{ backgroundColor: '#F5F5F5' }}>
+      <OvalsBackground />
       <div className="flex flex-col items-center justify-center p-8 pb-32">
         <div className="w-full max-w-6xl space-y-16">
           {/* Header */}
