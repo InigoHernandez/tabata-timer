@@ -1,20 +1,15 @@
-
 import React from 'react';
-
 const TimerHero = () => {
-  return (
-    <div className="text-left mb-12">
-      <div className="text-[#FF6B35] text-xs font-medium tracking-wider mb-6">
+  return <div className="text-left mb-12">
+      <div className="text-[#FF6B35] text-sm font-medium tracking-wider mb-4">
         TABAT.APP — HIGH INTENSITY TRAINING
       </div>
-      <div className="text-6xl font-light text-black leading-tight">
+      <h1 className="text-4xl md:text-7xl font-light text-black mb-6 leading-tight">
         Maximum results in minimum time.
-        <span className="block text-4xl text-gray-400">
-          Train smarter with scientific intervals.
-        </span>
-      </div>
-    </div>
-  );
+      </h1>
+      <p className="text-4xl md:text-5xl font-light text-gray-400 leading-tight">
+        Train smarter with scientific intervals.
+      </p>
+    </div>;
 };
-
 export default TimerHero;
