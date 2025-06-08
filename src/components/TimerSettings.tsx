@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -36,7 +37,7 @@ const TimerSettingsPanel = ({
           <div className="text-base font-normal mb-2" style={{
           color: '#0000004d'
         }}>
-            Remaining
+            Remaining time
           </div>
           <div className="text-4xl font-light font-roboto-mono">
             {formatTime(remainingTime)}
