@@ -93,8 +93,8 @@ const TimerDisplay = ({
             {getStateText()}
           </div>
           <div 
-            className="text-[12rem] font-extralight tracking-tighter font-roboto-mono leading-none transition-all duration-200"
-            key={`time-${currentTime}-${timerState}`}
+            className="text-[12rem] font-extralight tracking-tighter font-roboto-mono leading-none animate-fade-in"
+            key={`time-${timerState}-transition`}
           >
             {timerState === 'countdown' ? currentTime : formatTimeDisplay(currentTime)}
           </div>
