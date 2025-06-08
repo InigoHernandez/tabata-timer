@@ -114,7 +114,7 @@ const TabataTimer = () => {
         <div className="w-full max-w-4xl space-y-12">
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-3xl md:text-4xl font-light tracking-wide text-foreground">tabat.app</h1>
+            <h1 className="text-3xl md:text-4xl font-normal tracking-wide text-foreground">tabat.app</h1>
             <p className="text-muted-foreground text-xl font-light">high-intensity interval training</p>
           </div>
 
@@ -147,7 +147,7 @@ const TabataTimer = () => {
           {/* Settings Panel */}
           {showSettings && (
             <Card className="p-8 space-y-8 bg-card/30 backdrop-blur-sm border-border/30">
-              <h3 className="text-2xl font-light tracking-wide">timer settings</h3>
+              <h3 className="text-2xl font-normal tracking-wide">timer settings</h3>
               
               <div className="grid gap-8">
                 <div className="space-y-3">
