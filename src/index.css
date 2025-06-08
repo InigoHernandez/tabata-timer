@@ -118,8 +118,3 @@
     font-weight: 300;
   }
 }
-
-/* Add this to your global stylesheet */
-.lovable-badge, [class*="lovable"] {
-  display: none !important;
-}
