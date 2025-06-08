@@ -17,7 +17,7 @@ const TimerInfo = ({
 }: TimerInfoProps) => {
   const textSizes = isFullscreen
     ? "text-sm md:text-base"
-    : "text-xs md:text-sm";
+    : "text-sm md:text-base";
 
   const timeSizes = isFullscreen
     ? "text-2xl md:text-4xl"

@@ -59,8 +59,8 @@ const TimerDisplay = ({
   if (isFullscreen) {
     return (
       <div 
-        className="fixed inset-0 w-screen h-screen flex flex-col p-8 pb-8 overflow-hidden z-50 animate-fade-in transition-colors duration-500"
-        style={{ backgroundColor }}
+        className="fixed inset-0 w-full h-full flex flex-col p-8 pb-8 overflow-hidden z-50 animate-fade-in transition-colors duration-500"
+        style={{ backgroundColor, height: '100vh', width: '100vw' }}
       >
         <TimerInfo
           remainingTime={remainingTime}
@@ -147,7 +147,7 @@ const TimerDisplay = ({
 
       <div className="flex justify-between items-end flex-shrink-0 pt-4 animate-fade-in">
         <div>
-          <div className="text-xs md:text-sm font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
+          <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
             Cycles
           </div>
           <div 
