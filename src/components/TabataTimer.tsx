@@ -149,17 +149,33 @@ const TabataTimer = () => {
     return remaining;
   };
 
+  if (isFullscreen) {
+    return (
+      <TimerDisplay 
+        currentTime={currentTime} 
+        currentRound={currentRound} 
+        currentSet={currentSet} 
+        timerState={timerState} 
+        isRunning={isRunning} 
+        totalSets={settings.sets} 
+        totalRounds={settings.rounds} 
+        remainingTime={getRemainingTime()} 
+        workTime={settings.workTime} 
+        onToggleTimer={toggleTimer} 
+        onResetTimer={resetTimer} 
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out">
       <div className="h-screen flex flex-col p-2 md:p-4 lg:p-8 overflow-hidden transition-all duration-500 ease-in-out">
-        {!isFullscreen && (
-          <div className="flex-shrink-0">
-            <TimerHero hideInFullscreen={isFullscreen} />
-          </div>
-        )}
+        <div className="flex-shrink-0">
+          <TimerHero hideInFullscreen={isFullscreen} />
+        </div>
 
         <Card className="flex-1 overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out">
-          <div className={`grid ${isFullscreen ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'} h-full min-h-0 transition-all duration-500 ease-in-out`}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
             <TimerDisplay 
               currentTime={currentTime} 
               currentRound={currentRound} 
@@ -174,16 +190,14 @@ const TabataTimer = () => {
               onResetTimer={resetTimer} 
             />
 
-            {!isFullscreen && (
-              <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out px-[32px] py-[31px]">
-                <TimerSettingsPanel 
-                  settings={settings} 
-                  onSettingsChange={setSettings} 
-                  isRunning={isRunning} 
-                  timerState={timerState} 
-                />
-              </div>
-            )}
+            <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out px-[32px] py-[31px]">
+              <TimerSettingsPanel 
+                settings={settings} 
+                onSettingsChange={setSettings} 
+                isRunning={isRunning} 
+                timerState={timerState} 
+              />
+            </div>
           </div>
         </Card>
       </div>
