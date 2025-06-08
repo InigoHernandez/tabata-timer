@@ -21,7 +21,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
         setBars.push(
           <div
             key={`${set}-${round}`}
-            className={`md:h-6 w-[2px] transition-all duration-500 ease-out ${
+            className={`md:h-6 w-1 transition-all duration-500 ease-out ${
               isActive ? 'bg-foreground scale-110 opacity-100 h-12' : 
               isCompleted ? 'bg-muted-foreground scale-100 opacity-100 h-4' : 
               'bg-[#B2B2B3] scale-100 opacity-50 h-4'
