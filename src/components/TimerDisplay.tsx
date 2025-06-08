@@ -62,7 +62,7 @@ const TimerDisplay = ({
 
       <div className="space-y-6 flex-1 flex flex-col justify-center">
         <div className="text-left">
-          <div className="text-sm font-medium mb-2 tracking-wider" style={{ color: '#0000004d' }}>
+          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             {getStateText()}
           </div>
           <div className="text-9xl font-light tracking-tighter font-roboto-mono">
@@ -71,7 +71,7 @@ const TimerDisplay = ({
         </div>
 
         <div className="text-left">
-          <div className="text-sm font-medium mb-2 tracking-wider" style={{ color: '#0000004d' }}>
+          <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Cycles
           </div>
           <div className="text-4xl font-light font-roboto-mono">

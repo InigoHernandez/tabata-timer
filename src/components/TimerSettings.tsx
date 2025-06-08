@@ -31,7 +31,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
     <div className="flex-1 space-y-6">
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-sm">Number of tabatas</span>
+          <span className="text-base font-normal">Number of tabatas</span>
           <span className="font-medium">{settings.sets}</span>
         </div>
         <Slider
@@ -46,7 +46,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
 
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-sm">Rounds per tabatas</span>
+          <span className="text-base font-normal">Rounds per tabatas</span>
           <span className="font-medium">{settings.rounds}</span>
         </div>
         <Slider
@@ -61,7 +61,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
 
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-sm">Time on</span>
+          <span className="text-base font-normal">Time on</span>
           <span className="font-medium">{formatTime(settings.workTime)}</span>
         </div>
         <Slider
@@ -76,7 +76,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
 
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-sm">Time off</span>
+          <span className="text-base font-normal">Time off</span>
           <span className="font-medium">{formatTime(settings.restTime)}</span>
         </div>
         <Slider
@@ -91,7 +91,7 @@ const TimerSettingsPanel = ({ settings, onSettingsChange }: TimerSettingsProps) 
 
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-sm">Rest between tabatas</span>
+          <span className="text-base font-normal">Rest between tabatas</span>
           <span className="font-medium">{formatTime(settings.restBetweenSets)}</span>
         </div>
         <Slider
