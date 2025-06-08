@@ -1,6 +1,8 @@
 
 import React from 'react';
 import ProgressBars from './ProgressBars';
+import { Button } from '@/components/ui/button';
+import { Play, Pause, Square } from 'lucide-react';
 
 type TimerState = 'idle' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -12,6 +14,8 @@ interface TimerDisplayProps {
   isRunning: boolean;
   totalSets: number;
   totalRounds: number;
+  onToggleTimer: () => void;
+  onResetTimer: () => void;
 }
 
 const TimerDisplay = ({ 
@@ -21,7 +25,9 @@ const TimerDisplay = ({
   timerState, 
   isRunning, 
   totalSets, 
-  totalRounds 
+  totalRounds,
+  onToggleTimer,
+  onResetTimer
 }: TimerDisplayProps) => {
   const formatTimeDisplay = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -71,7 +77,7 @@ const TimerDisplay = ({
         </div>
       </div>
 
-      <div className="flex justify-start">
+      <div className="flex justify-between items-end">
         <div>
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Cycles
@@ -79,6 +85,26 @@ const TimerDisplay = ({
           <div className="text-4xl font-light font-roboto-mono">
             {getCurrentCycleNumber()}/{getTotalCycles()}
           </div>
+        </div>
+
+        <div className="flex gap-4">
+          <Button 
+            onClick={onResetTimer} 
+            size="lg" 
+            variant="outline" 
+            className="w-16 h-16 rounded-full p-0"
+          >
+            <Square className="w-8 h-8" />
+          </Button>
+          
+          <Button 
+            onClick={onToggleTimer} 
+            size="lg" 
+            className="w-16 h-16 rounded-full p-0 bg-foreground text-background hover:bg-foreground/90"
+            disabled={timerState === 'finished'}
+          >
+            {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" />}
+          </Button>
         </div>
       </div>
     </div>

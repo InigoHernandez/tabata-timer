@@ -115,6 +115,8 @@ const TabataTimer = () => {
               isRunning={isRunning}
               totalSets={settings.sets}
               totalRounds={settings.rounds}
+              onToggleTimer={toggleTimer}
+              onResetTimer={resetTimer}
             />
 
             <div className="border-l border-[#E8E8E8] bg-[#F5F5F5] p-6 flex flex-col">
