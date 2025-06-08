@@ -29,7 +29,7 @@ const TimerControls = ({
   return (
     <div className="space-y-6 pt-6 border-t border-[#E8E8E8]">
       <div className="text-center">
-        <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
+        <div className="text-sm font-medium mb-2 tracking-wider" style={{ color: '#0000004d' }}>
           REMAINING
         </div>
         <div className="text-2xl font-light font-roboto-mono">
