@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ProgressBars from './ProgressBars';
 import { Button } from '@/components/ui/button';
@@ -70,7 +71,7 @@ const TimerDisplay = ({
           <div className="text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             {getStateText()}
           </div>
-          <div className="text-[12rem] font-light tracking-tighter font-roboto-mono leading-none">
+          <div className="text-[12rem] font-extralight tracking-tighter font-roboto-mono leading-none">
             {formatTimeDisplay(currentTime)}
           </div>
         </div>
