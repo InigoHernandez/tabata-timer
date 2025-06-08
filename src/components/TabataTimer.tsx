@@ -172,9 +172,23 @@ const TabataTimer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-8">
-      <div className="max-w-7xl mx-auto">
-        <Card className="overflow-hidden">
+    <div className="min-h-screen bg-[#F8F8F8] font-aspekta">
+      <div className="max-w-7xl mx-auto px-8 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <div className="text-[#FF6B35] text-sm font-medium tracking-wider mb-4">
+            TABAT.APP — HIGH INTENSITY TRAINING
+          </div>
+          <h1 className="text-6xl md:text-7xl font-light text-black mb-6 leading-tight">
+            Maximum results in minimum time.
+          </h1>
+          <p className="text-4xl md:text-5xl font-light text-gray-400 leading-tight">
+            Train smarter with scientific intervals.
+          </p>
+        </div>
+
+        {/* Timer Card */}
+        <Card className="overflow-hidden border border-[#E8E8E8] bg-[#F5F5F5] rounded-xl shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-3 min-h-[600px]">
             {/* Left Panel - Timer */}
             <div className="lg:col-span-2 p-8 flex flex-col justify-center">
@@ -209,7 +223,7 @@ const TabataTimer = () => {
             </div>
 
             {/* Right Panel - Settings & Controls */}
-            <div className="border-l border-border p-6 flex flex-col">
+            <div className="border-l border-[#E8E8E8] bg-white p-6 flex flex-col">
               {/* Settings */}
               <div className="flex-1 space-y-6">
                 <div className="space-y-4">
@@ -293,7 +307,7 @@ const TabataTimer = () => {
               </div>
 
               {/* Remaining Time & Controls */}
-              <div className="space-y-6 pt-6 border-t border-border">
+              <div className="space-y-6 pt-6 border-t border-[#E8E8E8]">
                 <div className="text-center">
                   <div className="text-sm font-medium text-muted-foreground mb-2 tracking-wider">
                     REMAINING
