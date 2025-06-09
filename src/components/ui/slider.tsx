@@ -21,9 +21,9 @@ const Slider = React.forwardRef<
       props.disabled ? "bg-[#B2B2B3] bg-opacity-15" : "bg-[#B2B2B3] bg-opacity-15"
     )}>
       <SliderPrimitive.Range className={cn(
-        "absolute h-full",
+        "absolute h-full lg:h-0.5",
         props.disabled ? "bg-[#B2B2B3] bg-opacity-30" : "bg-primary"
-      )} style={{ height: '4px' }} className="lg:h-0.5" />
+      )} style={{ height: '4px' }} />
     </SliderPrimitive.Track>
     <SliderPrimitive.Thumb className={cn(
       "block h-7 w-7 lg:h-5 lg:w-5 rounded-full ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-110 transition-transform cursor-pointer border-2",
