@@ -37,6 +37,19 @@ const TimerMainDisplay = ({
     ? "text-[8rem] md:text-[16rem] lg:text-[20rem]"
     : "text-[6rem] md:text-[10rem] lg:text-[14rem]";
 
+  const formatTimeWithTightColon = (time: number) => {
+    const timeString = formatTimeDisplay(time);
+    const [minutes, seconds] = timeString.split(':');
+    
+    return (
+      <>
+        {minutes}
+        <span style={{ letterSpacing: '-0.3em', margin: '0 -0.1em' }}>:</span>
+        {seconds}
+      </>
+    );
+  };
+
   return (
     <div className="text-center transition-all duration-300 ease-in-out">
       <Badge 
@@ -49,7 +62,7 @@ const TimerMainDisplay = ({
         className={`${timeClasses} font-jetbrains-mono leading-none transition-all duration-300`}
         style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
       >
-        {formatTimeDisplay(getDisplayTime())}
+        {formatTimeWithTightColon(getDisplayTime())}
       </div>
     </div>
   );
