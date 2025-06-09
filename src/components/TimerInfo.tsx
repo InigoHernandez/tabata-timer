@@ -27,10 +27,10 @@ const TimerInfo = ({
     <>
       {/* Remaining Time */}
       <div 
-        className={`fixed text-right z-50 animate-fade-in`}
+        className={`absolute text-right z-10 animate-fade-in`}
         style={{
-          top: '32px',
-          right: '32px'
+          top: '0px',
+          right: '0px'
         }}
       >
         <div className={`${textSizes} font-normal mb-2 transition-all duration-500`} style={{ color: '#0000004d' }}>
