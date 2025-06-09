@@ -59,7 +59,7 @@ const TimerDisplay = ({
   if (isFullscreen) {
     return (
       <div 
-        className="fixed inset-0 w-screen h-screen flex flex-col overflow-hidden transition-all duration-300 ease-in-out"
+        className="fixed inset-0 w-screen h-screen flex flex-col overflow-hidden opacity-0 translate-y-2 animate-[fade-in-up_400ms_ease-out_forwards]"
         style={{ backgroundColor }}
       >
         {/* Top Section - Progress Bars and Remaining Time */}
@@ -76,10 +76,10 @@ const TimerDisplay = ({
 
           {/* Remaining Time - Top Right */}
           <div className="text-right">
-            <div className="text-sm md:text-base font-normal mb-2 transition-all duration-300" style={{ color: '#0000004d' }}>
+            <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
               Remaining time
             </div>
-            <div className="text-2xl md:text-4xl font-roboto-mono transition-all duration-300" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+            <div className="text-2xl md:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
               {formatTime(remainingTime)}
             </div>
           </div>
@@ -100,11 +100,11 @@ const TimerDisplay = ({
         <div className="flex justify-between items-end p-8 flex-shrink-0">
           {/* Cycles - Bottom Left */}
           <div>
-            <div className="text-sm md:text-base font-normal mb-2 transition-all duration-300" style={{ color: '#0000004d' }}>
+            <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
               Cycles
             </div>
             <div 
-              className="text-2xl md:text-4xl font-roboto-mono transition-all duration-300"
+              className="text-2xl md:text-4xl font-roboto-mono"
               style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
             >
               {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
@@ -129,7 +129,7 @@ const TimerDisplay = ({
 
   return (
     <div 
-      className="lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto transition-all duration-300 ease-in-out"
+      className="lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto"
       style={{ backgroundColor }}
     >
       <TimerInfo
@@ -162,11 +162,11 @@ const TimerDisplay = ({
 
       <div className="flex justify-between items-end flex-shrink-0 pt-4">
         <div>
-          <div className="text-sm md:text-base font-normal mb-2 transition-all duration-300" style={{ color: '#0000004d' }}>
+          <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
             Cycles
           </div>
           <div 
-            className="text-xl md:text-2xl lg:text-4xl font-roboto-mono transition-all duration-300"
+            className="text-xl md:text-2xl lg:text-4xl font-roboto-mono"
             style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
           >
             {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
