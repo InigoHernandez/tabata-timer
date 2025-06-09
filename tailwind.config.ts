@@ -115,10 +115,21 @@ export default {
 						backgroundColor: 'rgba(91, 255, 114, 0.15)'
 					},
 					'50%': {
-						backgroundColor: 'rgba(91, 255, 114, 0.30)'
+						backgroundColor: 'rgba(91, 255, 114, 0.35)'
 					},
 					'100%': {
 						backgroundColor: 'rgba(91, 255, 114, 0.15)'
+					}
+				},
+				'rest-pulse': {
+					'0%': {
+						backgroundColor: 'rgba(91, 168, 255, 0.15)'
+					},
+					'50%': {
+						backgroundColor: 'rgba(91, 168, 255, 0.30)'
+					},
+					'100%': {
+						backgroundColor: 'rgba(91, 168, 255, 0.15)'
 					}
 				}
 			},
@@ -127,7 +138,8 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'fade-in-up': 'fade-in-up 0.4s ease-out',
-				'work-pulse': 'work-pulse 3s ease-in-out infinite'
+				'work-pulse': 'work-pulse 2s ease-in-out infinite',
+				'rest-pulse': 'rest-pulse 4s ease-in-out infinite'
 			}
 		}
 	},

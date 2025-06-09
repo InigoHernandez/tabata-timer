@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import TimerControls from './TimerControls';
@@ -54,13 +55,14 @@ const TimerDisplay = ({
   };
 
   const backgroundColor = getBackgroundColor(isRunning, timerState);
-  const shouldPulse = isRunning && timerState === 'work';
+  const shouldWorkPulse = isRunning && timerState === 'work';
+  const shouldRestPulse = isRunning && timerState === 'rest';
 
   if (isFullscreen) {
     return (
       <div 
-        className={`fixed inset-0 w-screen h-screen flex flex-col overflow-hidden opacity-0 translate-y-2 animate-[fade-in-up_400ms_ease-out_forwards] ${shouldPulse ? 'animate-work-pulse' : ''}`}
-        style={shouldPulse ? {} : { backgroundColor }}
+        className={`fixed inset-0 w-screen h-screen flex flex-col overflow-hidden opacity-0 translate-y-2 animate-[fade-in-up_400ms_ease-out_forwards] ${shouldWorkPulse ? 'animate-work-pulse' : shouldRestPulse ? 'animate-rest-pulse' : ''}`}
+        style={shouldWorkPulse || shouldRestPulse ? {} : { backgroundColor }}
       >
         {/* Top Section - Progress Bars and Remaining Time */}
         <div className="flex justify-between items-start p-8 flex-shrink-0">
@@ -129,8 +131,8 @@ const TimerDisplay = ({
 
   return (
     <div 
-      className={`lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto ${shouldPulse ? 'animate-work-pulse' : ''}`}
-      style={shouldPulse ? {} : { backgroundColor }}
+      className={`lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto ${shouldWorkPulse ? 'animate-work-pulse' : shouldRestPulse ? 'animate-rest-pulse' : ''}`}
+      style={shouldWorkPulse || shouldRestPulse ? {} : { backgroundColor }}
     >
       <TimerInfo
         remainingTime={remainingTime}
