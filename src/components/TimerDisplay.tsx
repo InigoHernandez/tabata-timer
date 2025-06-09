@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import TimerControls from './TimerControls';
@@ -86,7 +85,7 @@ const TimerDisplay = ({
               <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
                 Remaining time
               </div>
-              <div className="text-2xl md:text-4xl font-roboto-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+              <div className="text-2xl md:text-4xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
                 {formatTime(remainingTime)}
               </div>
             </div>
@@ -111,7 +110,7 @@ const TimerDisplay = ({
                 Cycles
               </div>
               <div 
-                className="text-2xl md:text-4xl font-roboto-mono"
+                className="text-2xl md:text-4xl font-jetbrains-mono"
                 style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               >
                 {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
@@ -179,7 +178,7 @@ const TimerDisplay = ({
               Cycles
             </div>
             <div 
-              className="text-xl md:text-2xl lg:text-4xl font-roboto-mono"
+              className="text-xl md:text-2xl lg:text-4xl font-jetbrains-mono"
               style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
             >
               {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
