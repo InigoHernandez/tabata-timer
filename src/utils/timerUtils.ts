@@ -44,22 +44,22 @@ export const getStateInfo = (isRunning: boolean, timerState: TimerState) => {
 
 export const getBackgroundColor = (isRunning: boolean, timerState: TimerState) => {
   if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
-    return 'rgba(255, 235, 71, 0.3)'; // PAUSED - yellow with 30% opacity
+    return 'rgba(255, 235, 71, 0.1)'; // PAUSED - yellow with 10% opacity
   }
   
   switch (timerState) {
     case 'idle':
       return 'white'; // READY - keep white background
     case 'countdown':
-      return 'rgba(255, 139, 71, 0.3)'; // GET READY - orange with 30% opacity
+      return 'rgba(255, 139, 71, 0.1)'; // GET READY - orange with 10% opacity
     case 'work':
-      return 'rgba(91, 255, 114, 0.3)'; // WORK - green with 30% opacity
+      return 'rgba(91, 255, 114, 0.1)'; // WORK - green with 10% opacity
     case 'rest':
-      return 'rgba(91, 168, 255, 0.3)'; // REST - blue with 30% opacity
+      return 'rgba(91, 168, 255, 0.1)'; // REST - blue with 10% opacity
     case 'setRest':
-      return 'rgba(91, 237, 219, 0.3)'; // SET REST - cyan with 30% opacity
+      return 'rgba(91, 237, 219, 0.1)'; // SET REST - cyan with 10% opacity
     case 'finished':
-      return 'rgba(255, 139, 71, 0.3)'; // FINISHED - orange with 30% opacity
+      return 'rgba(255, 139, 71, 0.1)'; // FINISHED - orange with 10% opacity
     default:
       return 'white';
   }

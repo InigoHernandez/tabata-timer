@@ -37,19 +37,13 @@ const TimerMainDisplay = ({
     ? "text-[8rem] md:text-[16rem] lg:text-[20rem]"
     : "text-[6rem] md:text-[10rem] lg:text-[14rem]";
 
-  // Solid dot component (4px circle)
-  const SolidDot = () => (
-    <div className="w-1 h-1 bg-black rounded-full" />
-  );
-
   return (
     <div className="text-center animate-fade-in">
       <Badge 
-        className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px] cursor-default`}
+        className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center mx-auto w-fit transition-all duration-500 rounded-[4px] cursor-default`}
         style={{ fontWeight: '400' }}
         key={`${timerState}-${isRunning}`}
       >
-        <SolidDot />
         {stateInfo.text}
       </Badge>
       <div 
