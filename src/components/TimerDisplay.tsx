@@ -59,31 +59,34 @@ const TimerDisplay = ({
   if (isFullscreen) {
     return (
       <div 
-        className="col-span-3 w-screen h-screen relative overflow-hidden animate-fade-in transition-colors duration-500"
+        className="fixed inset-0 w-screen h-screen flex flex-col overflow-hidden animate-fade-in transition-colors duration-500"
         style={{ backgroundColor }}
       >
-        {/* Remaining Time - Top Right */}
-        <div className="absolute top-8 right-8 text-right z-10 animate-fade-in">
-          <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
-            Remaining time
+        {/* Top Section - Progress Bars and Remaining Time */}
+        <div className="flex justify-between items-start p-8 flex-shrink-0">
+          {/* Progress Bars - Top Left */}
+          <div className="flex-1 max-w-md animate-fade-in">
+            <ProgressBars 
+              currentSet={currentSet}
+              currentRound={currentRound}
+              totalSets={totalSets}
+              totalRounds={totalRounds}
+            />
           </div>
-          <div className="text-2xl md:text-4xl font-roboto-mono transition-all duration-500" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
-            {formatTime(remainingTime)}
+
+          {/* Remaining Time - Top Right */}
+          <div className="text-right animate-fade-in">
+            <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
+              Remaining time
+            </div>
+            <div className="text-2xl md:text-4xl font-roboto-mono transition-all duration-500" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+              {formatTime(remainingTime)}
+            </div>
           </div>
         </div>
 
-        {/* Progress Bars - Top Left */}
-        <div className="absolute top-8 left-8 right-32 md:right-48 animate-fade-in">
-          <ProgressBars 
-            currentSet={currentSet}
-            currentRound={currentRound}
-            totalSets={totalSets}
-            totalRounds={totalRounds}
-          />
-        </div>
-
-        {/* Main Timer Display - Center */}
-        <div className="absolute inset-0 flex items-center justify-center animate-fade-in">
+        {/* Center Section - Main Timer Display */}
+        <div className="flex-1 flex items-center justify-center animate-fade-in">
           <TimerMainDisplay
             currentTime={currentTime}
             timerState={timerState}
@@ -93,29 +96,32 @@ const TimerDisplay = ({
           />
         </div>
 
-        {/* Cycles - Bottom Left */}
-        <div className="absolute bottom-8 left-8 animate-fade-in">
-          <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
-            Cycles
+        {/* Bottom Section - Cycles and Controls */}
+        <div className="flex justify-between items-end p-8 flex-shrink-0">
+          {/* Cycles - Bottom Left */}
+          <div className="animate-fade-in">
+            <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
+              Cycles
+            </div>
+            <div 
+              className="text-2xl md:text-4xl font-roboto-mono transition-all duration-500"
+              style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
+            >
+              {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+            </div>
           </div>
-          <div 
-            className="text-2xl md:text-4xl font-roboto-mono transition-all duration-500"
-            style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
-          >
-            {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
-          </div>
-        </div>
 
-        {/* Controls - Bottom Right */}
-        <div className="absolute bottom-8 right-8 animate-fade-in">
-          <TimerControls
-            isRunning={isRunning}
-            timerState={timerState}
-            isFullscreen={isFullscreen}
-            onToggleTimer={onToggleTimer}
-            onResetTimer={onResetTimer}
-            onToggleFullscreen={toggleFullscreen}
-          />
+          {/* Controls - Bottom Right */}
+          <div className="animate-fade-in">
+            <TimerControls
+              isRunning={isRunning}
+              timerState={timerState}
+              isFullscreen={isFullscreen}
+              onToggleTimer={onToggleTimer}
+              onResetTimer={onResetTimer}
+              onToggleFullscreen={toggleFullscreen}
+            />
+          </div>
         </div>
       </div>
     );
