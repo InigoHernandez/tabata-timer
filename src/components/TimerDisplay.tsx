@@ -36,25 +36,15 @@ const TimerDisplay = ({
   onResetTimer
 }: TimerDisplayProps) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      const wasFullscreen = isFullscreen;
-      const nowFullscreen = !!document.fullscreenElement;
-      
-      if (wasFullscreen !== nowFullscreen) {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setIsFullscreen(nowFullscreen);
-          setTimeout(() => setIsTransitioning(false), 100);
-        }, 50);
-      }
+      setIsFullscreen(!!document.fullscreenElement);
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, [isFullscreen]);
+  }, []);
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -69,15 +59,13 @@ const TimerDisplay = ({
   if (isFullscreen) {
     return (
       <div 
-        className={`fixed inset-0 w-screen h-screen flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${
-          isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100 animate-fade-in'
-        }`}
+        className="fixed inset-0 w-screen h-screen flex flex-col overflow-hidden transition-all duration-300 ease-in-out"
         style={{ backgroundColor }}
       >
         {/* Top Section - Progress Bars and Remaining Time */}
         <div className="flex justify-between items-start p-8 flex-shrink-0">
           {/* Progress Bars - Top Left */}
-          <div className="flex-1 max-w-md animate-fade-in">
+          <div className="flex-1 max-w-md">
             <ProgressBars 
               currentSet={currentSet}
               currentRound={currentRound}
@@ -87,18 +75,18 @@ const TimerDisplay = ({
           </div>
 
           {/* Remaining Time - Top Right */}
-          <div className="text-right animate-fade-in">
-            <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
+          <div className="text-right">
+            <div className="text-sm md:text-base font-normal mb-2 transition-all duration-300" style={{ color: '#0000004d' }}>
               Remaining time
             </div>
-            <div className="text-2xl md:text-4xl font-roboto-mono transition-all duration-500" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+            <div className="text-2xl md:text-4xl font-roboto-mono transition-all duration-300" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
               {formatTime(remainingTime)}
             </div>
           </div>
         </div>
 
         {/* Center Section - Main Timer Display */}
-        <div className="flex-1 flex items-center justify-center animate-fade-in">
+        <div className="flex-1 flex items-center justify-center">
           <TimerMainDisplay
             currentTime={currentTime}
             timerState={timerState}
@@ -111,12 +99,12 @@ const TimerDisplay = ({
         {/* Bottom Section - Cycles and Controls */}
         <div className="flex justify-between items-end p-8 flex-shrink-0">
           {/* Cycles - Bottom Left */}
-          <div className="animate-fade-in">
-            <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
+          <div>
+            <div className="text-sm md:text-base font-normal mb-2 transition-all duration-300" style={{ color: '#0000004d' }}>
               Cycles
             </div>
             <div 
-              className="text-2xl md:text-4xl font-roboto-mono transition-all duration-500"
+              className="text-2xl md:text-4xl font-roboto-mono transition-all duration-300"
               style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
             >
               {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
@@ -124,7 +112,7 @@ const TimerDisplay = ({
           </div>
 
           {/* Controls - Bottom Right */}
-          <div className="animate-fade-in">
+          <div>
             <TimerControls
               isRunning={isRunning}
               timerState={timerState}
@@ -141,9 +129,7 @@ const TimerDisplay = ({
 
   return (
     <div 
-      className={`lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto transition-all duration-500 ease-in-out ${
-        isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100 animate-fade-in'
-      }`}
+      className="lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto transition-all duration-300 ease-in-out"
       style={{ backgroundColor }}
     >
       <TimerInfo
@@ -155,7 +141,7 @@ const TimerDisplay = ({
         isFullscreen={isFullscreen}
       />
 
-      <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0 animate-fade-in">
+      <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0">
         <ProgressBars 
           currentSet={currentSet}
           currentRound={currentRound}
@@ -164,7 +150,7 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-16 animate-fade-in">
+      <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-16">
         <TimerMainDisplay
           currentTime={currentTime}
           timerState={timerState}
@@ -174,13 +160,13 @@ const TimerDisplay = ({
         />
       </div>
 
-      <div className="flex justify-between items-end flex-shrink-0 pt-4 animate-fade-in">
+      <div className="flex justify-between items-end flex-shrink-0 pt-4">
         <div>
-          <div className="text-sm md:text-base font-normal mb-2 transition-all duration-500" style={{ color: '#0000004d' }}>
+          <div className="text-sm md:text-base font-normal mb-2 transition-all duration-300" style={{ color: '#0000004d' }}>
             Cycles
           </div>
           <div 
-            className="text-xl md:text-2xl lg:text-4xl font-roboto-mono transition-all duration-500"
+            className="text-xl md:text-2xl lg:text-4xl font-roboto-mono transition-all duration-300"
             style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
           >
             {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
