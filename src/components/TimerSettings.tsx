@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -36,13 +35,14 @@ const TimerSettingsPanel = ({
 
   // Disable sliders when timer is running (not idle, paused, or finished)
   const slidersDisabled = isRunning && timerState !== 'idle' && timerState !== 'finished';
+  
   return <div className="flex-1 py-4 animate-fade-in md:py-0 flex items-center justify-center">
       <div className="space-y-6 lg:space-y-5 px-0 py-0 w-full">
         <div className="space-y-4 lg:space-y-3 py-[16px]">
           <div className="flex justify-between items-center py-0">
             <span style={{
             color: '#0000004d'
-          }} className="text-base md:text-base font-normal">
+          }} className="text-sm md:text-base font-normal">
               Number of tabatas
             </span>
             <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
