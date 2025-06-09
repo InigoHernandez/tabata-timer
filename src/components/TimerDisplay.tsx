@@ -57,6 +57,22 @@ const TimerDisplay = ({
   const shouldWorkPulse = isRunning && timerState === 'work';
   const shouldRestPulse = isRunning && timerState === 'rest';
 
+  // Format time with custom colon styling for fullscreen
+  const formatTimeWithCustomColon = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    const timeString = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const [minutes, secsFormatted] = timeString.split(':');
+    
+    return (
+      <>
+        {minutes}
+        <span style={{ fontSize: '0.6em', verticalAlign: 'middle' }}>:</span>
+        {secsFormatted}
+      </>
+    );
+  };
+
   if (isFullscreen) {
     return (
       <div className="fixed inset-0 w-screen h-screen flex flex-col overflow-hidden opacity-0 translate-y-2 animate-[fade-in-up_400ms_ease-out_forwards]">
@@ -86,7 +102,7 @@ const TimerDisplay = ({
                 Remaining time
               </div>
               <div className="text-2xl md:text-4xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
-                {formatTime(remainingTime)}
+                {formatTimeWithCustomColon(remainingTime)}
               </div>
             </div>
           </div>
