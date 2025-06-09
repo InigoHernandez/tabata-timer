@@ -27,7 +27,7 @@ const TimerInfo = ({
     <>
       {/* Remaining Time */}
       <div 
-        className={`absolute text-right z-10 animate-fade-in`}
+        className={`fixed text-right z-50 animate-fade-in`}
         style={{
           top: '32px',
           right: '32px'
