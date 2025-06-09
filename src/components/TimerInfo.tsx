@@ -23,6 +23,20 @@ const TimerInfo = ({
     ? "text-2xl md:text-4xl"
     : "text-xl md:text-2xl lg:text-4xl";
 
+  // Format time with custom colon styling
+  const formatTimeWithCustomColon = (seconds: number) => {
+    const timeString = formatTime(seconds);
+    const [minutes, secs] = timeString.split(':');
+    
+    return (
+      <>
+        {minutes}
+        <span style={{ fontSize: '0.6em', verticalAlign: 'middle' }}>:</span>
+        {secs}
+      </>
+    );
+  };
+
   return (
     <>
       {/* Remaining Time */}
@@ -37,7 +51,7 @@ const TimerInfo = ({
           Remaining time
         </div>
         <div className={`${timeSizes} font-jetbrains-mono transition-all duration-500`} style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
-          {formatTime(remainingTime)}
+          {formatTimeWithCustomColon(remainingTime)}
         </div>
       </div>
     </>
