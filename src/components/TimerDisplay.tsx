@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import TimerControls from './TimerControls';
@@ -55,12 +54,13 @@ const TimerDisplay = ({
   };
 
   const backgroundColor = getBackgroundColor(isRunning, timerState);
+  const shouldPulse = isRunning && timerState === 'work';
 
   if (isFullscreen) {
     return (
       <div 
-        className="fixed inset-0 w-screen h-screen flex flex-col overflow-hidden opacity-0 translate-y-2 animate-[fade-in-up_400ms_ease-out_forwards]"
-        style={{ backgroundColor }}
+        className={`fixed inset-0 w-screen h-screen flex flex-col overflow-hidden opacity-0 translate-y-2 animate-[fade-in-up_400ms_ease-out_forwards] ${shouldPulse ? 'animate-work-pulse' : ''}`}
+        style={shouldPulse ? {} : { backgroundColor }}
       >
         {/* Top Section - Progress Bars and Remaining Time */}
         <div className="flex justify-between items-start p-8 flex-shrink-0">
@@ -129,8 +129,8 @@ const TimerDisplay = ({
 
   return (
     <div 
-      className="lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto"
-      style={{ backgroundColor }}
+      className={`lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto ${shouldPulse ? 'animate-work-pulse' : ''}`}
+      style={shouldPulse ? {} : { backgroundColor }}
     >
       <TimerInfo
         remainingTime={remainingTime}
