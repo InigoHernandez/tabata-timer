@@ -36,15 +36,25 @@ const TimerDisplay = ({
   onResetTimer
 }: TimerDisplayProps) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      const wasFullscreen = isFullscreen;
+      const nowFullscreen = !!document.fullscreenElement;
+      
+      if (wasFullscreen !== nowFullscreen) {
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setIsFullscreen(nowFullscreen);
+          setTimeout(() => setIsTransitioning(false), 100);
+        }, 50);
+      }
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
+  }, [isFullscreen]);
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -59,7 +69,9 @@ const TimerDisplay = ({
   if (isFullscreen) {
     return (
       <div 
-        className="fixed inset-0 w-screen h-screen flex flex-col overflow-hidden animate-fade-in transition-colors duration-500"
+        className={`fixed inset-0 w-screen h-screen flex flex-col overflow-hidden transition-all duration-500 ease-in-out ${
+          isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100 animate-fade-in'
+        }`}
         style={{ backgroundColor }}
       >
         {/* Top Section - Progress Bars and Remaining Time */}
@@ -129,7 +141,9 @@ const TimerDisplay = ({
 
   return (
     <div 
-      className="lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto animate-fade-in transition-colors duration-500"
+      className={`lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto transition-all duration-500 ease-in-out ${
+        isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100 animate-fade-in'
+      }`}
       style={{ backgroundColor }}
     >
       <TimerInfo

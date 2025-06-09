@@ -45,7 +45,7 @@ const TimerMainDisplay = ({
   return (
     <div className="text-center animate-fade-in">
       <Badge 
-        className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px]`}
+        className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center gap-2 mx-auto w-fit transition-all duration-500 rounded-[4px] cursor-default`}
         style={{ fontWeight: '400' }}
         key={`${timerState}-${isRunning}`}
       >
