@@ -4,6 +4,7 @@ import TimerHero from './TimerHero';
 import TimerDisplay from './TimerDisplay';
 import TimerSettingsPanel from './TimerSettings';
 import { useAudio } from '@/hooks/useAudio';
+
 interface TimerSettings {
   workTime: number;
   restTime: number;
@@ -12,7 +13,9 @@ interface TimerSettings {
   restBetweenSets: number;
   countdownTime: number;
 }
+
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
+
 const TabataTimer = () => {
   const [settings, setSettings] = useState<TimerSettings>({
     workTime: 20,
@@ -22,18 +25,21 @@ const TabataTimer = () => {
     restBetweenSets: 40,
     countdownTime: 5
   });
+
   const [isRunning, setIsRunning] = useState(false);
   const [currentTime, setCurrentTime] = useState(settings.workTime);
   const [currentRound, setCurrentRound] = useState(1);
   const [currentSet, setCurrentSet] = useState(1);
   const [timerState, setTimerState] = useState<TimerState>('idle');
   const [isFullscreen, setIsFullscreen] = useState(false);
+
   const {
     playCountdownSound,
     playWarningSound,
     playStartSound,
     playFinishSound
   } = useAudio();
+
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -41,11 +47,13 @@ const TabataTimer = () => {
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
+
   useEffect(() => {
     if (timerState === 'idle') {
       setCurrentTime(settings.workTime);
     }
   }, [settings.workTime, timerState]);
+
   const resetTimer = useCallback(() => {
     setIsRunning(false);
     setCurrentTime(settings.workTime);
@@ -53,6 +61,7 @@ const TabataTimer = () => {
     setCurrentSet(1);
     setTimerState('idle');
   }, [settings.workTime]);
+
   const toggleTimer = () => {
     if (timerState === 'idle') {
       setTimerState('countdown');
@@ -61,8 +70,10 @@ const TabataTimer = () => {
     }
     setIsRunning(!isRunning);
   };
+
   useEffect(() => {
     let interval: NodeJS.Timeout;
+
     if (isRunning && currentTime > 0) {
       interval = setInterval(() => {
         setCurrentTime(prev => {
@@ -105,18 +116,24 @@ const TabataTimer = () => {
         playStartSound();
       }
     }
+
     return () => clearInterval(interval);
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, playStartSound, playFinishSound]);
+
   const getRemainingTime = () => {
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     const totalWorkoutTime = settings.sets * timePerSet + (settings.sets - 1) * settings.restBetweenSets;
+
     if (timerState === 'idle' || timerState === 'countdown') {
       return totalWorkoutTime;
     }
+
     if (timerState === 'finished') {
       return 0;
     }
+
     let remaining = currentTime;
+
     if (timerState === 'work') {
       const remainingRoundsInSet = settings.rounds - currentRound;
       remaining += remainingRoundsInSet * (settings.workTime + settings.restTime);
@@ -126,6 +143,7 @@ const TabataTimer = () => {
     } else if (timerState === 'setRest') {
       remaining += settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     }
+
     if (currentSet < settings.sets) {
       const remainingSets = settings.sets - currentSet;
       remaining += remainingSets * timePerSet;
@@ -135,24 +153,81 @@ const TabataTimer = () => {
         remaining += (remainingSets - 1) * settings.restBetweenSets;
       }
     }
+
     return remaining;
   };
-  return <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out">
+
+  return (
+    <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out">
       <div className="h-screen flex flex-col p-2 md:p-4 lg:p-8 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
           <TimerHero hideInFullscreen={isFullscreen} />
         </div>
 
         <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
-          <div className="grid grid-cols-1 lg:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
-            <TimerDisplay currentTime={currentTime} currentRound={currentRound} currentSet={currentSet} timerState={timerState} isRunning={isRunning} totalSets={settings.sets} totalRounds={settings.rounds} remainingTime={getRemainingTime()} workTime={settings.workTime} onToggleTimer={toggleTimer} onResetTimer={resetTimer} />
+          {/* Mobile Layout - Stack vertically on small screens */}
+          <div className="flex flex-col lg:hidden h-full min-h-0">
+            {/* Timer Display - Top priority on mobile */}
+            <div className="flex-1 min-h-0">
+              <TimerDisplay 
+                currentTime={currentTime} 
+                currentRound={currentRound} 
+                currentSet={currentSet} 
+                timerState={timerState} 
+                isRunning={isRunning} 
+                totalSets={settings.sets} 
+                totalRounds={settings.rounds} 
+                remainingTime={getRemainingTime()} 
+                workTime={settings.workTime} 
+                onToggleTimer={toggleTimer} 
+                onResetTimer={resetTimer} 
+              />
+            </div>
 
-            {!isFullscreen && <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[32px] px-[34px]">
-                <TimerSettingsPanel settings={settings} onSettingsChange={setSettings} isRunning={isRunning} timerState={timerState} />
-              </div>}
+            {/* Settings Panel - Below timer on mobile, only when not fullscreen */}
+            {!isFullscreen && (
+              <div className="border-t border-[#E8E8E8] bg-[#F8F8F8] p-4 flex-shrink-0 max-h-[50vh] overflow-y-auto">
+                <TimerSettingsPanel 
+                  settings={settings} 
+                  onSettingsChange={setSettings} 
+                  isRunning={isRunning} 
+                  timerState={timerState} 
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Layout - Side by side on large screens */}
+          <div className="hidden lg:grid lg:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
+            <TimerDisplay 
+              currentTime={currentTime} 
+              currentRound={currentRound} 
+              currentSet={currentSet} 
+              timerState={timerState} 
+              isRunning={isRunning} 
+              totalSets={settings.sets} 
+              totalRounds={settings.rounds} 
+              remainingTime={getRemainingTime()} 
+              workTime={settings.workTime} 
+              onToggleTimer={toggleTimer} 
+              onResetTimer={resetTimer} 
+            />
+
+            {!isFullscreen && (
+              <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[32px] px-[34px]">
+                <TimerSettingsPanel 
+                  settings={settings} 
+                  onSettingsChange={setSettings} 
+                  isRunning={isRunning} 
+                  timerState={timerState} 
+                />
+              </div>
+            )}
           </div>
         </Card>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default TabataTimer;
