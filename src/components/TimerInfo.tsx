@@ -26,7 +26,13 @@ const TimerInfo = ({
   return (
     <>
       {/* Remaining Time */}
-      <div className={`absolute ${isFullscreen ? 'top-8 right-8' : 'top-8 right-8'} text-right z-10 animate-fade-in`}>
+      <div 
+        className={`absolute text-right z-10 animate-fade-in`}
+        style={{
+          top: '32px',
+          right: '32px'
+        }}
+      >
         <div className={`${textSizes} font-normal mb-2 transition-all duration-500`} style={{ color: '#0000004d' }}>
           Remaining time
         </div>
