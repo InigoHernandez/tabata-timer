@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -41,10 +42,10 @@ const TimerSettingsPanel = ({
           <div className="flex justify-between items-center py-0">
             <span style={{
             color: '#0000004d'
-          }} className="text-base md:text-base font-normal lg:text-sm">
+          }} className="text-base md:text-base font-normal">
               Number of tabatas
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-roboto-mono" style={{
+            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{settings.sets}</span>
           </div>
@@ -53,12 +54,12 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-4 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base lg:text-sm md:text-base font-normal" style={{
+            <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
           }}>
               Rounds per tabatas
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-roboto-mono" style={{
+            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{settings.rounds}</span>
           </div>
@@ -67,12 +68,12 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-4 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base lg:text-sm md:text-base font-normal" style={{
+            <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
           }}>
               Work time
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-roboto-mono" style={{
+            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{formatTime(settings.workTime)}</span>
           </div>
@@ -81,12 +82,12 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-4 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base lg:text-sm md:text-base font-normal" style={{
+            <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
           }}>
               Rest time
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-roboto-mono" style={{
+            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{formatTime(settings.restTime)}</span>
           </div>
@@ -95,12 +96,12 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-4 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base lg:text-sm md:text-base font-normal" style={{
+            <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
           }}>
               Rest between tabatas
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-roboto-mono" style={{
+            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{formatTime(settings.restBetweenSets)}</span>
           </div>
@@ -109,12 +110,12 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-4 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base lg:text-sm md:text-base font-normal" style={{
+            <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
           }}>
               Countdown time
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-roboto-mono" style={{
+            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{settings.countdownTime}s</span>
           </div>
