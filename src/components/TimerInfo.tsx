@@ -36,7 +36,7 @@ const TimerInfo = ({
         <div className={`${textSizes} font-normal mb-2 transition-all duration-500`} style={{ color: '#0000004d' }}>
           Remaining time
         </div>
-        <div className={`${timeSizes} font-roboto-mono transition-all duration-500`} style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+        <div className={`${timeSizes} font-jetbrains-mono transition-all duration-500`} style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
           {formatTime(remainingTime)}
         </div>
       </div>

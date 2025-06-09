@@ -40,13 +40,13 @@ const TimerMainDisplay = ({
   return (
     <div className="text-center transition-all duration-300 ease-in-out">
       <Badge 
-        className={`${stateInfo.color} text-black ${badgeClasses} font-roboto-mono flex items-center mx-auto w-fit transition-all duration-300 rounded-[4px] cursor-default`}
+        className={`${stateInfo.color} text-black ${badgeClasses} font-jetbrains-mono flex items-center mx-auto w-fit transition-all duration-300 rounded-[4px] cursor-default`}
         style={{ fontWeight: '400' }}
       >
         {stateInfo.text}
       </Badge>
       <div 
-        className={`${timeClasses} font-roboto-mono leading-none transition-all duration-300`}
+        className={`${timeClasses} font-jetbrains-mono leading-none transition-all duration-300`}
         style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
       >
         {formatTimeDisplay(getDisplayTime())}

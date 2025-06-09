@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -103,18 +103,18 @@
     @apply bg-[#F8F8F8] text-foreground font-aspekta;
   }
 
-  /* Improve Roboto Mono font rendering */
-  .font-roboto-mono {
-    font-family: 'Roboto Mono', monospace;
+  /* Improve JetBrains Mono font rendering */
+  .font-jetbrains-mono {
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 300;
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Apply Roboto Mono to slider text */
+  /* Apply JetBrains Mono to slider text */
   input[type="range"] + * {
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 300;
   }
 }
