@@ -45,7 +45,7 @@ const TimerSettingsPanel = ({
           }} className="text-base font-normal md:text-base">
               Number of tabatas
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
+            <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{settings.sets}</span>
           </div>
@@ -59,7 +59,7 @@ const TimerSettingsPanel = ({
           }}>
               Rounds per tabatas
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
+            <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{settings.rounds}</span>
           </div>
@@ -73,7 +73,7 @@ const TimerSettingsPanel = ({
           }}>
               Work time
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
+            <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{formatTime(settings.workTime)}</span>
           </div>
@@ -87,7 +87,7 @@ const TimerSettingsPanel = ({
           }}>
               Rest time
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
+            <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{formatTime(settings.restTime)}</span>
           </div>
@@ -101,7 +101,7 @@ const TimerSettingsPanel = ({
           }}>
               Rest between tabatas
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
+            <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{formatTime(settings.restBetweenSets)}</span>
           </div>
@@ -115,7 +115,7 @@ const TimerSettingsPanel = ({
           }}>
               Countdown time
             </span>
-            <span className="font-normal text-base lg:text-sm md:text-base font-jetbrains-mono" style={{
+            <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
             fontWeight: '400'
           }}>{settings.countdownTime}s</span>
           </div>
