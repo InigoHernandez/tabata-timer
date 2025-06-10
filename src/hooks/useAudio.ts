@@ -35,11 +35,23 @@ export const useAudio = () => {
     try {
       const audioContext = audioContextRef.current;
       
-      // Resume context if suspended
+      // Always try to resume context before playing (crucial for mobile Safari)
       if (audioContext.state === 'suspended') {
-        audioContext.resume();
+        audioContext.resume().then(() => {
+          playSound(audioContext, frequency, duration, volume);
+        }).catch(() => {
+          console.warn('Failed to resume audio context');
+        });
+      } else {
+        playSound(audioContext, frequency, duration, volume);
       }
+    } catch (error) {
+      console.warn('Failed to play sound:', error);
+    }
+  }, [initializeAudioContext]);
 
+  const playSound = (audioContext: AudioContext, frequency: number, duration: number, volume: number) => {
+    try {
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
 
@@ -56,9 +68,9 @@ export const useAudio = () => {
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + duration);
     } catch (error) {
-      console.warn('Failed to play sound:', error);
+      console.warn('Failed to create sound:', error);
     }
-  }, [initializeAudioContext]);
+  };
 
   const playCountdownSound = useCallback(() => {
     createBeepSound(800, 0.1, 0.4);

@@ -66,7 +66,7 @@ const TabataTimer = () => {
   }, [settings.workTime]);
 
   const toggleTimer = () => {
-    // Initialize audio context on first user interaction (required for Safari)
+    // Initialize and resume audio context on every user interaction (required for Safari mobile)
     initializeAudioContext();
     
     if (timerState === 'idle') {
@@ -84,15 +84,22 @@ const TabataTimer = () => {
       interval = setInterval(() => {
         setCurrentTime(prev => {
           if (prev <= 3 && prev > 0 && (timerState === 'work' || timerState === 'rest')) {
+            // Ensure audio context is ready before playing warning sounds
+            initializeAudioContext();
             playWarningSound();
           }
           if (timerState === 'countdown' && prev > 0) {
+            // Ensure audio context is ready before playing countdown sounds
+            initializeAudioContext();
             playCountdownSound();
           }
           return prev - 1;
         });
       }, 1000);
     } else if (isRunning && currentTime === 0) {
+      // Ensure audio context is ready before playing transition sounds
+      initializeAudioContext();
+      
       if (timerState === 'countdown') {
         setTimerState('work');
         setCurrentTime(settings.workTime);
@@ -124,7 +131,7 @@ const TabataTimer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, playStartSound, playFinishSound]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, playStartSound, playFinishSound, initializeAudioContext]);
 
   const getRemainingTime = () => {
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
