@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -40,7 +39,8 @@ const TabataTimer = () => {
     playCountdownSound,
     playWarningSound,
     playStartSound,
-    playFinishSound
+    playFinishSound,
+    initializeAudioContext
   } = useAudio();
 
   useEffect(() => {
@@ -66,6 +66,9 @@ const TabataTimer = () => {
   }, [settings.workTime]);
 
   const toggleTimer = () => {
+    // Initialize audio context on first user interaction (required for Safari)
+    initializeAudioContext();
+    
     if (timerState === 'idle') {
       setTimerState('countdown');
       setCurrentTime(settings.countdownTime);

@@ -1,50 +1,85 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 export const useAudio = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
+  const isInitializedRef = useRef(false);
 
-  const createBeepSound = (frequency: number, duration: number, volume: number = 0.3) => {
+  const initializeAudioContext = useCallback(() => {
+    if (!audioContextRef.current && !isInitializedRef.current) {
+      try {
+        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        isInitializedRef.current = true;
+        
+        // Resume context if it's suspended (Safari requirement)
+        if (audioContextRef.current.state === 'suspended') {
+          audioContextRef.current.resume();
+        }
+      } catch (error) {
+        console.warn('Failed to initialize audio context:', error);
+      }
+    }
+  }, []);
+
+  const createBeepSound = useCallback((frequency: number, duration: number, volume: number = 0.3) => {
+    // Initialize audio context if not already done
     if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      initializeAudioContext();
     }
 
-    const audioContext = audioContextRef.current;
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    if (!audioContextRef.current) {
+      console.warn('Audio context not available');
+      return;
+    }
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    try {
+      const audioContext = audioContextRef.current;
+      
+      // Resume context if suspended
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
 
-    oscillator.frequency.value = frequency;
-    oscillator.type = 'sine';
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
 
-    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-    gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
 
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + duration);
-  };
+      oscillator.frequency.value = frequency;
+      oscillator.type = 'sine';
 
-  const playCountdownSound = () => {
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
+    } catch (error) {
+      console.warn('Failed to play sound:', error);
+    }
+  }, [initializeAudioContext]);
+
+  const playCountdownSound = useCallback(() => {
     createBeepSound(800, 0.1, 0.4);
-  };
+  }, [createBeepSound]);
 
-  const playWarningSound = () => {
+  const playWarningSound = useCallback(() => {
     createBeepSound(1000, 0.1, 0.3);
-  };
+  }, [createBeepSound]);
 
-  const playStartSound = () => {
+  const playStartSound = useCallback(() => {
+    // Initialize audio context on first user interaction
+    initializeAudioContext();
     createBeepSound(600, 0.2, 0.5);
-  };
+  }, [createBeepSound, initializeAudioContext]);
 
-  const playFinishSound = () => {
+  const playFinishSound = useCallback(() => {
     // Play a celebratory finish sound - ascending tones
     createBeepSound(523, 0.3, 0.4); // C
     setTimeout(() => createBeepSound(659, 0.3, 0.4), 200); // E
     setTimeout(() => createBeepSound(784, 0.4, 0.5), 400); // G
-  };
+  }, [createBeepSound]);
 
   useEffect(() => {
     return () => {
@@ -58,6 +93,7 @@ export const useAudio = () => {
     playCountdownSound,
     playWarningSound,
     playStartSound,
-    playFinishSound
+    playFinishSound,
+    initializeAudioContext
   };
 };
