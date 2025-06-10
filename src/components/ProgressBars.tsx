@@ -55,9 +55,13 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
   };
 
   return (
-    <div className="mb-4 md:mb-8 h-16 md:h-18 flex items-start overflow-hidden transition-all duration-500 ease-out animate-fade-in">
+    <div className="mb-4 md:mb-8 flex items-start overflow-hidden transition-all duration-500 ease-out animate-fade-in">
       <div 
-        className="flex gap-1 md:gap-2 items-start justify-start flex-wrap transition-all duration-500 ease-out max-h-16 md:max-h-18"
+        className="flex gap-1 md:gap-2 items-start justify-start flex-wrap transition-all duration-500 ease-out"
+        style={{ 
+          minHeight: '24px', // Fixed minimum height to prevent layout shift
+          lineHeight: '24px'
+        }}
         key={`bars-${totalSets}-${totalRounds}`}
       >
         {renderProgressBars()}

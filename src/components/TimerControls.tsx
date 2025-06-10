@@ -29,7 +29,7 @@ const TimerControls = ({
   const buttonSizes = isFullscreen
     ? "w-12 h-12 md:w-16 md:h-16"
     : isMobile 
-    ? "w-12 h-12"  // Increased from w-11 h-11 for better touch accessibility
+    ? "w-14 h-14"  // All buttons same size in mobile
     : "w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16";
 
   const iconSizes = isFullscreen
@@ -38,43 +38,40 @@ const TimerControls = ({
     ? "w-5 h-5"
     : "w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8";
 
-  // Increased CTA button size for mobile
-  const ctaButtonSizes = isMobile ? "w-14 h-14" : buttonSizes;
-
   if (isMobile) {
     return (
       <div className="flex flex-col gap-2 items-center justify-end">
-        {/* Settings Button */}
+        {/* Settings Button - Same size as CTA */}
         <Button 
           onClick={onToggleSettings} 
           size="lg" 
           variant="outline" 
-          className={`${buttonSizes} rounded-lg p-0 active:scale-95 transition-all duration-200 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
+          className={`${buttonSizes} rounded-lg p-0 active:scale-95 transition-all duration-300 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
         >
-          <SlidersHorizontal className={`${iconSizes} transition-colors duration-200 ease-out`} />
+          <SlidersHorizontal className={`${iconSizes} transition-colors duration-300 ease-out`} />
         </Button>
         
-        {/* Reset Button */}
+        {/* Reset Button - Same size as CTA */}
         <Button 
           onClick={onResetTimer} 
           size="lg" 
           variant="outline" 
-          className={`${buttonSizes} rounded-lg p-0 active:scale-95 transition-all duration-200 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
+          className={`${buttonSizes} rounded-lg p-0 active:scale-95 transition-all duration-300 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
         >
-          <RefreshCcw className={`${iconSizes} transition-colors duration-200 ease-out`} />
+          <RefreshCcw className={`${iconSizes} transition-colors duration-300 ease-out`} />
         </Button>
         
-        {/* Play/Pause Button - Larger for better touch accessibility */}
+        {/* Play/Pause Button - Same size as others */}
         <Button 
           onClick={onToggleTimer} 
           size="lg" 
-          className={`${ctaButtonSizes} rounded-lg p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-all duration-200 ease-out`}
+          className={`${buttonSizes} rounded-lg p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-all duration-300 ease-out`}
           disabled={timerState === 'finished'}
         >
           {isRunning ? (
-            <Pause className={`${iconSizes} fill-current transition-colors duration-200 ease-out`} />
+            <Pause className={`${iconSizes} fill-current transition-colors duration-300 ease-out`} />
           ) : (
-            <Play className={`${iconSizes} fill-current transition-colors duration-200 ease-out`} />
+            <Play className={`${iconSizes} fill-current transition-colors duration-300 ease-out`} />
           )}
         </Button>
       </div>
@@ -88,12 +85,12 @@ const TimerControls = ({
         onClick={onToggleFullscreen} 
         size="lg" 
         variant="outline" 
-        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-all duration-200 ease-out hidden md:flex border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
+        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-all duration-300 ease-out hidden md:flex border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
       >
         {isFullscreen ? (
-          <Minimize className={`${iconSizes} transition-colors duration-200 ease-out`} />
+          <Minimize className={`${iconSizes} transition-colors duration-300 ease-out`} />
         ) : (
-          <Maximize className={`${iconSizes} transition-colors duration-200 ease-out`} />
+          <Maximize className={`${iconSizes} transition-colors duration-300 ease-out`} />
         )}
       </Button>
       
@@ -101,21 +98,21 @@ const TimerControls = ({
         onClick={onResetTimer} 
         size="lg" 
         variant="outline" 
-        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-all duration-200 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
+        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-all duration-300 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
       >
-        <RefreshCcw className={`${iconSizes} transition-colors duration-200 ease-out`} />
+        <RefreshCcw className={`${iconSizes} transition-colors duration-300 ease-out`} />
       </Button>
       
       <Button 
         onClick={onToggleTimer} 
         size="lg" 
-        className={`${buttonSizes} rounded-md p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-all duration-200 ease-out`}
+        className={`${buttonSizes} rounded-md p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-all duration-300 ease-out`}
         disabled={timerState === 'finished'}
       >
         {isRunning ? (
-          <Pause className={`${iconSizes} fill-current transition-colors duration-200 ease-out`} />
+          <Pause className={`${iconSizes} fill-current transition-colors duration-300 ease-out`} />
         ) : (
-          <Play className={`${iconSizes} fill-current transition-colors duration-200 ease-out`} />
+          <Play className={`${iconSizes} fill-current transition-colors duration-300 ease-out`} />
         )}
       </Button>
     </div>
