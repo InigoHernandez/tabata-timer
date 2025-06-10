@@ -40,9 +40,27 @@ const TabataTimer = () => {
     playWarningSound,
     playStartSound,
     playFinishSound,
-    initializeAudioContext,
+    initializeAudio,
     testAudio
   } = useAudio();
+
+  // Initialize audio on first user interaction
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      // Remove listeners after first interaction
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+      initializeAudio();
+    };
+
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('touchstart', handleUserInteraction);
+
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+  }, [initializeAudio]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -67,8 +85,8 @@ const TabataTimer = () => {
   }, [settings.workTime]);
 
   const toggleTimer = () => {
-    // Initialize and resume audio context on every user interaction (required for Safari mobile)
-    initializeAudioContext();
+    // Initialize audio on explicit timer action
+    initializeAudio();
     
     if (timerState === 'idle') {
       setTimerState('countdown');
@@ -170,7 +188,18 @@ const TabataTimer = () => {
 
   return (
     <div className="h-dvh bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out overflow-hidden">
-      {/* Add test audio button for debugging - only visible in development */}
+      {/* Add audio initialization button for mobile Safari */}
+      <button 
+        onClick={() => {
+          initializeAudio();
+          testAudio();
+        }}
+        className="fixed top-2 left-2 z-50 bg-green-500 text-white px-2 py-1 text-xs rounded"
+      >
+        Initialize Audio
+      </button>
+
+      {/* Add test audio button for debugging */}
       {process.env.NODE_ENV === 'development' && (
         <button 
           onClick={testAudio}

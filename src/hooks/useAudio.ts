@@ -2,125 +2,143 @@
 import { useEffect, useRef, useCallback } from 'react';
 
 export const useAudio = () => {
-  const audioContextRef = useRef<AudioContext | null>(null);
+  const audioElementsRef = useRef<{ [key: string]: HTMLAudioElement }>({});
   const isInitializedRef = useRef(false);
-  const lastUserInteractionRef = useRef<number>(0);
 
-  const initializeAudioContext = useCallback(() => {
-    lastUserInteractionRef.current = Date.now();
+  // Create audio data URLs for different beep sounds
+  const createBeepDataUrl = (frequency: number, duration: number, volume: number = 0.3) => {
+    const sampleRate = 44100;
+    const samples = Math.floor(sampleRate * duration);
+    const buffer = new ArrayBuffer(44 + samples * 2);
+    const view = new DataView(buffer);
     
-    if (!audioContextRef.current && !isInitializedRef.current) {
-      try {
-        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
-        isInitializedRef.current = true;
-        console.log('Audio context initialized:', audioContextRef.current.state);
-      } catch (error) {
-        console.warn('Failed to initialize audio context:', error);
-      }
-    }
-
-    // Always try to resume context on user interaction
-    if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
-      audioContextRef.current.resume().then(() => {
-        console.log('Audio context resumed successfully');
-      }).catch((error) => {
-        console.warn('Failed to resume audio context:', error);
-      });
-    }
-  }, []);
-
-  const createBeepSound = useCallback((frequency: number, duration: number, volume: number = 0.3) => {
-    // Check if we have recent user interaction (within 1 second)
-    const timeSinceInteraction = Date.now() - lastUserInteractionRef.current;
-    if (timeSinceInteraction > 1000) {
-      console.warn('No recent user interaction, skipping audio');
-      return;
-    }
-
-    if (!audioContextRef.current) {
-      console.warn('Audio context not available');
-      return;
-    }
-
-    const audioContext = audioContextRef.current;
-    console.log('Attempting to play sound, context state:', audioContext.state);
-
-    // Force resume if suspended
-    if (audioContext.state === 'suspended') {
-      audioContext.resume().then(() => {
-        playSound(audioContext, frequency, duration, volume);
-      }).catch((error) => {
-        console.warn('Failed to resume for sound playback:', error);
-      });
-    } else {
-      playSound(audioContext, frequency, duration, volume);
-    }
-  }, []);
-
-  const playSound = (audioContext: AudioContext, frequency: number, duration: number, volume: number) => {
-    try {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      oscillator.frequency.value = frequency;
-      oscillator.type = 'sine';
-
-      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-      gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + duration);
-      
-      console.log('Sound played successfully');
-    } catch (error) {
-      console.warn('Failed to create sound:', error);
-    }
-  };
-
-  const playCountdownSound = useCallback(() => {
-    createBeepSound(800, 0.1, 0.4);
-  }, [createBeepSound]);
-
-  const playWarningSound = useCallback(() => {
-    createBeepSound(1000, 0.1, 0.3);
-  }, [createBeepSound]);
-
-  const playStartSound = useCallback(() => {
-    initializeAudioContext();
-    createBeepSound(600, 0.2, 0.5);
-  }, [createBeepSound, initializeAudioContext]);
-
-  const playFinishSound = useCallback(() => {
-    // Play a celebratory finish sound - ascending tones
-    createBeepSound(523, 0.3, 0.4); // C
-    setTimeout(() => createBeepSound(659, 0.3, 0.4), 200); // E
-    setTimeout(() => createBeepSound(784, 0.4, 0.5), 400); // G
-  }, [createBeepSound]);
-
-  // Test function to verify audio works on user interaction
-  const testAudio = useCallback(() => {
-    initializeAudioContext();
-    createBeepSound(440, 0.2, 0.3);
-  }, [initializeAudioContext, createBeepSound]);
-
-  useEffect(() => {
-    return () => {
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
+    // WAV header
+    const writeString = (offset: number, string: string) => {
+      for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
       }
     };
+    
+    writeString(0, 'RIFF');
+    view.setUint32(4, 36 + samples * 2, true);
+    writeString(8, 'WAVE');
+    writeString(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    writeString(36, 'data');
+    view.setUint32(40, samples * 2, true);
+    
+    // Generate sine wave
+    for (let i = 0; i < samples; i++) {
+      const sample = Math.sin(2 * Math.PI * frequency * i / sampleRate) * volume * 0x7FFF;
+      view.setInt16(44 + i * 2, sample, true);
+    }
+    
+    const blob = new Blob([buffer], { type: 'audio/wav' });
+    return URL.createObjectURL(blob);
+  };
+
+  const initializeAudio = useCallback(() => {
+    if (isInitializedRef.current) return;
+    
+    try {
+      // Create different audio elements for different sounds
+      audioElementsRef.current = {
+        countdown: new Audio(createBeepDataUrl(800, 0.1, 0.4)),
+        warning: new Audio(createBeepDataUrl(1000, 0.1, 0.3)),
+        start: new Audio(createBeepDataUrl(600, 0.2, 0.5)),
+        finish1: new Audio(createBeepDataUrl(523, 0.3, 0.4)), // C
+        finish2: new Audio(createBeepDataUrl(659, 0.3, 0.4)), // E
+        finish3: new Audio(createBeepDataUrl(784, 0.4, 0.5)), // G
+        test: new Audio(createBeepDataUrl(440, 0.2, 0.3))
+      };
+
+      // Preload all audio elements
+      Object.values(audioElementsRef.current).forEach(audio => {
+        audio.preload = 'auto';
+        audio.load();
+      });
+      
+      isInitializedRef.current = true;
+      console.log('Audio elements initialized');
+    } catch (error) {
+      console.warn('Failed to initialize audio elements:', error);
+    }
   }, []);
+
+  const playSound = useCallback((soundName: keyof typeof audioElementsRef.current) => {
+    if (!isInitializedRef.current) {
+      initializeAudio();
+    }
+    
+    const audio = audioElementsRef.current[soundName];
+    if (!audio) return;
+    
+    try {
+      // Reset and play
+      audio.currentTime = 0;
+      const playPromise = audio.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.warn(`Failed to play ${soundName} sound:`, error);
+          // If autoplay is prevented, we can try again on next user interaction
+        });
+      }
+      
+      console.log(`${soundName} sound played`);
+    } catch (error) {
+      console.warn(`Error playing ${soundName} sound:`, error);
+    }
+  }, [initializeAudio]);
+
+  const playCountdownSound = useCallback(() => {
+    playSound('countdown');
+  }, [playSound]);
+
+  const playWarningSound = useCallback(() => {
+    playSound('warning');
+  }, [playSound]);
+
+  const playStartSound = useCallback(() => {
+    playSound('start');
+  }, [playSound]);
+
+  const playFinishSound = useCallback(() => {
+    playSound('finish1');
+    setTimeout(() => playSound('finish2'), 200);
+    setTimeout(() => playSound('finish3'), 400);
+  }, [playSound]);
+
+  const testAudio = useCallback(() => {
+    playSound('test');
+  }, [playSound]);
+
+  useEffect(() => {
+    // Initialize on mount
+    initializeAudio();
+    
+    return () => {
+      // Clean up audio elements
+      if (isInitializedRef.current) {
+        Object.values(audioElementsRef.current).forEach(audio => {
+          URL.revokeObjectURL(audio.src);
+        });
+      }
+    };
+  }, [initializeAudio]);
 
   return {
     playCountdownSound,
     playWarningSound,
     playStartSound,
     playFinishSound,
-    initializeAudioContext,
+    initializeAudio,
     testAudio
   };
 };
