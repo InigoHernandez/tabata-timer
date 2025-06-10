@@ -4,27 +4,37 @@ import { useEffect, useRef, useCallback } from 'react';
 export const useAudio = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
   const isInitializedRef = useRef(false);
+  const lastUserInteractionRef = useRef<number>(0);
 
   const initializeAudioContext = useCallback(() => {
+    lastUserInteractionRef.current = Date.now();
+    
     if (!audioContextRef.current && !isInitializedRef.current) {
       try {
         audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
         isInitializedRef.current = true;
-        
-        // Resume context if it's suspended (Safari requirement)
-        if (audioContextRef.current.state === 'suspended') {
-          audioContextRef.current.resume();
-        }
+        console.log('Audio context initialized:', audioContextRef.current.state);
       } catch (error) {
         console.warn('Failed to initialize audio context:', error);
       }
     }
+
+    // Always try to resume context on user interaction
+    if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
+      audioContextRef.current.resume().then(() => {
+        console.log('Audio context resumed successfully');
+      }).catch((error) => {
+        console.warn('Failed to resume audio context:', error);
+      });
+    }
   }, []);
 
   const createBeepSound = useCallback((frequency: number, duration: number, volume: number = 0.3) => {
-    // Initialize audio context if not already done
-    if (!audioContextRef.current) {
-      initializeAudioContext();
+    // Check if we have recent user interaction (within 1 second)
+    const timeSinceInteraction = Date.now() - lastUserInteractionRef.current;
+    if (timeSinceInteraction > 1000) {
+      console.warn('No recent user interaction, skipping audio');
+      return;
     }
 
     if (!audioContextRef.current) {
@@ -32,23 +42,20 @@ export const useAudio = () => {
       return;
     }
 
-    try {
-      const audioContext = audioContextRef.current;
-      
-      // Always try to resume context before playing (crucial for mobile Safari)
-      if (audioContext.state === 'suspended') {
-        audioContext.resume().then(() => {
-          playSound(audioContext, frequency, duration, volume);
-        }).catch(() => {
-          console.warn('Failed to resume audio context');
-        });
-      } else {
+    const audioContext = audioContextRef.current;
+    console.log('Attempting to play sound, context state:', audioContext.state);
+
+    // Force resume if suspended
+    if (audioContext.state === 'suspended') {
+      audioContext.resume().then(() => {
         playSound(audioContext, frequency, duration, volume);
-      }
-    } catch (error) {
-      console.warn('Failed to play sound:', error);
+      }).catch((error) => {
+        console.warn('Failed to resume for sound playback:', error);
+      });
+    } else {
+      playSound(audioContext, frequency, duration, volume);
     }
-  }, [initializeAudioContext]);
+  }, []);
 
   const playSound = (audioContext: AudioContext, frequency: number, duration: number, volume: number) => {
     try {
@@ -67,6 +74,8 @@ export const useAudio = () => {
 
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + duration);
+      
+      console.log('Sound played successfully');
     } catch (error) {
       console.warn('Failed to create sound:', error);
     }
@@ -81,7 +90,6 @@ export const useAudio = () => {
   }, [createBeepSound]);
 
   const playStartSound = useCallback(() => {
-    // Initialize audio context on first user interaction
     initializeAudioContext();
     createBeepSound(600, 0.2, 0.5);
   }, [createBeepSound, initializeAudioContext]);
@@ -92,6 +100,12 @@ export const useAudio = () => {
     setTimeout(() => createBeepSound(659, 0.3, 0.4), 200); // E
     setTimeout(() => createBeepSound(784, 0.4, 0.5), 400); // G
   }, [createBeepSound]);
+
+  // Test function to verify audio works on user interaction
+  const testAudio = useCallback(() => {
+    initializeAudioContext();
+    createBeepSound(440, 0.2, 0.3);
+  }, [initializeAudioContext, createBeepSound]);
 
   useEffect(() => {
     return () => {
@@ -106,6 +120,7 @@ export const useAudio = () => {
     playWarningSound,
     playStartSound,
     playFinishSound,
-    initializeAudioContext
+    initializeAudioContext,
+    testAudio
   };
 };

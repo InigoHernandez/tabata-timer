@@ -40,7 +40,8 @@ const TabataTimer = () => {
     playWarningSound,
     playStartSound,
     playFinishSound,
-    initializeAudioContext
+    initializeAudioContext,
+    testAudio
   } = useAudio();
 
   useEffect(() => {
@@ -84,22 +85,15 @@ const TabataTimer = () => {
       interval = setInterval(() => {
         setCurrentTime(prev => {
           if (prev <= 3 && prev > 0 && (timerState === 'work' || timerState === 'rest')) {
-            // Ensure audio context is ready before playing warning sounds
-            initializeAudioContext();
             playWarningSound();
           }
           if (timerState === 'countdown' && prev > 0) {
-            // Ensure audio context is ready before playing countdown sounds
-            initializeAudioContext();
             playCountdownSound();
           }
           return prev - 1;
         });
       }, 1000);
     } else if (isRunning && currentTime === 0) {
-      // Ensure audio context is ready before playing transition sounds
-      initializeAudioContext();
-      
       if (timerState === 'countdown') {
         setTimerState('work');
         setCurrentTime(settings.workTime);
@@ -131,7 +125,7 @@ const TabataTimer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, playStartSound, playFinishSound, initializeAudioContext]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, playStartSound, playFinishSound]);
 
   const getRemainingTime = () => {
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
@@ -176,6 +170,16 @@ const TabataTimer = () => {
 
   return (
     <div className="h-dvh bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out overflow-hidden">
+      {/* Add test audio button for debugging - only visible in development */}
+      {process.env.NODE_ENV === 'development' && (
+        <button 
+          onClick={testAudio}
+          className="fixed top-2 right-2 z-50 bg-blue-500 text-white px-2 py-1 text-xs rounded"
+        >
+          Test Audio
+        </button>
+      )}
+
       {/* Mobile Layout - Full viewport adaptation */}
       <div className="md:hidden h-full flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
