@@ -188,27 +188,6 @@ const TabataTimer = () => {
 
   return (
     <div className="h-dvh bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out overflow-hidden">
-      {/* Add audio initialization button for mobile Safari */}
-      <button 
-        onClick={() => {
-          initializeAudio();
-          testAudio();
-        }}
-        className="fixed top-2 left-2 z-50 bg-green-500 text-white px-2 py-1 text-xs rounded"
-      >
-        Initialize Audio
-      </button>
-
-      {/* Add test audio button for debugging */}
-      {process.env.NODE_ENV === 'development' && (
-        <button 
-          onClick={testAudio}
-          className="fixed top-2 right-2 z-50 bg-blue-500 text-white px-2 py-1 text-xs rounded"
-        >
-          Test Audio
-        </button>
-      )}
-
       {/* Mobile Layout - Full viewport adaptation */}
       <div className="md:hidden h-full flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
