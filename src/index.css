@@ -117,4 +117,27 @@
     font-family: 'JetBrains Mono', monospace;
     font-weight: 300;
   }
+
+  /* Safari mobile viewport fix */
+  html {
+    height: 100dvh;
+  }
+
+  body {
+    min-height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Ensure mobile compatibility */
+  @supports (-webkit-touch-callout: none) {
+    html {
+      height: -webkit-fill-available;
+    }
+    
+    body {
+      min-height: -webkit-fill-available;
+      max-height: -webkit-fill-available;
+    }
+  }
 }
