@@ -254,24 +254,26 @@ const TabataTimer = () => {
           </div>
 
           <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
-            {/* Tablet Layout - Similar to desktop but optimized for tablet viewport */}
-            <div className="xl:hidden grid grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
-              <TimerDisplay 
-                currentTime={currentTime} 
-                currentRound={currentRound} 
-                currentSet={currentSet} 
-                timerState={timerState} 
-                isRunning={isRunning} 
-                totalSets={settings.sets} 
-                totalRounds={settings.rounds} 
-                remainingTime={getRemainingTime()} 
-                workTime={settings.workTime} 
-                onToggleTimer={toggleTimer} 
-                onResetTimer={resetTimer} 
-              />
+            {/* Tablet Layout - 2 columns with adjusted proportions for tablet screens */}
+            <div className="xl:hidden grid grid-cols-5 h-full min-h-0 transition-all duration-500 ease-in-out">
+              <div className="col-span-3">
+                <TimerDisplay 
+                  currentTime={currentTime} 
+                  currentRound={currentRound} 
+                  currentSet={currentSet} 
+                  timerState={timerState} 
+                  isRunning={isRunning} 
+                  totalSets={settings.sets} 
+                  totalRounds={settings.rounds} 
+                  remainingTime={getRemainingTime()} 
+                  workTime={settings.workTime} 
+                  onToggleTimer={toggleTimer} 
+                  onResetTimer={resetTimer} 
+                />
+              </div>
 
               {!isFullscreen && (
-                <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
+                <div className="col-span-2 border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
                   <TimerSettingsPanel 
                     settings={settings} 
                     onSettingsChange={setSettings} 
