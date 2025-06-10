@@ -33,9 +33,10 @@ const TimerMainDisplay = ({
     ? "mb-6 px-4 py-2 text-lg"
     : "mb-4 px-3 py-1 text-sm";
 
+  // Made timer numbers slightly bigger
   const timeClasses = isFullscreen
     ? "text-[8rem] md:text-[16rem] lg:text-[20rem]"
-    : "text-[6rem] md:text-[10rem] lg:text-[14rem]";
+    : "text-[7rem] md:text-[11rem] lg:text-[15rem]";
 
   // Format time with custom colon styling
   const formatTimeWithCustomColon = (seconds: number) => {
