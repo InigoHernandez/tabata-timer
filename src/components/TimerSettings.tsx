@@ -36,9 +36,9 @@ const TimerSettingsPanel = ({
 
   // Disable sliders when timer is running (not idle, paused, or finished)
   const slidersDisabled = isRunning && timerState !== 'idle' && timerState !== 'finished';
-  return <div className="flex-1 py-4 animate-fade-in md:py-0 flex items-center justify-center">
-      <div className="space-y-6 lg:space-y-5 px-0 py-0 w-full">
-        <div className="space-y-4 lg:space-y-3 py-[16px]">
+  return <div className="flex-1 py-2 animate-fade-in md:py-0 flex items-center justify-center">
+      <div className="space-y-4 lg:space-y-5 px-0 py-0 w-full">
+        <div className="space-y-2 lg:space-y-3 py-[12px]">
           <div className="flex justify-between items-center py-0">
             <span style={{
             color: 'rgba(0, 0, 0, 0.3)'
@@ -52,7 +52,7 @@ const TimerSettingsPanel = ({
           <Slider value={[settings.sets]} onValueChange={value => updateSetting('sets', value[0])} max={8} min={1} step={1} className="w-full" disabled={slidersDisabled} />
         </div>
 
-        <div className="space-y-4 lg:space-y-3">
+        <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
@@ -66,7 +66,7 @@ const TimerSettingsPanel = ({
           <Slider value={[settings.rounds]} onValueChange={value => updateSetting('rounds', value[0])} max={12} min={1} step={1} className="w-full" disabled={slidersDisabled} />
         </div>
 
-        <div className="space-y-4 lg:space-y-3">
+        <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
@@ -80,7 +80,7 @@ const TimerSettingsPanel = ({
           <Slider value={[settings.workTime]} onValueChange={value => updateSetting('workTime', value[0])} max={60} min={5} step={5} className="w-full" disabled={slidersDisabled} />
         </div>
 
-        <div className="space-y-4 lg:space-y-3">
+        <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
@@ -94,7 +94,7 @@ const TimerSettingsPanel = ({
           <Slider value={[settings.restTime]} onValueChange={value => updateSetting('restTime', value[0])} max={60} min={5} step={5} className="w-full" disabled={slidersDisabled} />
         </div>
 
-        <div className="space-y-4 lg:space-y-3">
+        <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
@@ -108,7 +108,7 @@ const TimerSettingsPanel = ({
           <Slider value={[settings.restBetweenSets]} onValueChange={value => updateSetting('restBetweenSets', value[0])} max={180} min={30} step={15} className="w-full" disabled={slidersDisabled} />
         </div>
 
-        <div className="space-y-4 lg:space-y-3">
+        <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-base md:text-base font-normal" style={{
             color: '#0000004d'
