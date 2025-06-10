@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
 import TimerDisplay from './TimerDisplay';
 import TimerSettingsPanel from './TimerSettings';
+import MobileSettingsDrawer from './MobileSettingsDrawer';
 import { useAudio } from '@/hooks/useAudio';
 
 interface TimerSettings {
@@ -32,6 +33,7 @@ const TabataTimer = () => {
   const [currentSet, setCurrentSet] = useState(1);
   const [timerState, setTimerState] = useState<TimerState>('idle');
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMobileSettingsOpen, setIsMobileSettingsOpen] = useState(false);
 
   const {
     playCountdownSound,
@@ -157,6 +159,10 @@ const TabataTimer = () => {
     return remaining;
   };
 
+  const toggleMobileSettings = () => {
+    setIsMobileSettingsOpen(!isMobileSettingsOpen);
+  };
+
   return (
     <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out">
       <div className="h-screen flex flex-col p-2 md:p-4 lg:p-8 overflow-hidden transition-all duration-500 ease-in-out">
@@ -165,9 +171,8 @@ const TabataTimer = () => {
         </div>
 
         <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
-          {/* Mobile Layout - Stack vertically on small screens */}
-          <div className="flex flex-col lg:hidden h-full min-h-0">
-            {/* Timer Display - Top priority on mobile */}
+          {/* Mobile Layout - Full screen timer only */}
+          <div className="flex flex-col md:hidden h-full min-h-0">
             <div className="flex-1 min-h-0">
               <TimerDisplay 
                 currentTime={currentTime} 
@@ -183,10 +188,26 @@ const TabataTimer = () => {
                 onResetTimer={resetTimer} 
               />
             </div>
+          </div>
 
-            {/* Settings Panel - Below timer on mobile, only when not fullscreen */}
+          {/* Tablet Layout - Similar to desktop but optimized for tablet viewport */}
+          <div className="hidden md:grid xl:hidden md:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
+            <TimerDisplay 
+              currentTime={currentTime} 
+              currentRound={currentRound} 
+              currentSet={currentSet} 
+              timerState={timerState} 
+              isRunning={isRunning} 
+              totalSets={settings.sets} 
+              totalRounds={settings.rounds} 
+              remainingTime={getRemainingTime()} 
+              workTime={settings.workTime} 
+              onToggleTimer={toggleTimer} 
+              onResetTimer={resetTimer} 
+            />
+
             {!isFullscreen && (
-              <div className="border-t border-[#E8E8E8] bg-[#F8F8F8] p-4 flex-shrink-0 max-h-[50vh] overflow-y-auto">
+              <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
                 <TimerSettingsPanel 
                   settings={settings} 
                   onSettingsChange={setSettings} 
@@ -197,8 +218,8 @@ const TabataTimer = () => {
             )}
           </div>
 
-          {/* Desktop Layout - Side by side on large screens */}
-          <div className="hidden lg:grid lg:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
+          {/* Desktop Layout - Original layout for large screens */}
+          <div className="hidden xl:grid xl:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
             <TimerDisplay 
               currentTime={currentTime} 
               currentRound={currentRound} 
@@ -226,6 +247,16 @@ const TabataTimer = () => {
           </div>
         </Card>
       </div>
+
+      {/* Mobile Settings Drawer */}
+      <MobileSettingsDrawer
+        isOpen={isMobileSettingsOpen}
+        onToggle={toggleMobileSettings}
+        settings={settings}
+        onSettingsChange={setSettings}
+        isRunning={isRunning}
+        timerState={timerState}
+      />
     </div>
   );
 };

@@ -86,9 +86,9 @@ const TimerDisplay = ({
         {/* Content Layer */}
         <div className="relative z-10 w-full h-full flex flex-col">
           {/* Top Section - Progress Bars and Remaining Time */}
-          <div className="flex justify-between items-start p-8 flex-shrink-0">
+          <div className="flex justify-between items-start p-4 md:p-6 lg:p-8 flex-shrink-0">
             {/* Progress Bars - Top Left */}
-            <div className="flex-1 max-w-md">
+            <div className="flex-1 max-w-sm md:max-w-md">
               <ProgressBars 
                 currentSet={currentSet}
                 currentRound={currentRound}
@@ -102,14 +102,14 @@ const TimerDisplay = ({
               <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
                 Remaining time
               </div>
-              <div className="text-2xl md:text-4xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+              <div className="text-xl md:text-2xl lg:text-4xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
                 {formatTimeWithCustomColon(remainingTime)}
               </div>
             </div>
           </div>
 
           {/* Center Section - Main Timer Display */}
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex-1 flex items-center justify-center px-4">
             <TimerMainDisplay
               currentTime={currentTime}
               timerState={timerState}
@@ -120,14 +120,14 @@ const TimerDisplay = ({
           </div>
 
           {/* Bottom Section - Cycles and Controls */}
-          <div className="flex justify-between items-end p-8 flex-shrink-0">
+          <div className="flex justify-between items-end p-4 md:p-6 lg:p-8 flex-shrink-0">
             {/* Cycles - Bottom Left */}
             <div>
               <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
                 Cycles
               </div>
               <div 
-                className="text-2xl md:text-4xl font-jetbrains-mono"
+                className="text-xl md:text-2xl lg:text-4xl font-jetbrains-mono"
                 style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               >
                 {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
@@ -214,13 +214,6 @@ const TimerDisplay = ({
       </div>
     </div>
   );
-};
-
-// Helper function to format time
-const formatTime = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 };
 
 export default TimerDisplay;

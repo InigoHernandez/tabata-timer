@@ -32,11 +32,12 @@ const TimerControls = ({
 
   return (
     <div className={`flex ${isFullscreen ? 'gap-4' : 'gap-2 md:gap-4'} items-center transition-all duration-500`}>
+      {/* Hide fullscreen button on mobile (md:block to show on tablet and up) */}
       <Button 
         onClick={onToggleFullscreen} 
         size="lg" 
         variant="outline" 
-        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-transform duration-100`}
+        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-transform duration-100 hidden md:flex`}
       >
         {isFullscreen ? (
           <Minimize className={iconSizes} />
