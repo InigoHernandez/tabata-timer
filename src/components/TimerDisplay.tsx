@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import TimerControls from './TimerControls';
@@ -152,7 +153,7 @@ const TimerDisplay = ({
     );
   }
 
-  // Mobile Layout (updated layout with proper alignment)
+  // Mobile Layout (updated with better viewport adaptation)
   return (
     <div className="lg:col-span-2 h-full flex flex-col relative min-h-0 overflow-hidden">
       {/* Background Layer with Animation */}
@@ -163,10 +164,10 @@ const TimerDisplay = ({
       
       {/* Content Layer */}
       <div className="relative z-10 w-full h-full flex flex-col">
-        {/* Mobile Card Layout */}
-        <div className="md:hidden flex-1 flex flex-col p-4">
+        {/* Mobile Card Layout - Better space distribution */}
+        <div className="md:hidden flex-1 flex flex-col p-4 min-h-0">
           {/* Top section - Progress bars and remaining time */}
-          <div className="flex justify-between items-start mb-6">
+          <div className="flex justify-between items-start mb-4 flex-shrink-0">
             <div className="flex-1 max-w-[200px]">
               <ProgressBars 
                 currentSet={currentSet}
@@ -185,8 +186,8 @@ const TimerDisplay = ({
             </div>
           </div>
 
-          {/* Center section - Timer display (perfectly centered) */}
-          <div className="flex-1 flex items-center justify-center">
+          {/* Center section - Timer display (perfectly centered and flexible) */}
+          <div className="flex-1 flex items-center justify-center min-h-0 py-2">
             <TimerMainDisplay
               currentTime={currentTime}
               timerState={timerState}
@@ -196,8 +197,8 @@ const TimerDisplay = ({
             />
           </div>
 
-          {/* Bottom section - Cycles and Controls (aligned) */}
-          <div className="flex justify-between items-end">
+          {/* Bottom section - Cycles and Controls (always visible) */}
+          <div className="flex justify-between items-end flex-shrink-0 pt-2">
             <div>
               <div className="text-sm font-normal mb-1" style={{ color: '#0000004d' }}>
                 Cycles

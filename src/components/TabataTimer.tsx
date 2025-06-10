@@ -166,13 +166,13 @@ const TabataTimer = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out">
-      {/* Mobile Layout - No padding, full screen usage */}
+      {/* Mobile Layout - Full viewport adaptation */}
       <div className="md:hidden h-screen flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
           <TimerHero hideInFullscreen={isFullscreen} />
         </div>
 
-        <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
+        <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out mb-2`}>
           <div className="flex flex-col h-full min-h-0">
             <div className="flex-1 min-h-0">
               <TimerDisplay 
