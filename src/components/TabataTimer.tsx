@@ -165,9 +165,9 @@ const TabataTimer = () => {
   };
 
   return (
-    <div className="bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out" style={{ minHeight: '100vh', height: '100dvh' }}>
-      {/* Mobile Layout - Optimized for Safari */}
-      <div className="md:hidden flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out" style={{ height: '100dvh' }}>
+    <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out">
+      {/* Mobile Layout - Full viewport adaptation */}
+      <div className="md:hidden h-screen flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
           <TimerHero hideInFullscreen={isFullscreen} />
         </div>
