@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, RefreshCcw, Maximize, Minimize, SlidersHorizontal } from 'lucide-react';
@@ -84,7 +85,7 @@ const TimerControls = ({
         onClick={onToggleFullscreen} 
         size="lg" 
         variant="outline" 
-        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-transform duration-100 hidden md:flex`}
+        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-transform duration-100 hidden md:flex border-foreground/20`}
       >
         {isFullscreen ? (
           <Minimize className={iconSizes} />
@@ -97,7 +98,7 @@ const TimerControls = ({
         onClick={onResetTimer} 
         size="lg" 
         variant="outline" 
-        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-transform duration-100`}
+        className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-transform duration-100 border-foreground/20`}
       >
         <RefreshCcw className={iconSizes} />
       </Button>
