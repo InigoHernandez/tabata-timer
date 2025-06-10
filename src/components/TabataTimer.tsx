@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -32,6 +33,7 @@ const TabataTimer = () => {
   const [currentRound, setCurrentRound] = useState(1);
   const [currentSet, setCurrentSet] = useState(1);
   const [timerState, setTimerState] = useState<TimerState>('idle');
+  const [prevTimerState, setPrevTimerState] = useState<TimerState>('idle');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMobileSettingsOpen, setIsMobileSettingsOpen] = useState(false);
 
@@ -82,6 +84,7 @@ const TabataTimer = () => {
     setCurrentRound(1);
     setCurrentSet(1);
     setTimerState('idle');
+    setPrevTimerState('idle');
   }, [settings.workTime]);
 
   const toggleTimer = () => {
@@ -91,11 +94,29 @@ const TabataTimer = () => {
     if (timerState === 'idle') {
       setTimerState('countdown');
       setCurrentTime(settings.countdownTime);
-      // Play countdown sound immediately when countdown starts at the current time
+      // Play countdown sound immediately when countdown starts
       playCountdownSound();
     }
     setIsRunning(!isRunning);
   };
+
+  // Handle state transitions and play appropriate sounds
+  const handleStateTransition = useCallback((newState: TimerState, newTime: number) => {
+    setPrevTimerState(timerState);
+    setTimerState(newState);
+    setCurrentTime(newTime);
+
+    // Play sounds immediately when state changes
+    if (newState === 'work') {
+      playStartSound(); // Work start sound
+    } else if (newState === 'rest') {
+      playStartSound(); // Rest start sound (using same sound for now)
+    } else if (newState === 'setRest') {
+      playStartSound(); // Set rest start sound
+    } else if (newState === 'finished') {
+      playFinishSound(); // Finished sound
+    }
+  }, [timerState, playStartSound, playFinishSound]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -106,13 +127,23 @@ const TabataTimer = () => {
           const currentTimeValue = prev; // Current time before decrement
           const newTime = prev - 1; // Time after decrement
           
-          // Play audio cues BEFORE decrementing, based on current time
-          if (timerState === 'countdown' && currentTimeValue > 1) {
-            // Play countdown sound for each second except the last one (which transitions to work)
-            playCountdownSound();
-          } else if ((timerState === 'work' || timerState === 'rest') && currentTimeValue <= 5 && currentTimeValue > 1) {
-            // Play warning sound for last 5 seconds (5, 4, 3, 2) but not 1 (which transitions)
-            playWarningSound();
+          // Play audio cues for current second (before decrementing)
+          if (timerState === 'countdown') {
+            if (currentTimeValue > 1) {
+              // Play countdown sound for each second except the last one
+              playCountdownSound();
+            }
+            // Note: When countdown reaches 0, state transition will handle the start sound
+          } else if (timerState === 'work' || timerState === 'rest') {
+            if (currentTimeValue <= 5 && currentTimeValue > 1) {
+              // Play warning sound for last 5 seconds (5, 4, 3, 2) but not 1 (which transitions)
+              playWarningSound();
+            }
+          } else if (timerState === 'setRest') {
+            if (currentTimeValue <= 5 && currentTimeValue > 1) {
+              // Play warning sound for last 5 seconds of set rest
+              playWarningSound();
+            }
           }
           
           return newTime;
@@ -121,40 +152,28 @@ const TabataTimer = () => {
     } else if (isRunning && currentTime === 0) {
       // Handle state transitions when time reaches 0
       if (timerState === 'countdown') {
-        setTimerState('work');
-        setCurrentTime(settings.workTime);
-        // Play start sound immediately when work begins
-        playStartSound();
+        handleStateTransition('work', settings.workTime);
       } else if (timerState === 'work') {
         if (currentRound < settings.rounds) {
-          setTimerState('rest');
-          setCurrentTime(settings.restTime);
+          handleStateTransition('rest', settings.restTime);
         } else if (currentSet < settings.sets) {
-          setTimerState('setRest');
-          setCurrentTime(settings.restBetweenSets);
+          handleStateTransition('setRest', settings.restBetweenSets);
           setCurrentRound(1);
           setCurrentSet(prev => prev + 1);
         } else {
-          setTimerState('finished');
+          handleStateTransition('finished', 0);
           setIsRunning(false);
-          playFinishSound();
         }
       } else if (timerState === 'rest') {
-        setTimerState('work');
-        setCurrentTime(settings.workTime);
         setCurrentRound(prev => prev + 1);
-        // Play start sound immediately when work begins after rest
-        playStartSound();
+        handleStateTransition('work', settings.workTime);
       } else if (timerState === 'setRest') {
-        setTimerState('work');
-        setCurrentTime(settings.workTime);
-        // Play start sound immediately when work begins after set rest
-        playStartSound();
+        handleStateTransition('work', settings.workTime);
       }
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, playStartSound, playFinishSound]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, handleStateTransition]);
 
   const getRemainingTime = () => {
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;

@@ -51,7 +51,9 @@ export const useAudio = () => {
       audioElementsRef.current = {
         countdown: new Audio(createBeepDataUrl(800, 0.1, 0.4)),
         warning: new Audio(createBeepDataUrl(1000, 0.1, 0.3)),
-        start: new Audio(createBeepDataUrl(600, 0.2, 0.5)),
+        workStart: new Audio(createBeepDataUrl(600, 0.2, 0.5)),
+        restStart: new Audio(createBeepDataUrl(400, 0.2, 0.4)),
+        setRestStart: new Audio(createBeepDataUrl(500, 0.2, 0.4)),
         finish1: new Audio(createBeepDataUrl(523, 0.3, 0.4)), // C
         finish2: new Audio(createBeepDataUrl(659, 0.3, 0.4)), // E
         finish3: new Audio(createBeepDataUrl(784, 0.4, 0.5)), // G
@@ -106,7 +108,15 @@ export const useAudio = () => {
   }, [playSound]);
 
   const playStartSound = useCallback(() => {
-    playSound('start');
+    playSound('workStart');
+  }, [playSound]);
+
+  const playRestStartSound = useCallback(() => {
+    playSound('restStart');
+  }, [playSound]);
+
+  const playSetRestStartSound = useCallback(() => {
+    playSound('setRestStart');
   }, [playSound]);
 
   const playFinishSound = useCallback(() => {
@@ -137,6 +147,8 @@ export const useAudio = () => {
     playCountdownSound,
     playWarningSound,
     playStartSound,
+    playRestStartSound,
+    playSetRestStartSound,
     playFinishSound,
     initializeAudio,
     testAudio
