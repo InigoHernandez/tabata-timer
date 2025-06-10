@@ -10,7 +10,7 @@ interface ProgressBarsProps {
 
 const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: ProgressBarsProps) => {
   const renderProgressBars = () => {
-    const rows = [];
+    const bars = [];
     
     for (let set = 1; set <= totalSets; set++) {
       const setBars = [];
@@ -30,31 +30,34 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
         );
       }
       
-      // Create a row with bars and "R" marker (except for last set)
-      rows.push(
+      bars.push(
         <div 
           key={set} 
-          className="flex items-center justify-between w-full transition-all duration-500 ease-out opacity-100"
+          className="flex gap-1 transition-all duration-500 ease-out opacity-100"
         >
-          <div className="flex gap-1">
-            {setBars}
-          </div>
-          {set < totalSets && (
-            <div className="flex items-center justify-center w-2 h-4 md:h-6 flex-shrink-0 ml-2">
-              <span className="text-xs font-medium opacity-60">R</span>
-            </div>
-          )}
+          {setBars}
         </div>
       );
+      
+      if (set < totalSets) {
+        bars.push(
+          <div 
+            key={`rest-${set}`} 
+            className="flex items-center justify-center w-2 h-4 md:h-6 flex-shrink-0 transition-all duration-500 ease-out opacity-100"
+          >
+            <span className="text-xs font-medium opacity-60 transition-opacity duration-500">R</span>
+          </div>
+        );
+      }
     }
     
-    return rows;
+    return bars;
   };
 
   return (
-    <div className="mb-4 md:mb-8 transition-all duration-500 ease-out animate-fade-in">
+    <div className="mb-4 md:mb-8 h-16 md:h-18 flex items-start overflow-hidden transition-all duration-500 ease-out animate-fade-in">
       <div 
-        className="flex flex-col gap-1 md:gap-2 transition-all duration-500 ease-out"
+        className="flex gap-1 md:gap-2 items-start justify-start flex-wrap transition-all duration-500 ease-out max-h-16 md:max-h-18"
         key={`bars-${totalSets}-${totalRounds}`}
       >
         {renderProgressBars()}
