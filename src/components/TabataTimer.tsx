@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -165,14 +166,14 @@ const TabataTimer = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out">
-      <div className="h-screen flex flex-col p-2 md:p-4 lg:p-8 overflow-hidden transition-all duration-500 ease-in-out">
+      {/* Mobile Layout - No padding, full screen usage */}
+      <div className="md:hidden h-screen flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
           <TimerHero hideInFullscreen={isFullscreen} />
         </div>
 
         <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
-          {/* Mobile Layout - Full screen timer only */}
-          <div className="flex flex-col md:hidden h-full min-h-0">
+          <div className="flex flex-col h-full min-h-0">
             <div className="flex-1 min-h-0">
               <TimerDisplay 
                 currentTime={currentTime} 
@@ -190,63 +191,74 @@ const TabataTimer = () => {
               />
             </div>
           </div>
-
-          {/* Tablet Layout - Similar to desktop but optimized for tablet viewport */}
-          <div className="hidden md:grid xl:hidden md:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
-            <TimerDisplay 
-              currentTime={currentTime} 
-              currentRound={currentRound} 
-              currentSet={currentSet} 
-              timerState={timerState} 
-              isRunning={isRunning} 
-              totalSets={settings.sets} 
-              totalRounds={settings.rounds} 
-              remainingTime={getRemainingTime()} 
-              workTime={settings.workTime} 
-              onToggleTimer={toggleTimer} 
-              onResetTimer={resetTimer} 
-            />
-
-            {!isFullscreen && (
-              <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
-                <TimerSettingsPanel 
-                  settings={settings} 
-                  onSettingsChange={setSettings} 
-                  isRunning={isRunning} 
-                  timerState={timerState} 
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Desktop Layout - Original layout for large screens */}
-          <div className="hidden xl:grid xl:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
-            <TimerDisplay 
-              currentTime={currentTime} 
-              currentRound={currentRound} 
-              currentSet={currentSet} 
-              timerState={timerState} 
-              isRunning={isRunning} 
-              totalSets={settings.sets} 
-              totalRounds={settings.rounds} 
-              remainingTime={getRemainingTime()} 
-              workTime={settings.workTime} 
-              onToggleTimer={toggleTimer} 
-              onResetTimer={resetTimer} 
-            />
-
-            {!isFullscreen && (
-              <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[32px] px-[34px]">
-                <TimerSettingsPanel 
-                  settings={settings} 
-                  onSettingsChange={setSettings} 
-                  isRunning={isRunning} 
-                  timerState={timerState} 
-                />
-              </div>
-            )}
-          </div>
         </Card>
+      </div>
+
+      {/* Desktop Layout - 32px padding enforced */}
+      <div className="hidden md:block h-screen p-8 overflow-hidden transition-all duration-500 ease-in-out">
+        <div className="h-full flex flex-col">
+          <div className="flex-shrink-0">
+            <TimerHero hideInFullscreen={isFullscreen} />
+          </div>
+
+          <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
+            {/* Tablet Layout - Similar to desktop but optimized for tablet viewport */}
+            <div className="xl:hidden grid grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
+              <TimerDisplay 
+                currentTime={currentTime} 
+                currentRound={currentRound} 
+                currentSet={currentSet} 
+                timerState={timerState} 
+                isRunning={isRunning} 
+                totalSets={settings.sets} 
+                totalRounds={settings.rounds} 
+                remainingTime={getRemainingTime()} 
+                workTime={settings.workTime} 
+                onToggleTimer={toggleTimer} 
+                onResetTimer={resetTimer} 
+              />
+
+              {!isFullscreen && (
+                <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
+                  <TimerSettingsPanel 
+                    settings={settings} 
+                    onSettingsChange={setSettings} 
+                    isRunning={isRunning} 
+                    timerState={timerState} 
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Desktop Layout - Original layout for large screens */}
+            <div className="hidden xl:grid xl:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
+              <TimerDisplay 
+                currentTime={currentTime} 
+                currentRound={currentRound} 
+                currentSet={currentSet} 
+                timerState={timerState} 
+                isRunning={isRunning} 
+                totalSets={settings.sets} 
+                totalRounds={settings.rounds} 
+                remainingTime={getRemainingTime()} 
+                workTime={settings.workTime} 
+                onToggleTimer={toggleTimer} 
+                onResetTimer={resetTimer} 
+              />
+
+              {!isFullscreen && (
+                <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[32px] px-[34px]">
+                  <TimerSettingsPanel 
+                    settings={settings} 
+                    onSettingsChange={setSettings} 
+                    isRunning={isRunning} 
+                    timerState={timerState} 
+                  />
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
       </div>
 
       {/* Mobile Settings Drawer */}
