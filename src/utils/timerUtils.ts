@@ -44,23 +44,23 @@ export const getStateInfo = (isRunning: boolean, timerState: TimerState) => {
 
 export const getBackgroundColor = (isRunning: boolean, timerState: TimerState) => {
   if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
-    return 'rgba(255, 235, 71, 0.15)'; // PAUSED - yellow with 15% opacity
+    return 'rgba(255, 235, 71, 0.5)'; // PAUSED - yellow with higher opacity
   }
   
   switch (timerState) {
     case 'idle':
-      return 'white'; // READY - keep white background
+      return 'rgba(240, 238, 235, 0.3)'; // READY - light beige
     case 'countdown':
-      return 'rgba(255, 139, 71, 0.15)'; // GET READY - orange with 15% opacity
+      return 'rgba(255, 139, 71, 0.5)'; // GET READY - orange
     case 'work':
-      return 'rgba(91, 255, 114, 0.15)'; // WORK - green with 15% opacity
+      return 'rgba(91, 255, 114, 0.5)'; // WORK - green
     case 'rest':
-      return 'rgba(91, 168, 255, 0.15)'; // REST - blue with 15% opacity
+      return 'rgba(91, 168, 255, 0.5)'; // REST - blue  
     case 'setRest':
-      return 'rgba(91, 237, 219, 0.15)'; // SET REST - cyan with 15% opacity
+      return 'rgba(91, 237, 219, 0.5)'; // SET REST - cyan
     case 'finished':
-      return 'rgba(255, 139, 71, 0.15)'; // FINISHED - orange with 15% opacity
+      return 'rgba(255, 139, 71, 0.5)'; // FINISHED - orange
     default:
-      return 'white';
+      return 'rgba(240, 238, 235, 0.3)';
   }
 };
