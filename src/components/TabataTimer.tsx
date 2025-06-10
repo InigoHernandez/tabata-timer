@@ -91,7 +91,7 @@ const TabataTimer = () => {
     if (timerState === 'idle') {
       setTimerState('countdown');
       setCurrentTime(settings.countdownTime);
-      // Play countdown sound immediately when countdown starts
+      // Play countdown sound immediately when countdown starts at the current time
       playCountdownSound();
     }
     setIsRunning(!isRunning);
@@ -103,14 +103,15 @@ const TabataTimer = () => {
     if (isRunning && currentTime > 0) {
       interval = setInterval(() => {
         setCurrentTime(prev => {
-          const newTime = prev - 1;
+          const currentTimeValue = prev; // Current time before decrement
+          const newTime = prev - 1; // Time after decrement
           
-          // Play audio cues based on the NEW time value (after decrement)
-          if (timerState === 'countdown' && newTime > 0) {
-            // Play countdown sound for each remaining second
+          // Play audio cues BEFORE decrementing, based on current time
+          if (timerState === 'countdown' && currentTimeValue > 1) {
+            // Play countdown sound for each second except the last one (which transitions to work)
             playCountdownSound();
-          } else if ((timerState === 'work' || timerState === 'rest') && newTime <= 5 && newTime > 0) {
-            // Play warning sound for last 5 seconds of work and rest
+          } else if ((timerState === 'work' || timerState === 'rest') && currentTimeValue <= 5 && currentTimeValue > 1) {
+            // Play warning sound for last 5 seconds (5, 4, 3, 2) but not 1 (which transitions)
             playWarningSound();
           }
           
