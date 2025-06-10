@@ -32,18 +32,6 @@ const MobileSettingsDrawer = ({
 }: MobileSettingsDrawerProps) => {
   return (
     <>
-      {/* Settings Access Button - Only show when drawer is closed */}
-      {!isOpen && (
-        <Button
-          onClick={onToggle}
-          size="lg"
-          variant="outline"
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full p-0 shadow-lg bg-background border-2 transition-all duration-300 hover:scale-105 md:hidden"
-        >
-          <Settings className="w-6 h-6" />
-        </Button>
-      )}
-
       {/* Backdrop */}
       <div
         className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${

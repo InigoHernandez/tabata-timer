@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ProgressBars from './ProgressBars';
 import TimerControls from './TimerControls';
@@ -20,6 +19,7 @@ interface TimerDisplayProps {
   workTime: number;
   onToggleTimer: () => void;
   onResetTimer: () => void;
+  onToggleSettings?: () => void;
 }
 
 const TimerDisplay = ({ 
@@ -33,7 +33,8 @@ const TimerDisplay = ({
   remainingTime,
   workTime,
   onToggleTimer,
-  onResetTimer
+  onResetTimer,
+  onToggleSettings
 }: TimerDisplayProps) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -151,8 +152,9 @@ const TimerDisplay = ({
     );
   }
 
+  // Mobile Layout (updated to match design reference)
   return (
-    <div className="lg:col-span-2 p-4 md:p-8 flex flex-col relative min-h-0 overflow-y-auto">
+    <div className="lg:col-span-2 h-full flex flex-col relative min-h-0 overflow-hidden">
       {/* Background Layer with Animation */}
       <div 
         className={`absolute inset-0 ${shouldWorkPulse ? 'animate-work-pulse' : shouldRestPulse ? 'animate-rest-pulse' : ''}`}
@@ -161,55 +163,123 @@ const TimerDisplay = ({
       
       {/* Content Layer */}
       <div className="relative z-10 w-full h-full flex flex-col">
-        <TimerInfo
-          remainingTime={remainingTime}
-          currentSet={currentSet}
-          currentRound={currentRound}
-          totalSets={totalSets}
-          totalRounds={totalRounds}
-          isFullscreen={isFullscreen}
-        />
+        {/* Mobile Card Layout */}
+        <div className="md:hidden flex-1 flex flex-col p-4">
+          <div className="bg-background rounded-xl border border-[#E8E8E8] shadow-sm h-full flex flex-col relative p-6">
+            {/* Top section - Progress bars and remaining time */}
+            <div className="flex justify-between items-start mb-8">
+              <div className="flex-1 max-w-[200px]">
+                <ProgressBars 
+                  currentSet={currentSet}
+                  currentRound={currentRound}
+                  totalSets={totalSets}
+                  totalRounds={totalRounds}
+                />
+              </div>
+              <div className="text-right">
+                <div className="text-sm font-normal mb-1" style={{ color: '#0000004d' }}>
+                  Remaining time
+                </div>
+                <div className="text-lg font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+                  {formatTimeWithCustomColon(remainingTime)}
+                </div>
+              </div>
+            </div>
 
-        <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0">
-          <ProgressBars 
+            {/* Center section - Timer display and controls */}
+            <div className="flex-1 flex items-center justify-between">
+              <div className="flex-1 flex flex-col items-center justify-center">
+                <TimerMainDisplay
+                  currentTime={currentTime}
+                  timerState={timerState}
+                  isRunning={isRunning}
+                  workTime={workTime}
+                  isFullscreen={false}
+                />
+              </div>
+              
+              {/* Vertical Button Stack */}
+              <div className="ml-4">
+                <TimerControls
+                  isRunning={isRunning}
+                  timerState={timerState}
+                  isFullscreen={isFullscreen}
+                  onToggleTimer={onToggleTimer}
+                  onResetTimer={onResetTimer}
+                  onToggleFullscreen={toggleFullscreen}
+                  onToggleSettings={onToggleSettings}
+                  isMobile={true}
+                />
+              </div>
+            </div>
+
+            {/* Bottom section - Cycles */}
+            <div className="mt-8">
+              <div className="text-sm font-normal mb-1" style={{ color: '#0000004d' }}>
+                Cycles
+              </div>
+              <div 
+                className="text-xl font-jetbrains-mono"
+                style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
+              >
+                {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tablet/Desktop Layout - Keep existing layout */}
+        <div className="hidden md:flex md:flex-col md:h-full md:p-4 lg:p-8">
+          <TimerInfo
+            remainingTime={remainingTime}
             currentSet={currentSet}
             currentRound={currentRound}
             totalSets={totalSets}
             totalRounds={totalRounds}
-          />
-        </div>
-
-        <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-16">
-          <TimerMainDisplay
-            currentTime={currentTime}
-            timerState={timerState}
-            isRunning={isRunning}
-            workTime={workTime}
             isFullscreen={isFullscreen}
           />
-        </div>
 
-        <div className="flex justify-between items-end flex-shrink-0 pt-4">
-          <div>
-            <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
-              Cycles
-            </div>
-            <div 
-              className="text-xl md:text-2xl lg:text-4xl font-jetbrains-mono"
-              style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
-            >
-              {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
-            </div>
+          <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0">
+            <ProgressBars 
+              currentSet={currentSet}
+              currentRound={currentRound}
+              totalSets={totalSets}
+              totalRounds={totalRounds}
+            />
           </div>
 
-          <TimerControls
-            isRunning={isRunning}
-            timerState={timerState}
-            isFullscreen={isFullscreen}
-            onToggleTimer={onToggleTimer}
-            onResetTimer={onResetTimer}
-            onToggleFullscreen={toggleFullscreen}
-          />
+          <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-16">
+            <TimerMainDisplay
+              currentTime={currentTime}
+              timerState={timerState}
+              isRunning={isRunning}
+              workTime={workTime}
+              isFullscreen={isFullscreen}
+            />
+          </div>
+
+          <div className="flex justify-between items-end flex-shrink-0 pt-4">
+            <div>
+              <div className="text-sm md:text-base font-normal mb-2" style={{ color: '#0000004d' }}>
+                Cycles
+              </div>
+              <div 
+                className="text-xl md:text-2xl lg:text-4xl font-jetbrains-mono"
+                style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
+              >
+                {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+              </div>
+            </div>
+
+            <TimerControls
+              isRunning={isRunning}
+              timerState={timerState}
+              isFullscreen={isFullscreen}
+              onToggleTimer={onToggleTimer}
+              onResetTimer={onResetTimer}
+              onToggleFullscreen={toggleFullscreen}
+            />
+          </div>
         </div>
       </div>
     </div>

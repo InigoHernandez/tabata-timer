@@ -185,7 +185,8 @@ const TabataTimer = () => {
                 remainingTime={getRemainingTime()} 
                 workTime={settings.workTime} 
                 onToggleTimer={toggleTimer} 
-                onResetTimer={resetTimer} 
+                onResetTimer={resetTimer}
+                onToggleSettings={toggleMobileSettings}
               />
             </div>
           </div>
