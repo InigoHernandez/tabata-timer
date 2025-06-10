@@ -135,13 +135,13 @@ const TabataTimer = () => {
             }
             // Note: When countdown reaches 0, state transition will handle the start sound
           } else if (timerState === 'work' || timerState === 'rest') {
-            if (currentTimeValue <= 5 && currentTimeValue > 1) {
-              // Play warning sound for last 5 seconds (5, 4, 3, 2) but not 1 (which transitions)
+            // Play warning sound for last 5 seconds (5, 4, 3, 2, 1)
+            if (currentTimeValue >= 1 && currentTimeValue <= 5) {
               playWarningSound();
             }
           } else if (timerState === 'setRest') {
-            if (currentTimeValue <= 5 && currentTimeValue > 1) {
-              // Play warning sound for last 5 seconds of set rest
+            // Play warning sound for last 5 seconds of set rest (5, 4, 3, 2, 1)
+            if (currentTimeValue >= 1 && currentTimeValue <= 5) {
               playWarningSound();
             }
           }
