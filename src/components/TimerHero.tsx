@@ -8,7 +8,7 @@ const TimerHero = ({
   if (hideInFullscreen) return null;
   return <div className="flex justify-between items-start mb-4 md:mb-6 animate-fade-in">
       <div className="text-left max-w-md">
-        <p className="font-light text-lg leading-relaxed md:text-xl px-[4px]">
+        <p className="font-light text-lg leading-relaxed md:text-xl px-[4px] py-[4px]">
           tabata{' '}
           <span style={{
           color: '#0000004d'
