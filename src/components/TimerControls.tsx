@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, RefreshCcw, Maximize, Minimize, Settings } from 'lucide-react';
+import { Play, Pause, RefreshCcw, Maximize, Minimize, SlidersHorizontal } from 'lucide-react';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -29,7 +28,7 @@ const TimerControls = ({
   const buttonSizes = isFullscreen
     ? "w-12 h-12 md:w-16 md:h-16"
     : isMobile 
-    ? "w-12 h-12"
+    ? "w-11 h-11"
     : "w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16";
 
   const iconSizes = isFullscreen
@@ -40,15 +39,15 @@ const TimerControls = ({
 
   if (isMobile) {
     return (
-      <div className="flex flex-col gap-3 items-center">
+      <div className="flex flex-col gap-2 items-center justify-end">
         {/* Settings Button */}
         <Button 
           onClick={onToggleSettings} 
           size="lg" 
           variant="outline" 
-          className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-transform duration-100`}
+          className={`${buttonSizes} rounded-lg p-0 active:scale-95 transition-transform duration-100 border-foreground/20`}
         >
-          <Settings className={iconSizes} />
+          <SlidersHorizontal className={iconSizes} />
         </Button>
         
         {/* Reset Button */}
@@ -56,7 +55,7 @@ const TimerControls = ({
           onClick={onResetTimer} 
           size="lg" 
           variant="outline" 
-          className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-transform duration-100`}
+          className={`${buttonSizes} rounded-lg p-0 active:scale-95 transition-transform duration-100 border-foreground/20`}
         >
           <RefreshCcw className={iconSizes} />
         </Button>
@@ -65,7 +64,7 @@ const TimerControls = ({
         <Button 
           onClick={onToggleTimer} 
           size="lg" 
-          className={`${buttonSizes} rounded-md p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-transform duration-100`}
+          className={`${buttonSizes} rounded-lg p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-transform duration-100`}
           disabled={timerState === 'finished'}
         >
           {isRunning ? (
