@@ -91,7 +91,8 @@ const TabataTimer = () => {
     if (timerState === 'idle') {
       setTimerState('countdown');
       setCurrentTime(settings.countdownTime);
-      playStartSound();
+      // Play countdown sound immediately when countdown starts
+      playCountdownSound();
     }
     setIsRunning(!isRunning);
   };
@@ -102,19 +103,26 @@ const TabataTimer = () => {
     if (isRunning && currentTime > 0) {
       interval = setInterval(() => {
         setCurrentTime(prev => {
-          if (prev <= 3 && prev > 0 && (timerState === 'work' || timerState === 'rest')) {
+          const newTime = prev - 1;
+          
+          // Play audio cues based on the NEW time value (after decrement)
+          if (timerState === 'countdown' && newTime > 0) {
+            // Play countdown sound for each remaining second
+            playCountdownSound();
+          } else if ((timerState === 'work' || timerState === 'rest') && newTime <= 5 && newTime > 0) {
+            // Play warning sound for last 5 seconds of work and rest
             playWarningSound();
           }
-          if (timerState === 'countdown' && prev > 0) {
-            playCountdownSound();
-          }
-          return prev - 1;
+          
+          return newTime;
         });
       }, 1000);
     } else if (isRunning && currentTime === 0) {
+      // Handle state transitions when time reaches 0
       if (timerState === 'countdown') {
         setTimerState('work');
         setCurrentTime(settings.workTime);
+        // Play start sound immediately when work begins
         playStartSound();
       } else if (timerState === 'work') {
         if (currentRound < settings.rounds) {
@@ -134,10 +142,12 @@ const TabataTimer = () => {
         setTimerState('work');
         setCurrentTime(settings.workTime);
         setCurrentRound(prev => prev + 1);
+        // Play start sound immediately when work begins after rest
         playStartSound();
       } else if (timerState === 'setRest') {
         setTimerState('work');
         setCurrentTime(settings.workTime);
+        // Play start sound immediately when work begins after set rest
         playStartSound();
       }
     }
