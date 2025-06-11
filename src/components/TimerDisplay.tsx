@@ -152,11 +152,11 @@ const TimerDisplay = ({
             </div>
           </div>
 
-          {/* Tablet Layout (md to lg) - iPad specific optimizations with proper bottom spacing */}
+          {/* Tablet Layout (md to lg) - iPad specific optimizations with proper spacing alignment */}
           <div className="md:flex md:flex-col md:h-full xl:hidden p-4 md:p-6 lg:p-8">
-            {/* Top Section - Progress Bars and Remaining Time */}
+            {/* Top Section - Progress Bars and Remaining Time with aligned spacing */}
             <div className="flex justify-between items-start flex-shrink-0 mb-4 lg:mb-6">
-              {/* Progress Bars - Top Left */}
+              {/* Progress Bars - Top Left with consistent top alignment */}
               <div className="flex-1 max-w-[240px] lg:max-w-[280px]">
                 <ProgressBars 
                   currentSet={currentSet}
@@ -166,7 +166,7 @@ const TimerDisplay = ({
                 />
               </div>
 
-              {/* Remaining Time - Top Right */}
+              {/* Remaining Time - Top Right with proper alignment to match left side spacing */}
               <div className="text-right">
                 <div className="text-sm lg:text-base font-normal mb-1" style={{ color: '#0000004d' }}>
                   Remaining time
