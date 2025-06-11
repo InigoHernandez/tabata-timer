@@ -166,8 +166,8 @@ const TimerDisplay = ({
                 />
               </div>
 
-              {/* Remaining Time - Top Right with proper alignment to match left side spacing */}
-              <div className="text-right">
+              {/* Remaining Time - Top Right with matching spacing to progress bars */}
+              <div className="text-right" style={{ marginTop: '0px', marginRight: '0px' }}>
                 <div className="text-sm lg:text-base font-normal mb-1" style={{ color: '#0000004d' }}>
                   Remaining time
                 </div>
