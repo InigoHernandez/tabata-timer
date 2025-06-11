@@ -85,12 +85,12 @@ const TimerDisplay = ({
           style={shouldWorkPulse || shouldRestPulse ? {} : { backgroundColor }}
         />
         
-        {/* Content Layer - Responsive to viewport height */}
-        <div className="relative z-10 w-full h-full flex flex-col min-h-0 p-4 md:p-6 lg:p-8">
+        {/* Content Layer - Better viewport height management */}
+        <div className="relative z-10 w-full h-full flex flex-col min-h-0 p-3 md:p-4 lg:p-6 xl:p-8">
           {/* Top Section - Progress Bars and Remaining Time */}
-          <div className="flex justify-between items-start flex-shrink-0 mb-4 md:mb-6">
+          <div className="flex justify-between items-start flex-shrink-0 mb-3 md:mb-4 lg:mb-6">
             {/* Progress Bars - Top Left */}
-            <div className="flex-1 max-w-sm md:max-w-md lg:max-w-lg">
+            <div className="flex-1 max-w-[200px] md:max-w-sm lg:max-w-md">
               <ProgressBars 
                 currentSet={currentSet}
                 currentRound={currentRound}
@@ -101,17 +101,17 @@ const TimerDisplay = ({
 
             {/* Remaining Time - Top Right */}
             <div className="text-right">
-              <div className="text-sm md:text-base lg:text-lg font-normal mb-1 md:mb-2" style={{ color: '#0000004d' }}>
+              <div className="text-xs md:text-sm lg:text-base font-normal mb-1" style={{ color: '#0000004d' }}>
                 Remaining time
               </div>
-              <div className="text-lg md:text-2xl lg:text-3xl xl:text-4xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+              <div className="text-base md:text-lg lg:text-2xl xl:text-3xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
                 {formatTimeWithCustomColon(remainingTime)}
               </div>
             </div>
           </div>
 
-          {/* Center Section - Main Timer Display (flexible height) */}
-          <div className="flex-1 flex items-center justify-center min-h-0 py-2 md:py-4">
+          {/* Center Section - Main Timer Display (flexible but constrained) */}
+          <div className="flex-1 flex items-center justify-center min-h-0 py-1 md:py-2 lg:py-4">
             <TimerMainDisplay
               currentTime={currentTime}
               timerState={timerState}
@@ -121,15 +121,15 @@ const TimerDisplay = ({
             />
           </div>
 
-          {/* Bottom Section - Cycles and Controls (always visible) */}
-          <div className="flex justify-between items-end flex-shrink-0 mt-4 md:mt-6">
+          {/* Bottom Section - Cycles and Controls (always visible with safe spacing) */}
+          <div className="flex justify-between items-end flex-shrink-0 mt-3 md:mt-4 lg:mt-6 pb-2 md:pb-4">
             {/* Cycles - Bottom Left */}
             <div>
-              <div className="text-sm md:text-base lg:text-lg font-normal mb-1 md:mb-2" style={{ color: '#0000004d' }}>
+              <div className="text-xs md:text-sm lg:text-base font-normal mb-1" style={{ color: '#0000004d' }}>
                 Cycles
               </div>
               <div 
-                className="text-lg md:text-2xl lg:text-3xl xl:text-4xl font-jetbrains-mono"
+                className="text-base md:text-lg lg:text-2xl xl:text-3xl font-jetbrains-mono"
                 style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               >
                 {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
