@@ -1,10 +1,10 @@
-
 import { useEffect, useRef, useCallback } from 'react';
 
 export const useAudio = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
   const beepBuffersRef = useRef<{ [key: string]: AudioBuffer | null }>({});
   const isInitializedRef = useRef(false);
+  const scheduledBeepsRef = useRef<AudioBufferSourceNode[]>([]);
 
   // Create audio data URLs for different beep sounds
   const createBeepDataUrl = (frequency: number, duration: number, volume: number = 0.3) => {
@@ -96,6 +96,19 @@ export const useAudio = () => {
     }
   }, [loadBeepSound]);
 
+  // Stop all scheduled beeps
+  const stopAllScheduledBeeps = useCallback(() => {
+    console.log('Stopping all scheduled beeps');
+    scheduledBeepsRef.current.forEach(source => {
+      try {
+        source.stop();
+      } catch (error) {
+        // Source might already be stopped or finished
+      }
+    });
+    scheduledBeepsRef.current = [];
+  }, []);
+
   const playBeepAt = useCallback((soundKey: string, offsetInSeconds: number = 0) => {
     if (!audioContextRef.current || !beepBuffersRef.current[soundKey]) {
       console.warn(`Cannot play ${soundKey}: AudioContext or buffer not ready`);
@@ -107,6 +120,17 @@ export const useAudio = () => {
       source.buffer = beepBuffersRef.current[soundKey];
       source.connect(audioContextRef.current.destination);
       source.start(audioContextRef.current.currentTime + offsetInSeconds);
+      
+      // Track the scheduled source
+      scheduledBeepsRef.current.push(source);
+      
+      // Clean up the source reference when it finishes naturally
+      source.onended = () => {
+        const index = scheduledBeepsRef.current.indexOf(source);
+        if (index > -1) {
+          scheduledBeepsRef.current.splice(index, 1);
+        }
+      };
       
       console.log(`${soundKey} scheduled to play in ${offsetInSeconds}s`);
     } catch (error) {
@@ -179,6 +203,7 @@ export const useAudio = () => {
     
     return () => {
       // Clean up
+      stopAllScheduledBeeps();
       if (audioContextRef.current) {
         audioContextRef.current.close();
       }
@@ -186,7 +211,7 @@ export const useAudio = () => {
         // AudioBuffers don't need explicit cleanup
       });
     };
-  }, [initializeAudio]);
+  }, [initializeAudio, stopAllScheduledBeeps]);
 
   return {
     playCountdownSound,
@@ -198,6 +223,7 @@ export const useAudio = () => {
     initializeAudio,
     testAudio,
     scheduleCountdownBeeps,
-    scheduleLastFourBeeps
+    scheduleLastFourBeeps,
+    stopAllScheduledBeeps
   };
 };

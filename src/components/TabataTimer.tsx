@@ -44,7 +44,8 @@ const TabataTimer = () => {
     initializeAudio,
     testAudio,
     scheduleCountdownBeeps,
-    scheduleLastFourBeeps
+    scheduleLastFourBeeps,
+    stopAllScheduledBeeps
   } = useAudio();
 
   useEffect(() => {
@@ -79,13 +80,16 @@ const TabataTimer = () => {
   }, [settings.workTime, timerState]);
 
   const resetTimer = useCallback(() => {
+    // Stop all scheduled beeps immediately
+    stopAllScheduledBeeps();
+    
     setIsRunning(false);
     setCurrentTime(settings.workTime);
     setCurrentRound(1);
     setCurrentSet(1);
     setTimerState('idle');
     setPrevTimerState('idle');
-  }, [settings.workTime]);
+  }, [settings.workTime, stopAllScheduledBeeps]);
 
   const toggleTimer = () => {
     // Initialize audio on explicit timer action
@@ -96,7 +100,11 @@ const TabataTimer = () => {
       setCurrentTime(settings.countdownTime);
       // Schedule all countdown beeps precisely
       scheduleCountdownBeeps(settings.countdownTime);
+    } else if (isRunning) {
+      // Pausing - stop all scheduled beeps
+      stopAllScheduledBeeps();
     }
+    
     setIsRunning(!isRunning);
   };
 
