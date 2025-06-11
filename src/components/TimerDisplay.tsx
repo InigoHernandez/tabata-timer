@@ -152,12 +152,12 @@ const TimerDisplay = ({
             </div>
           </div>
 
-          {/* Tablet Layout (md to lg) - iPad specific optimizations */}
-          <div className="md:flex md:flex-col md:h-full xl:hidden p-4 md:p-6">
+          {/* Tablet Layout (md to lg) - iPad specific optimizations with proper bottom spacing */}
+          <div className="md:flex md:flex-col md:h-full xl:hidden p-4 md:p-6 lg:p-8">
             {/* Top Section - Progress Bars and Remaining Time */}
-            <div className="flex justify-between items-start flex-shrink-0 mb-4">
+            <div className="flex justify-between items-start flex-shrink-0 mb-4 lg:mb-6">
               {/* Progress Bars - Top Left */}
-              <div className="flex-1 max-w-[240px]">
+              <div className="flex-1 max-w-[240px] lg:max-w-[280px]">
                 <ProgressBars 
                   currentSet={currentSet}
                   currentRound={currentRound}
@@ -168,17 +168,17 @@ const TimerDisplay = ({
 
               {/* Remaining Time - Top Right */}
               <div className="text-right">
-                <div className="text-sm font-normal mb-1" style={{ color: '#0000004d' }}>
+                <div className="text-sm lg:text-base font-normal mb-1" style={{ color: '#0000004d' }}>
                   Remaining time
                 </div>
-                <div className="text-xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
+                <div className="text-xl lg:text-2xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
                   {formatTimeWithCustomColon(remainingTime)}
                 </div>
               </div>
             </div>
 
-            {/* Center Section - Main Timer Display with constrained height */}
-            <div className="flex-1 flex items-center justify-center min-h-0 max-h-[60vh] py-2">
+            {/* Center Section - Main Timer Display (flexible height but constrained) */}
+            <div className="flex-1 flex items-center justify-center min-h-0 py-2 lg:py-4">
               <TimerMainDisplay
                 currentTime={currentTime}
                 timerState={timerState}
@@ -188,15 +188,15 @@ const TimerDisplay = ({
               />
             </div>
 
-            {/* Bottom Section - Cycles and Controls (always at bottom with safe area) */}
-            <div className="flex justify-between items-end flex-shrink-0 mt-4 pb-6">
+            {/* Bottom Section - Cycles and Controls with consistent spacing */}
+            <div className="flex justify-between items-end flex-shrink-0 mt-4 lg:mt-6 mb-6 lg:mb-8">
               {/* Cycles - Bottom Left */}
               <div>
-                <div className="text-sm font-normal mb-1" style={{ color: '#0000004d' }}>
+                <div className="text-sm lg:text-base font-normal mb-1 lg:mb-2" style={{ color: '#0000004d' }}>
                   Cycles
                 </div>
                 <div 
-                  className="text-xl font-jetbrains-mono"
+                  className="text-xl lg:text-2xl font-jetbrains-mono"
                   style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
                 >
                   {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
