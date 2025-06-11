@@ -2,7 +2,8 @@
 import { useEffect, useRef, useCallback } from 'react';
 
 export const useAudio = () => {
-  const audioElementsRef = useRef<{ [key: string]: HTMLAudioElement }>({});
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const beepBuffersRef = useRef<{ [key: string]: AudioBuffer | null }>({});
   const isInitializedRef = useRef(false);
 
   // Create audio data URLs for different beep sounds
@@ -43,103 +44,147 @@ export const useAudio = () => {
     return URL.createObjectURL(blob);
   };
 
-  const initializeAudio = useCallback(() => {
-    if (isInitializedRef.current) return;
+  const loadBeepSound = useCallback(async (key: string, dataUrl: string) => {
+    if (!audioContextRef.current) return;
     
     try {
-      // Create different audio elements for different sounds
-      audioElementsRef.current = {
-        countdown: new Audio(createBeepDataUrl(800, 0.1, 0.4)),
-        warning: new Audio(createBeepDataUrl(1000, 0.1, 0.3)),
-        workStart: new Audio(createBeepDataUrl(600, 0.2, 0.5)),
-        restStart: new Audio(createBeepDataUrl(400, 0.2, 0.4)),
-        setRestStart: new Audio(createBeepDataUrl(500, 0.2, 0.4)),
-        finish1: new Audio(createBeepDataUrl(523, 0.3, 0.4)), // C
-        finish2: new Audio(createBeepDataUrl(659, 0.3, 0.4)), // E
-        finish3: new Audio(createBeepDataUrl(784, 0.4, 0.5)), // G
-        test: new Audio(createBeepDataUrl(440, 0.2, 0.3))
-      };
-
-      // Preload all audio elements
-      Object.values(audioElementsRef.current).forEach(audio => {
-        audio.preload = 'auto';
-        audio.load();
-      });
-      
-      isInitializedRef.current = true;
-      console.log('Audio elements initialized');
+      const response = await fetch(dataUrl);
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBuffer = await audioContextRef.current.decodeAudioData(arrayBuffer);
+      beepBuffersRef.current[key] = audioBuffer;
+      console.log(`${key} sound loaded`);
     } catch (error) {
-      console.warn('Failed to initialize audio elements:', error);
+      console.warn(`Failed to load ${key} sound:`, error);
+      beepBuffersRef.current[key] = null;
     }
   }, []);
 
-  const playSound = useCallback((soundName: keyof typeof audioElementsRef.current) => {
-    if (!isInitializedRef.current) {
-      initializeAudio();
-    }
-    
-    const audio = audioElementsRef.current[soundName];
-    if (!audio) return;
+  const initializeAudio = useCallback(async () => {
+    if (isInitializedRef.current) return;
     
     try {
-      // Reset and play
-      audio.currentTime = 0;
-      const playPromise = audio.play();
+      // Create AudioContext
+      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
       
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.warn(`Failed to play ${soundName} sound:`, error);
-          // If autoplay is prevented, we can try again on next user interaction
-        });
+      // Resume context if suspended (browser autoplay policy)
+      if (audioContextRef.current.state === 'suspended') {
+        await audioContextRef.current.resume();
       }
-      
-      console.log(`${soundName} sound played`);
-    } catch (error) {
-      console.warn(`Error playing ${soundName} sound:`, error);
-    }
-  }, [initializeAudio]);
 
+      // Create and load different audio buffers
+      const sounds = {
+        countdown: createBeepDataUrl(800, 0.1, 0.4),
+        warning: createBeepDataUrl(1000, 0.1, 0.3),
+        workStart: createBeepDataUrl(600, 0.2, 0.5),
+        restStart: createBeepDataUrl(400, 0.2, 0.4),
+        setRestStart: createBeepDataUrl(500, 0.2, 0.4),
+        finish1: createBeepDataUrl(523, 0.3, 0.4), // C
+        finish2: createBeepDataUrl(659, 0.3, 0.4), // E
+        finish3: createBeepDataUrl(784, 0.4, 0.5), // G
+        test: createBeepDataUrl(440, 0.2, 0.3)
+      };
+
+      // Load all sounds
+      await Promise.all(
+        Object.entries(sounds).map(([key, dataUrl]) => loadBeepSound(key, dataUrl))
+      );
+      
+      isInitializedRef.current = true;
+      console.log('AudioContext and sounds initialized');
+    } catch (error) {
+      console.warn('Failed to initialize AudioContext:', error);
+    }
+  }, [loadBeepSound]);
+
+  const playBeepAt = useCallback((soundKey: string, offsetInSeconds: number = 0) => {
+    if (!audioContextRef.current || !beepBuffersRef.current[soundKey]) {
+      console.warn(`Cannot play ${soundKey}: AudioContext or buffer not ready`);
+      return;
+    }
+    
+    try {
+      const source = audioContextRef.current.createBufferSource();
+      source.buffer = beepBuffersRef.current[soundKey];
+      source.connect(audioContextRef.current.destination);
+      source.start(audioContextRef.current.currentTime + offsetInSeconds);
+      
+      console.log(`${soundKey} scheduled to play in ${offsetInSeconds}s`);
+    } catch (error) {
+      console.warn(`Error playing ${soundKey}:`, error);
+    }
+  }, []);
+
+  // Schedule countdown beeps (5, 4, 3, 2, 1)
+  const scheduleCountdownBeeps = useCallback((countdownDuration: number) => {
+    if (!audioContextRef.current) return;
+    
+    console.log('Scheduling countdown beeps');
+    // Schedule beeps for 5, 4, 3, 2, 1 seconds remaining
+    for (let i = 0; i < 5; i++) {
+      const timeUntilBeep = countdownDuration - 5 + i;
+      if (timeUntilBeep >= 0) {
+        playBeepAt('countdown', timeUntilBeep);
+      }
+    }
+  }, [playBeepAt]);
+
+  // Schedule last 4 seconds beeps for work/rest (4, 3, 2, 1)
+  const scheduleLastFourBeeps = useCallback((totalTimeRemaining: number) => {
+    if (!audioContextRef.current) return;
+    
+    console.log('Scheduling last 4 beeps');
+    // Schedule beeps for 4, 3, 2, 1 seconds remaining
+    for (let i = 0; i < 4; i++) {
+      const timeUntilBeep = totalTimeRemaining - 4 + i;
+      if (timeUntilBeep >= 0) {
+        playBeepAt('warning', timeUntilBeep);
+      }
+    }
+  }, [playBeepAt]);
+
+  // Individual sound functions for immediate play
   const playCountdownSound = useCallback(() => {
-    playSound('countdown');
-  }, [playSound]);
+    playBeepAt('countdown');
+  }, [playBeepAt]);
 
   const playWarningSound = useCallback(() => {
-    playSound('warning');
-  }, [playSound]);
+    playBeepAt('warning');
+  }, [playBeepAt]);
 
   const playStartSound = useCallback(() => {
-    playSound('workStart');
-  }, [playSound]);
+    playBeepAt('workStart');
+  }, [playBeepAt]);
 
   const playRestStartSound = useCallback(() => {
-    playSound('restStart');
-  }, [playSound]);
+    playBeepAt('restStart');
+  }, [playBeepAt]);
 
   const playSetRestStartSound = useCallback(() => {
-    playSound('setRestStart');
-  }, [playSound]);
+    playBeepAt('setRestStart');
+  }, [playBeepAt]);
 
   const playFinishSound = useCallback(() => {
-    playSound('finish1');
-    setTimeout(() => playSound('finish2'), 200);
-    setTimeout(() => playSound('finish3'), 400);
-  }, [playSound]);
+    playBeepAt('finish1');
+    playBeepAt('finish2', 0.2);
+    playBeepAt('finish3', 0.4);
+  }, [playBeepAt]);
 
   const testAudio = useCallback(() => {
-    playSound('test');
-  }, [playSound]);
+    playBeepAt('test');
+  }, [playBeepAt]);
 
   useEffect(() => {
     // Initialize on mount
     initializeAudio();
     
     return () => {
-      // Clean up audio elements
-      if (isInitializedRef.current) {
-        Object.values(audioElementsRef.current).forEach(audio => {
-          URL.revokeObjectURL(audio.src);
-        });
+      // Clean up
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
       }
+      Object.values(beepBuffersRef.current).forEach(buffer => {
+        // AudioBuffers don't need explicit cleanup
+      });
     };
   }, [initializeAudio]);
 
@@ -151,6 +196,8 @@ export const useAudio = () => {
     playSetRestStartSound,
     playFinishSound,
     initializeAudio,
-    testAudio
+    testAudio,
+    scheduleCountdownBeeps,
+    scheduleLastFourBeeps
   };
 };

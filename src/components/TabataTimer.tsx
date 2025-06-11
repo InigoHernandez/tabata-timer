@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
@@ -43,10 +42,11 @@ const TabataTimer = () => {
     playStartSound,
     playFinishSound,
     initializeAudio,
-    testAudio
+    testAudio,
+    scheduleCountdownBeeps,
+    scheduleLastFourBeeps
   } = useAudio();
 
-  // Initialize audio on first user interaction
   useEffect(() => {
     const handleUserInteraction = () => {
       // Remove listeners after first interaction
@@ -94,8 +94,8 @@ const TabataTimer = () => {
     if (timerState === 'idle') {
       setTimerState('countdown');
       setCurrentTime(settings.countdownTime);
-      // Play countdown sound immediately when countdown starts
-      playCountdownSound();
+      // Schedule all countdown beeps precisely
+      scheduleCountdownBeeps(settings.countdownTime);
     }
     setIsRunning(!isRunning);
   };
@@ -106,48 +106,32 @@ const TabataTimer = () => {
     setTimerState(newState);
     setCurrentTime(newTime);
 
-    // Play sounds immediately when state changes
+    // Play sounds immediately when state changes and schedule future beeps
     if (newState === 'work') {
-      playStartSound(); // Work start sound
+      playStartSound(); // Work start sound immediately
+      // Schedule beeps for last 4 seconds (4, 3, 2, 1)
+      scheduleLastFourBeeps(newTime);
     } else if (newState === 'rest') {
-      playStartSound(); // Rest start sound (using same sound for now)
+      playStartSound(); // Rest start sound immediately
+      // Schedule beeps for last 4 seconds (4, 3, 2, 1)
+      scheduleLastFourBeeps(newTime);
     } else if (newState === 'setRest') {
-      playStartSound(); // Set rest start sound
+      playStartSound(); // Set rest start sound immediately
+      // Schedule beeps for last 4 seconds if duration > 4
+      if (newTime > 4) {
+        scheduleLastFourBeeps(newTime);
+      }
     } else if (newState === 'finished') {
       playFinishSound(); // Finished sound
     }
-  }, [timerState, playStartSound, playFinishSound]);
+  }, [timerState, playStartSound, playFinishSound, scheduleLastFourBeeps]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
     if (isRunning && currentTime > 0) {
       interval = setInterval(() => {
-        setCurrentTime(prev => {
-          const currentTimeValue = prev; // Current time before decrement
-          const newTime = prev - 1; // Time after decrement
-          
-          // Play audio cues for current second (before decrementing)
-          if (timerState === 'countdown') {
-            if (currentTimeValue > 1) {
-              // Play countdown sound for each second except the last one
-              playCountdownSound();
-            }
-            // Note: When countdown reaches 0, state transition will handle the start sound
-          } else if (timerState === 'work' || timerState === 'rest') {
-            // Play warning sound for last 5 seconds (5, 4, 3, 2, 1)
-            if (currentTimeValue >= 1 && currentTimeValue <= 5) {
-              playWarningSound();
-            }
-          } else if (timerState === 'setRest') {
-            // Play warning sound for last 5 seconds of set rest (5, 4, 3, 2, 1)
-            if (currentTimeValue >= 1 && currentTimeValue <= 5) {
-              playWarningSound();
-            }
-          }
-          
-          return newTime;
-        });
+        setCurrentTime(prev => prev - 1);
       }, 1000);
     } else if (isRunning && currentTime === 0) {
       // Handle state transitions when time reaches 0
@@ -173,7 +157,7 @@ const TabataTimer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, playCountdownSound, playWarningSound, handleStateTransition]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, handleStateTransition]);
 
   const getRemainingTime = () => {
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
