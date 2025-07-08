@@ -91,14 +91,13 @@ const TabataTimer = () => {
     setPrevTimerState('idle');
   }, [settings.workTime, stopAllScheduledBeeps]);
 
-  const toggleTimer = () => {
-    // Initialize audio on explicit timer action
-    initializeAudio();
-    
+  const toggleTimer = async () => {
     if (timerState === 'idle') {
+      // Initialize audio and wait for it to complete before scheduling sounds
+      await initializeAudio();
       setTimerState('countdown');
       setCurrentTime(settings.countdownTime);
-      // Schedule all countdown beeps precisely
+      // Schedule all countdown beeps precisely after audio is ready
       scheduleCountdownBeeps(settings.countdownTime);
     } else if (isRunning) {
       // Pausing - stop all scheduled beeps
