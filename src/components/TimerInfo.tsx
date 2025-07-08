@@ -41,11 +41,7 @@ const TimerInfo = ({
     <>
       {/* Remaining Time - Positioned with proper padding from card edges */}
       <div 
-        className={`absolute text-right z-10 animate-fade-in`}
-        style={{
-          top: '32px', // 32px from card top edge
-          right: '32px' // 32px from card edge instead of 0px
-        }}
+        className={`absolute text-right z-10 animate-fade-in top-4 right-4 lg:top-8 lg:right-8`}
       >
         <div className={`${textSizes} font-normal mb-2 transition-all duration-500`} style={{ color: '#0000004d' }}>
           Remaining time
