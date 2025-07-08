@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 
 interface ProgressBarsProps {
   currentSet: number;
@@ -8,8 +8,8 @@ interface ProgressBarsProps {
   totalRounds: number;
 }
 
-const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: ProgressBarsProps) => {
-  const renderProgressBars = () => {
+const ProgressBars = memo(({ currentSet, currentRound, totalSets, totalRounds }: ProgressBarsProps) => {
+  const progressBars = useMemo(() => {
     const bars = [];
     
     for (let set = 1; set <= totalSets; set++) {
@@ -52,7 +52,7 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
     }
     
     return bars;
-  };
+  }, [currentSet, currentRound, totalSets, totalRounds]);
 
   return (
     <div className="mb-4 md:mb-8 flex items-start overflow-hidden transition-all duration-500 ease-out animate-fade-in">
@@ -64,10 +64,12 @@ const ProgressBars = ({ currentSet, currentRound, totalSets, totalRounds }: Prog
         }}
         key={`bars-${totalSets}-${totalRounds}`}
       >
-        {renderProgressBars()}
+        {progressBars}
       </div>
     </div>
   );
-};
+});
+
+ProgressBars.displayName = 'ProgressBars';
 
 export default ProgressBars;

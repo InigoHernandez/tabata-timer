@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Card } from '@/components/ui/card';
 import TimerHero from './TimerHero';
 import TimerDisplay from './TimerDisplay';
@@ -166,7 +166,7 @@ const TabataTimer = () => {
     return () => clearInterval(interval);
   }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, handleStateTransition]);
 
-  const getRemainingTime = () => {
+  const remainingTime = useMemo(() => {
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     const totalWorkoutTime = settings.sets * timePerSet + (settings.sets - 1) * settings.restBetweenSets;
 
@@ -201,7 +201,7 @@ const TabataTimer = () => {
     }
 
     return remaining;
-  };
+  }, [settings, timerState, currentTime, currentRound, currentSet]);
 
   const toggleMobileSettings = () => {
     setIsMobileSettingsOpen(!isMobileSettingsOpen);
@@ -226,7 +226,7 @@ const TabataTimer = () => {
                 isRunning={isRunning} 
                 totalSets={settings.sets} 
                 totalRounds={settings.rounds} 
-                remainingTime={getRemainingTime()} 
+                 remainingTime={remainingTime}
                 workTime={settings.workTime} 
                 onToggleTimer={toggleTimer} 
                 onResetTimer={resetTimer}
@@ -256,7 +256,7 @@ const TabataTimer = () => {
                   isRunning={isRunning} 
                   totalSets={settings.sets} 
                   totalRounds={settings.rounds} 
-                  remainingTime={getRemainingTime()} 
+                   remainingTime={remainingTime}
                   workTime={settings.workTime} 
                   onToggleTimer={toggleTimer} 
                   onResetTimer={resetTimer} 
@@ -285,7 +285,7 @@ const TabataTimer = () => {
                 isRunning={isRunning} 
                 totalSets={settings.sets} 
                 totalRounds={settings.rounds} 
-                remainingTime={getRemainingTime()} 
+                remainingTime={remainingTime} 
                 workTime={settings.workTime} 
                 onToggleTimer={toggleTimer} 
                 onResetTimer={resetTimer} 

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { formatTimeDisplay, getStateInfo } from '@/utils/timerUtils';
 
@@ -13,34 +13,33 @@ interface TimerMainDisplayProps {
   isFullscreen: boolean;
 }
 
-const TimerMainDisplay = ({
+const TimerMainDisplay = memo(({
   currentTime,
   timerState,
   isRunning,
   workTime,
   isFullscreen
 }: TimerMainDisplayProps) => {
-  const stateInfo = getStateInfo(isRunning, timerState);
+  const stateInfo = useMemo(() => getStateInfo(isRunning, timerState), [isRunning, timerState]);
 
-  const getDisplayTime = () => {
+  const displayTime = useMemo(() => {
     if (timerState === 'idle') {
       return workTime;
     }
     return timerState === 'countdown' ? currentTime : currentTime;
-  };
+  }, [timerState, workTime, currentTime]);
 
-  const badgeClasses = isFullscreen
+  const badgeClasses = useMemo(() => isFullscreen
     ? "mb-6 px-4 py-2 text-lg"
-    : "mb-4 px-3 py-1 text-sm";
+    : "mb-4 px-3 py-1 text-sm", [isFullscreen]);
 
-  // Made timer numbers slightly bigger
-  const timeClasses = isFullscreen
+  const timeClasses = useMemo(() => isFullscreen
     ? "text-[8rem] md:text-[16rem] lg:text-[20rem]"
-    : "text-[7rem] md:text-[11rem] lg:text-[15rem]";
+    : "text-[7rem] md:text-[11rem] lg:text-[15rem]", [isFullscreen]);
 
   // Format time with custom colon styling
-  const formatTimeWithCustomColon = (seconds: number) => {
-    const timeString = formatTimeDisplay(seconds);
+  const formattedTime = useMemo(() => {
+    const timeString = formatTimeDisplay(displayTime);
     const [minutes, secs] = timeString.split(':');
     
     return (
@@ -50,7 +49,7 @@ const TimerMainDisplay = ({
         {secs}
       </>
     );
-  };
+  }, [displayTime]);
 
   return (
     <div className="text-center transition-all duration-300 ease-in-out">
@@ -64,10 +63,12 @@ const TimerMainDisplay = ({
         className={`${timeClasses} font-jetbrains-mono leading-none transition-all duration-300`}
         style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
       >
-        {formatTimeWithCustomColon(getDisplayTime())}
+        {formattedTime}
       </div>
     </div>
   );
-};
+});
+
+TimerMainDisplay.displayName = 'TimerMainDisplay';
 
 export default TimerMainDisplay;
