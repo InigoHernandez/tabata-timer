@@ -13,7 +13,7 @@ const TimerHero = ({
           <span style={{
           color: '#0000004d'
         }}>
-            high intensity training timer
+            minimalist HIIT timer
           </span>
         </p>
       </div>
