@@ -111,24 +111,24 @@ export default {
 				},
 				'work-pulse': {
 					'0%': {
-						backgroundColor: 'rgba(91, 255, 114, 0.15)'
+						backgroundColor: 'hsl(133 100% 68% / 0.15)'
 					},
 					'50%': {
-						backgroundColor: 'rgba(91, 255, 114, 0.35)'
+						backgroundColor: 'hsl(133 100% 68% / 0.35)'
 					},
 					'100%': {
-						backgroundColor: 'rgba(91, 255, 114, 0.15)'
+						backgroundColor: 'hsl(133 100% 68% / 0.15)'
 					}
 				},
 				'rest-pulse': {
 					'0%': {
-						backgroundColor: 'rgba(91, 168, 255, 0.15)'
+						backgroundColor: 'hsl(215 100% 68% / 0.15)'
 					},
 					'50%': {
-						backgroundColor: 'rgba(91, 168, 255, 0.30)'
+						backgroundColor: 'hsl(215 100% 68% / 0.30)'
 					},
 					'100%': {
-						backgroundColor: 'rgba(91, 168, 255, 0.15)'
+						backgroundColor: 'hsl(215 100% 68% / 0.15)'
 					}
 				}
 			},
