@@ -2,6 +2,8 @@
 
 A modern, feature-rich Tabata interval timer application built with React and TypeScript. Perfect for high-intensity interval training (HIIT) workouts with customizable work/rest periods, multiple sets, and audio feedback.
 
+>> https://tabata.page/
+
 <img width="756" height="425" alt="Tabata Timer" src="https://github.com/user-attachments/assets/9e0e3f04-d645-4a1f-84a2-f2310b17e6af" />
 
 
