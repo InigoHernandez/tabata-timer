@@ -46,6 +46,7 @@ const TimerControls = ({
           onClick={onToggleSettings} 
           size="lg" 
           variant="outline" 
+          aria-label="Open settings"
           className={`${buttonSizes} rounded-lg p-0 active:scale-95 transition-all duration-300 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
         >
           <SlidersHorizontal className={`${iconSizes} transition-colors duration-300 ease-out`} />
@@ -56,6 +57,7 @@ const TimerControls = ({
           onClick={onResetTimer} 
           size="lg" 
           variant="outline" 
+          aria-label="Reset timer"
           className={`${buttonSizes} rounded-lg p-0 active:scale-95 transition-all duration-300 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
         >
           <RefreshCcw className={`${iconSizes} transition-colors duration-300 ease-out`} />
@@ -65,6 +67,7 @@ const TimerControls = ({
         <Button 
           onClick={timerState === 'finished' ? onResetTimer : onToggleTimer} 
           size="lg" 
+          aria-label={timerState === 'finished' ? 'Reset timer' : isRunning ? 'Pause timer' : 'Start timer'}
           className={`${buttonSizes} rounded-lg p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-all duration-300 ease-out`}
         >
           {timerState === 'finished' ? (
@@ -86,6 +89,7 @@ const TimerControls = ({
         onClick={onToggleFullscreen} 
         size="lg" 
         variant="outline" 
+        aria-label="Toggle fullscreen"
         className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-all duration-300 ease-out hidden md:flex border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
       >
         {isFullscreen ? (
@@ -99,6 +103,7 @@ const TimerControls = ({
         onClick={onResetTimer} 
         size="lg" 
         variant="outline" 
+        aria-label="Reset timer"
         className={`${buttonSizes} rounded-md p-0 active:scale-95 transition-all duration-300 ease-out border-foreground/20 hover:bg-foreground/10 hover:border-foreground/30`}
       >
         <RefreshCcw className={`${iconSizes} transition-colors duration-300 ease-out`} />
@@ -107,6 +112,7 @@ const TimerControls = ({
       <Button 
         onClick={timerState === 'finished' ? onResetTimer : onToggleTimer} 
         size="lg" 
+        aria-label={timerState === 'finished' ? 'Reset timer' : isRunning ? 'Pause timer' : 'Start timer'}
         className={`${buttonSizes} rounded-md p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-all duration-300 ease-out`}
       >
         {timerState === 'finished' ? (
