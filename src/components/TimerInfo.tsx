@@ -26,6 +26,9 @@ const TimerInfo = ({
   // Format time with custom colon styling
   const formatTimeWithCustomColon = (seconds: number) => {
     const timeString = formatTime(seconds);
+    if (!timeString.includes(':')) {
+      return <>{timeString}</>;
+    }
     const [minutes, secs] = timeString.split(':');
     
     return (
