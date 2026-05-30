@@ -59,6 +59,7 @@ const TimerDisplay = ({
 
   useEffect(() => {
     if (isFullscreen) {
+      window.scrollTo(0, 0);
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
     } else {
