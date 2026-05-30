@@ -65,10 +65,11 @@ const TimerMainDisplay = memo(({
         {stateInfo.text}
       </Badge>
       <div 
+        key={`${mode}-${workTime}`}
         className={`${timeClasses} font-jetbrains-mono leading-none transition-all duration-300`}
         style={{ letterSpacing: '-0.04em', fontWeight: '300' }}
       >
-        {formattedTime}
+        <span className="inline-block animate-scale-in">{formattedTime}</span>
       </div>
     </div>
   );
