@@ -23,8 +23,8 @@ const DEFAULT_FOCUS: FocusSettings = {
   focusTime: 25,
   shortBreak: 5,
   longBreak: 15,
-  sessionsBeforeLongBreak: 4,
-  countdownTime: 5,
+  pomodoros: 4,
+  loop: false,
 };
 
 const loadMode = (): TimerMode => {
@@ -47,10 +47,10 @@ const TabataTimer = () => {
     return {
       workTime: focusSettings.focusTime * 60,
       restTime: focusSettings.shortBreak * 60,
-      rounds: focusSettings.sessionsBeforeLongBreak,
+      rounds: focusSettings.pomodoros,
       sets: 999, // infinite loop in focus mode
       restBetweenSets: focusSettings.longBreak * 60,
-      countdownTime: focusSettings.countdownTime,
+      countdownTime: 0, // focus mode skips countdown
     };
   }, [mode, trainingSettings, focusSettings]);
 
@@ -138,10 +138,15 @@ const TabataTimer = () => {
     if (timerState === 'idle') {
       // Initialize audio and wait for it to complete before scheduling sounds
       await initializeAudio();
-      setTimerState('countdown');
-      setCurrentTime(settings.countdownTime);
-      // Schedule all countdown beeps precisely after audio is ready
-      scheduleCountdownBeeps(settings.countdownTime);
+      if (mode === 'focus') {
+        // Focus mode starts immediately, no countdown
+        handleStateTransition('work', settings.workTime);
+      } else {
+        setTimerState('countdown');
+        setCurrentTime(settings.countdownTime);
+        // Schedule all countdown beeps precisely after audio is ready
+        scheduleCountdownBeeps(settings.countdownTime);
+      }
     } else if (isRunning) {
       // Pausing - stop all scheduled beeps
       stopAllScheduledBeeps();
@@ -206,12 +211,17 @@ const TabataTimer = () => {
         setCurrentRound(prev => prev + 1);
         handleStateTransition('work', settings.workTime);
       } else if (timerState === 'setRest') {
-        handleStateTransition('work', settings.workTime);
+        if (mode === 'focus' && !focusSettings.loop) {
+          handleStateTransition('finished', 0);
+          setIsRunning(false);
+        } else {
+          handleStateTransition('work', settings.workTime);
+        }
       }
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, mode, handleStateTransition]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, mode, focusSettings.loop, handleStateTransition]);
 
   const remainingTime = useMemo(() => {
     if (mode === 'focus') {
@@ -270,10 +280,10 @@ const TabataTimer = () => {
 
   const cyclesText = useMemo(() => {
     if (mode === 'focus') {
-      return `${currentRound}/${focusSettings.sessionsBeforeLongBreak}`;
+      return `${currentRound}/${focusSettings.pomodoros}`;
     }
     return `${(currentSet - 1) * settings.rounds + currentRound}/${settings.rounds * settings.sets}`;
-  }, [mode, currentRound, currentSet, focusSettings.sessionsBeforeLongBreak, settings.rounds, settings.sets]);
+  }, [mode, currentRound, currentSet, focusSettings.pomodoros, settings.rounds, settings.sets]);
 
   const heroSubtitle = mode === 'focus' ? 'minimalist Pomodoro timer' : 'minimalist HIIT timer';
 
@@ -298,7 +308,7 @@ const TabataTimer = () => {
                 currentSet={currentSet} 
                 timerState={timerState} 
                 isRunning={isRunning} 
-                totalSets={settings.sets} 
+                totalSets={mode === "focus" ? 1 : settings.sets} 
                 totalRounds={settings.rounds} 
                  remainingTime={remainingTime}
                 workTime={settings.workTime} 
@@ -328,7 +338,7 @@ const TabataTimer = () => {
                   currentSet={currentSet} 
                   timerState={timerState} 
                   isRunning={isRunning} 
-                  totalSets={settings.sets} 
+                  totalSets={mode === "focus" ? 1 : settings.sets} 
                   totalRounds={settings.rounds} 
                    remainingTime={remainingTime}
                   workTime={settings.workTime} 
@@ -361,7 +371,7 @@ const TabataTimer = () => {
                 currentSet={currentSet} 
                 timerState={timerState} 
                 isRunning={isRunning} 
-                totalSets={settings.sets} 
+                totalSets={mode === "focus" ? 1 : settings.sets} 
                 totalRounds={settings.rounds} 
                 remainingTime={remainingTime} 
                 workTime={settings.workTime} 
