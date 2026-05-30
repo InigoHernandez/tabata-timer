@@ -102,12 +102,7 @@ const TimerDisplay = ({
             <div className="flex justify-between items-start flex-shrink-0 mb-6">
               {/* Progress Bars - Top Left */}
               <div className="flex-1 max-w-md">
-                <ProgressBars sequence={sequence} activeIndex={activeIndex} 
-                  currentSet={currentSet}
-                  currentRound={currentRound}
-                  totalSets={totalSets}
-                  totalRounds={totalRounds}
-                />
+                <ProgressBars sequence={sequence} activeIndex={activeIndex} />
               </div>
 
               {/* Remaining Time - Top Right */}
@@ -168,12 +163,7 @@ const TimerDisplay = ({
             <div className="flex justify-between items-start flex-shrink-0 mb-4 lg:mb-6 relative">
               {/* Progress Bars - Top Left with consistent top alignment */}
               <div className="flex-1 max-w-[240px] lg:max-w-[280px]">
-                <ProgressBars sequence={sequence} activeIndex={activeIndex} 
-                  currentSet={currentSet}
-                  currentRound={currentRound}
-                  totalSets={totalSets}
-                  totalRounds={totalRounds}
-                />
+                <ProgressBars sequence={sequence} activeIndex={activeIndex} />
               </div>
 
               {/* Remaining Time - Top Right with exact alignment to progress bars top and controls right edge */}
@@ -233,12 +223,7 @@ const TimerDisplay = ({
             {/* Top section - Progress bars and remaining time */}
             <div className="flex justify-between items-start mb-4 flex-shrink-0">
               <div className="flex-1 max-w-[180px]">
-                <ProgressBars sequence={sequence} activeIndex={activeIndex} 
-                  currentSet={currentSet}
-                  currentRound={currentRound}
-                  totalSets={totalSets}
-                  totalRounds={totalRounds}
-                />
+                <ProgressBars sequence={sequence} activeIndex={activeIndex} />
               </div>
               <div className="text-right">
                 <div className="text-xs font-normal mb-1 text-foreground/30">
@@ -311,12 +296,7 @@ const TimerDisplay = ({
           {/* Top section - Progress bars and remaining time */}
           <div className="flex justify-between items-start mb-4 flex-shrink-0">
             <div className="flex-1 max-w-[200px]">
-              <ProgressBars sequence={sequence} activeIndex={activeIndex} 
-                currentSet={currentSet}
-                currentRound={currentRound}
-                totalSets={totalSets}
-                totalRounds={totalRounds}
-              />
+              <ProgressBars sequence={sequence} activeIndex={activeIndex} />
             </div>
             <div className="text-right">
               <div className="text-sm font-normal mb-1 text-foreground/30">
@@ -382,12 +362,7 @@ const TimerDisplay = ({
           />
 
           <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0">
-            <ProgressBars sequence={sequence} activeIndex={activeIndex} 
-              currentSet={currentSet}
-              currentRound={currentRound}
-              totalSets={totalSets}
-              totalRounds={totalRounds}
-            />
+            <ProgressBars sequence={sequence} activeIndex={activeIndex} />
           </div>
 
           <div className="flex-1 flex items-center justify-center min-h-0 py-4 -mt-16">
