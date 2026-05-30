@@ -13,7 +13,7 @@ const TimerHero = ({
       <div className="text-left max-w-md">
         <p className="font-light text-lg leading-relaxed md:text-xl px-[4px] py-0">
           <a href="/" className="hover:opacity-80 transition-opacity">stint</a>{' '}
-          <span className="text-foreground/30">
+          <span className="text-foreground/60">
             {subtitle}
           </span>
         </p>

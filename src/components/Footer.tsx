@@ -38,7 +38,7 @@ const moreLinks = [
 function Group({ title, items }: { title: string; items: { to: string; label: string }[] }) {
   return (
     <div>
-      <h3 className="text-xs uppercase tracking-wider text-foreground/40 mb-3 font-aspekta">{title}</h3>
+      <h3 className="text-xs uppercase tracking-wider text-foreground/70 mb-3 font-aspekta">{title}</h3>
       <ul className="space-y-1.5">
         {items.map(i => (
           <li key={i.to}>
@@ -59,7 +59,7 @@ export default function Footer() {
         <Group title="Timers" items={genericLinks} />
         <Group title="More" items={moreLinks} />
       </div>
-      <div className="border-t border-[#E8E8E8] dark:border-[#262626] py-6 text-center text-xs text-foreground/40">
+      <div className="border-t border-[#E8E8E8] dark:border-[#262626] py-6 text-center text-xs text-foreground/70">
         © {new Date().getFullYear()} Stint — A minimalist timer for any session.
       </div>
     </footer>
