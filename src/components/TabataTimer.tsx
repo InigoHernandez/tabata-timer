@@ -7,6 +7,9 @@ import MobileSettingsDrawer from './MobileSettingsDrawer';
 import { useAudio } from '@/hooks/useAudio';
 import type { TimerMode } from './ModeTabs';
 import type { TrainingSettings, FocusSettings } from './TimerSettings';
+import type { SequenceItem } from './ProgressBars';
+
+const LONG_BREAK_EVERY = 4;
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -192,12 +195,17 @@ const TabataTimer = () => {
       if (timerState === 'countdown') {
         handleStateTransition('work', settings.workTime);
       } else if (timerState === 'work') {
-        if (currentRound < settings.rounds) {
+        if (mode === 'focus') {
+          if (currentRound >= settings.rounds) {
+            handleStateTransition('finished', 0);
+            setIsRunning(false);
+          } else if (currentRound % LONG_BREAK_EVERY === 0) {
+            handleStateTransition('setRest', settings.restBetweenSets);
+          } else {
+            handleStateTransition('rest', settings.restTime);
+          }
+        } else if (currentRound < settings.rounds) {
           handleStateTransition('rest', settings.restTime);
-        } else if (mode === 'focus') {
-          // Focus mode: after last session in cycle, go to long break and loop
-          handleStateTransition('setRest', settings.restBetweenSets);
-          setCurrentRound(1);
         } else if (currentSet < settings.sets) {
           handleStateTransition('setRest', settings.restBetweenSets);
           setCurrentRound(1);
@@ -211,11 +219,9 @@ const TabataTimer = () => {
         handleStateTransition('work', settings.workTime);
       } else if (timerState === 'setRest') {
         if (mode === 'focus') {
-          handleStateTransition('finished', 0);
-          setIsRunning(false);
-        } else {
-          handleStateTransition('work', settings.workTime);
+          setCurrentRound(prev => prev + 1);
         }
+        handleStateTransition('work', settings.workTime);
       }
     }
 
@@ -285,6 +291,62 @@ const TabataTimer = () => {
   }, [mode, currentRound, currentSet, focusSettings.pomodoros, settings.rounds, settings.sets]);
 
   const heroSubtitle = mode === 'focus' ? 'minimalist Pomodoro timer' : 'minimalist HIIT timer';
+
+  const sequence = useMemo<SequenceItem[]>(() => {
+    const seq: SequenceItem[] = [];
+    if (mode === 'focus') {
+      const N = focusSettings.pomodoros;
+      for (let r = 1; r <= N; r++) {
+        seq.push({ kind: 'work', set: 1, round: r });
+        if (r < N) {
+          seq.push({
+            kind: r % LONG_BREAK_EVERY === 0 ? 'longRest' : 'rest',
+            set: 1,
+            round: r,
+          });
+        }
+      }
+    } else {
+      const { sets, rounds } = trainingSettings;
+      for (let s = 1; s <= sets; s++) {
+        for (let r = 1; r <= rounds; r++) {
+          seq.push({ kind: 'work', set: s, round: r });
+          if (r < rounds) seq.push({ kind: 'rest', set: s, round: r });
+        }
+        if (s < sets) seq.push({ kind: 'longRest', set: s, round: rounds });
+      }
+    }
+    return seq;
+  }, [mode, focusSettings.pomodoros, trainingSettings.sets, trainingSettings.rounds]);
+
+  const activeIndex = useMemo(() => {
+    if (timerState === 'finished') return sequence.length;
+    if (timerState === 'idle' || timerState === 'countdown') return -1;
+    const matchSet = mode === 'focus' ? 1 : currentSet;
+    if (timerState === 'work') {
+      return sequence.findIndex(
+        (i) => i.kind === 'work' && i.set === matchSet && i.round === currentRound,
+      );
+    }
+    if (timerState === 'rest') {
+      return sequence.findIndex(
+        (i) => i.kind === 'rest' && i.set === matchSet && i.round === currentRound,
+      );
+    }
+    if (timerState === 'setRest') {
+      if (mode === 'focus') {
+        return sequence.findIndex(
+          (i) => i.kind === 'longRest' && i.round === currentRound,
+        );
+      }
+      // training: currentSet was incremented when entering setRest
+      const prevSet = currentSet - 1;
+      return sequence.findIndex(
+        (i) => i.kind === 'longRest' && i.set === prevSet,
+      );
+    }
+    return -1;
+  }, [sequence, mode, timerState, currentSet, currentRound]);
 
   const toggleMobileSettings = () => {
     setIsMobileSettingsOpen(!isMobileSettingsOpen);
