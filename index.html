@@ -32,6 +32,22 @@
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#F8F8F8" />
 
+    <!-- Fallback redirect for tabata.page when JS is disabled / before main.tsx loads.
+         Runs inline before render; no-op on stint.run. -->
+    <script>
+      (function () {
+        var h = window.location.hostname;
+        if (h === 'tabata.page' || h === 'www.tabata.page') {
+          window.location.replace(
+            'https://stint.run/tabata' +
+              window.location.pathname +
+              window.location.search +
+              window.location.hash
+          );
+        }
+      })();
+    </script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -53,6 +69,9 @@
 
   <body>
     <div id="root"></div>
+    <noscript>
+      <p>This site has moved to <a href="https://stint.run/tabata">stint.run/tabata</a>.</p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
