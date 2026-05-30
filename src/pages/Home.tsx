@@ -34,6 +34,7 @@ export default function Home() {
         jsonLd={faqLd}
       />
       <div className="h-dvh">
+        <h1 className="sr-only">Stint — Free Online Timer for Training, Focus & Sessions</h1>
         <TabataTimer />
       </div>
 

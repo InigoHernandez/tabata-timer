@@ -37,6 +37,7 @@ const ModeTabs = ({ mode, onChange }: ModeTabsProps) => {
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(tab.id)}
+            aria-label={`${tab.label} mode`}
             className={`relative z-10 py-2 text-sm font-normal rounded-md transition-colors duration-300 ${
               isActive
                 ? 'text-background'
