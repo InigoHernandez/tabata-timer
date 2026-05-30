@@ -29,12 +29,11 @@ const MobileSettingsDrawer = ({
 }: MobileSettingsDrawerProps) => {
   return <>
       {/* Backdrop */}
-      <div className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={onToggle} />
+      <div className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={onToggle} onTouchMove={(e) => e.preventDefault()} />
 
       {/* Settings Drawer - Positioned lower with smaller height */}
-      <div className={`fixed bottom-0 left-0 right-0 bg-background rounded-t-xl shadow-xl z-50 transition-transform duration-300 ease-out md:hidden ${isOpen ? 'translate-y-0' : 'translate-y-full'}`} style={{
-      maxHeight: '85vh',
-      top: '15vh'
+      <div className={`fixed bottom-0 left-0 right-0 bg-background rounded-t-xl shadow-xl z-50 transition-transform duration-300 ease-out md:hidden flex flex-col ${isOpen ? 'translate-y-0' : 'translate-y-full'}`} style={{
+      top: '8vh'
     }}>
         {/* Handle */}
         <div className="flex justify-center pt-3 pb-1">
@@ -50,9 +49,7 @@ const MobileSettingsDrawer = ({
         </div>
 
         {/* Settings Content - Optimized for all sliders visible */}
-        <div className="overflow-y-auto px-6 pb-6 flex-1" style={{
-        maxHeight: 'calc(85vh - 80px)'
-      }}>
+        <div className="overflow-y-auto px-6 pt-2 flex-1" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 40px)' }}>
           <TimerSettingsPanel
             mode={mode}
             onModeChange={onModeChange}
