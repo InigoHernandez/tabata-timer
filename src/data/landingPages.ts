@@ -278,10 +278,10 @@ export const landingPages: LandingPage[] = [
     h1: 'Deep Work Timer',
     intro: 'Long, uninterrupted focus blocks for serious cognitive work. Default: 90-minute sessions with 20-minute recovery breaks — aligned with ultradian rhythms.',
     mode: 'focus',
-    focus: { focusTime: 90, shortBreak: 20, longBreak: 30, pomodoros: 2 },
+    focus: { focusTime: 55, shortBreak: 20, longBreak: 30, pomodoros: 2 },
     howTo: [
       'Block out distractions before you start: phone in another room, notifications off, one tab.',
-      'Press play. Work the full 90 minutes on a single hard problem.',
+      'Press play. Work the full focus block on a single hard problem.',
       'Take the recovery break — walk, eat, look out the window. Then go again.',
     ],
     examples: [
@@ -291,7 +291,6 @@ export const landingPages: LandingPage[] = [
     ],
     related: [
       { path: '/pomodoro', label: 'Pomodoro timer' },
-      { path: '/90-20', label: '90/20 ultradian timer' },
       { path: '/52-17', label: '52/17 timer' },
       { path: '/focus-timer', label: 'Focus timer' },
       { path: '/guides/deep-work', label: 'Guide: Deep Work' },
