@@ -6,13 +6,13 @@ interface TimerHeroProps {
 }
 const TimerHero = ({
   hideInFullscreen = false,
-  subtitle = 'minimalist HIIT timer'
+  subtitle = '— minimalist timer'
 }: TimerHeroProps) => {
   if (hideInFullscreen) return null;
   return <div className="flex justify-between items-center mb-4 md:mb-6 animate-fade-in">
       <div className="text-left max-w-md">
         <p className="font-light text-lg leading-relaxed md:text-xl px-[4px] py-0">
-          tabata{' '}
+          <a href="/" className="hover:opacity-80 transition-opacity">stint</a>{' '}
           <span className="text-foreground/30">
             {subtitle}
           </span>

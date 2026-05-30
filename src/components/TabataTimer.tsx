@@ -38,10 +38,16 @@ const loadMode = (): TimerMode => {
   }
 };
 
-const TabataTimer = () => {
-  const [mode, setModeState] = useState<TimerMode>(loadMode);
-  const [trainingSettings, setTrainingSettings] = useState<TrainingSettings>(DEFAULT_TRAINING);
-  const [focusSettings, setFocusSettings] = useState<FocusSettings>(DEFAULT_FOCUS);
+interface TabataTimerProps {
+  initialMode?: TimerMode;
+  initialTraining?: Partial<TrainingSettings>;
+  initialFocus?: Partial<FocusSettings>;
+}
+
+const TabataTimer = ({ initialMode, initialTraining, initialFocus }: TabataTimerProps = {}) => {
+  const [mode, setModeState] = useState<TimerMode>(() => initialMode ?? loadMode());
+  const [trainingSettings, setTrainingSettings] = useState<TrainingSettings>({ ...DEFAULT_TRAINING, ...initialTraining });
+  const [focusSettings, setFocusSettings] = useState<FocusSettings>({ ...DEFAULT_FOCUS, ...initialFocus });
 
   // Derived effective engine settings
   const settings = useMemo(() => {
@@ -290,7 +296,7 @@ const TabataTimer = () => {
     return `${(currentSet - 1) * settings.rounds + currentRound}/${settings.rounds * settings.sets}`;
   }, [mode, currentRound, currentSet, focusSettings.pomodoros, settings.rounds, settings.sets]);
 
-  const heroSubtitle = mode === 'focus' ? 'minimalist Pomodoro timer' : 'minimalist HIIT timer';
+  const heroSubtitle = '— minimalist timer';
 
   const sequence = useMemo<SequenceItem[]>(() => {
     const seq: SequenceItem[] = [];
