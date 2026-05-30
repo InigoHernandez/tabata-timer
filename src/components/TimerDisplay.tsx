@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import ProgressBars from './ProgressBars';
+import ProgressBars, { type SequenceItem } from './ProgressBars';
 import TimerControls from './TimerControls';
 import TimerInfo from './TimerInfo';
 import TimerMainDisplay from './TimerMainDisplay';
@@ -21,6 +21,8 @@ interface TimerDisplayProps {
   workTime: number;
   cyclesText: string;
   mode: TimerMode;
+  sequence: SequenceItem[];
+  activeIndex: number;
   onToggleTimer: () => void;
   onResetTimer: () => void;
   onToggleSettings?: () => void;
@@ -38,6 +40,8 @@ const TimerDisplay = ({
   workTime,
   cyclesText,
   mode,
+  sequence,
+  activeIndex,
   onToggleTimer,
   onResetTimer,
   onToggleSettings
