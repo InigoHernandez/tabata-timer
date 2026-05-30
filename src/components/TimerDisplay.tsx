@@ -5,6 +5,7 @@ import TimerControls from './TimerControls';
 import TimerInfo from './TimerInfo';
 import TimerMainDisplay from './TimerMainDisplay';
 import { getBackgroundColor } from '@/utils/timerUtils';
+import type { TimerMode } from './ModeTabs';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -18,6 +19,8 @@ interface TimerDisplayProps {
   totalRounds: number;
   remainingTime: number;
   workTime: number;
+  cyclesText: string;
+  mode: TimerMode;
   onToggleTimer: () => void;
   onResetTimer: () => void;
   onToggleSettings?: () => void;
@@ -33,6 +36,8 @@ const TimerDisplay = ({
   totalRounds,
   remainingTime,
   workTime,
+  cyclesText,
+  mode,
   onToggleTimer,
   onResetTimer,
   onToggleSettings
@@ -120,6 +125,7 @@ const TimerDisplay = ({
                 isRunning={isRunning}
                 workTime={workTime}
                 isFullscreen={isFullscreen}
+                mode={mode}
               />
             </div>
 
@@ -134,7 +140,7 @@ const TimerDisplay = ({
                   className="text-3xl font-jetbrains-mono"
                   style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
                 >
-                  {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                  {cyclesText}
                 </div>
               </div>
 
@@ -185,6 +191,7 @@ const TimerDisplay = ({
                 isRunning={isRunning}
                 workTime={workTime}
                 isFullscreen={isFullscreen}
+                mode={mode}
               />
             </div>
 
@@ -199,7 +206,7 @@ const TimerDisplay = ({
                   className="text-xl lg:text-2xl font-jetbrains-mono"
                   style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
                 >
-                  {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                  {cyclesText}
                 </div>
               </div>
 
@@ -247,6 +254,7 @@ const TimerDisplay = ({
                 isRunning={isRunning}
                 workTime={workTime}
                 isFullscreen={false}
+                mode={mode}
               />
             </div>
 
@@ -260,7 +268,7 @@ const TimerDisplay = ({
                   className="text-base font-jetbrains-mono"
                   style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
                 >
-                  {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                  {cyclesText}
                 </div>
               </div>
               
@@ -324,6 +332,7 @@ const TimerDisplay = ({
               isRunning={isRunning}
               workTime={workTime}
               isFullscreen={false}
+                mode={mode}
             />
           </div>
 
@@ -337,7 +346,7 @@ const TimerDisplay = ({
                 className="text-xl font-jetbrains-mono"
                 style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               >
-                {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                {cyclesText}
               </div>
             </div>
             
@@ -384,6 +393,7 @@ const TimerDisplay = ({
               isRunning={isRunning}
               workTime={workTime}
               isFullscreen={isFullscreen}
+                mode={mode}
             />
           </div>
 
@@ -396,7 +406,7 @@ const TimerDisplay = ({
                 className="text-xl md:text-2xl lg:text-4xl font-jetbrains-mono"
                 style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               >
-                {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                {cyclesText}
               </div>
             </div>
 

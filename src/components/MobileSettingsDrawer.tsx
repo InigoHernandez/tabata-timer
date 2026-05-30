@@ -1,28 +1,29 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Check, Settings } from 'lucide-react';
-import TimerSettingsPanel from './TimerSettings';
-interface TimerSettings {
-  workTime: number;
-  restTime: number;
-  rounds: number;
-  sets: number;
-  restBetweenSets: number;
-  countdownTime: number;
-}
+import TimerSettingsPanel, { type TrainingSettings, type FocusSettings } from './TimerSettings';
+import { type TimerMode } from './ModeTabs';
 interface MobileSettingsDrawerProps {
   isOpen: boolean;
   onToggle: () => void;
-  settings: TimerSettings;
-  onSettingsChange: (settings: TimerSettings) => void;
+  mode: TimerMode;
+  onModeChange: (mode: TimerMode) => void;
+  trainingSettings: TrainingSettings;
+  focusSettings: FocusSettings;
+  onTrainingChange: (s: TrainingSettings) => void;
+  onFocusChange: (s: FocusSettings) => void;
   isRunning: boolean;
   timerState: string;
 }
 const MobileSettingsDrawer = ({
   isOpen,
   onToggle,
-  settings,
-  onSettingsChange,
+  mode,
+  onModeChange,
+  trainingSettings,
+  focusSettings,
+  onTrainingChange,
+  onFocusChange,
   isRunning,
   timerState
 }: MobileSettingsDrawerProps) => {
@@ -52,7 +53,16 @@ const MobileSettingsDrawer = ({
         <div className="overflow-y-auto px-6 pb-6 flex-1" style={{
         maxHeight: 'calc(85vh - 80px)'
       }}>
-          <TimerSettingsPanel settings={settings} onSettingsChange={onSettingsChange} isRunning={isRunning} timerState={timerState} />
+          <TimerSettingsPanel
+            mode={mode}
+            onModeChange={onModeChange}
+            trainingSettings={trainingSettings}
+            focusSettings={focusSettings}
+            onTrainingChange={onTrainingChange}
+            onFocusChange={onFocusChange}
+            isRunning={isRunning}
+            timerState={timerState}
+          />
         </div>
       </div>
     </>;

@@ -1,7 +1,7 @@
 
 import React, { memo, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { formatTimeDisplay, getStateInfo } from '@/utils/timerUtils';
+import { formatTimeDisplay, getStateInfo, type TimerMode } from '@/utils/timerUtils';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -11,6 +11,7 @@ interface TimerMainDisplayProps {
   isRunning: boolean;
   workTime: number;
   isFullscreen: boolean;
+  mode?: TimerMode;
 }
 
 const TimerMainDisplay = memo(({
@@ -18,9 +19,10 @@ const TimerMainDisplay = memo(({
   timerState,
   isRunning,
   workTime,
-  isFullscreen
+  isFullscreen,
+  mode = 'training'
 }: TimerMainDisplayProps) => {
-  const stateInfo = useMemo(() => getStateInfo(isRunning, timerState), [isRunning, timerState]);
+  const stateInfo = useMemo(() => getStateInfo(isRunning, timerState, mode), [isRunning, timerState, mode]);
 
   const displayTime = useMemo(() => {
     if (timerState === 'idle') {

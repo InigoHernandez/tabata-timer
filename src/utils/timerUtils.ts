@@ -19,11 +19,36 @@ export const getTotalCycles = (totalRounds: number, totalSets: number) =>
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
-export const getStateInfo = (isRunning: boolean, timerState: TimerState) => {
+export type TimerMode = 'training' | 'focus';
+
+export const getStateInfo = (
+  isRunning: boolean,
+  timerState: TimerState,
+  mode: TimerMode = 'training'
+) => {
   if (!isRunning && timerState !== 'idle' && timerState !== 'finished') {
     return { text: 'PAUSED', color: 'bg-[#ffeb47]' };
   }
-  
+
+  if (mode === 'focus') {
+    switch (timerState) {
+      case 'idle':
+        return { text: 'READY', color: 'bg-[#f0eeeb]' };
+      case 'countdown':
+        return { text: 'GET READY', color: 'bg-[#ff8b47]' };
+      case 'work':
+        return { text: 'FOCUS', color: 'bg-[#5bff72]' };
+      case 'rest':
+        return { text: 'SHORT BREAK', color: 'bg-[#5ba8ff]' };
+      case 'setRest':
+        return { text: 'LONG BREAK', color: 'bg-[#5beddb]' };
+      case 'finished':
+        return { text: 'FINISHED', color: 'bg-[#ff8b47]' };
+      default:
+        return { text: 'READY', color: 'bg-[#f0eeeb]' };
+    }
+  }
+
   switch (timerState) {
     case 'idle':
       return { text: 'READY', color: 'bg-[#f0eeeb]' };

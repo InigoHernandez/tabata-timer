@@ -5,27 +5,54 @@ import TimerDisplay from './TimerDisplay';
 import TimerSettingsPanel from './TimerSettings';
 import MobileSettingsDrawer from './MobileSettingsDrawer';
 import { useAudio } from '@/hooks/useAudio';
-
-interface TimerSettings {
-  workTime: number;
-  restTime: number;
-  rounds: number;
-  sets: number;
-  restBetweenSets: number;
-  countdownTime: number;
-}
+import type { TimerMode } from './ModeTabs';
+import type { TrainingSettings, FocusSettings } from './TimerSettings';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
+const DEFAULT_TRAINING: TrainingSettings = {
+  workTime: 20,
+  restTime: 10,
+  rounds: 8,
+  sets: 2,
+  restBetweenSets: 40,
+  countdownTime: 5,
+};
+
+const DEFAULT_FOCUS: FocusSettings = {
+  focusTime: 25,
+  shortBreak: 5,
+  longBreak: 15,
+  sessionsBeforeLongBreak: 4,
+  countdownTime: 5,
+};
+
+const loadMode = (): TimerMode => {
+  try {
+    const v = localStorage.getItem('timerMode');
+    return v === 'focus' ? 'focus' : 'training';
+  } catch {
+    return 'training';
+  }
+};
+
 const TabataTimer = () => {
-  const [settings, setSettings] = useState<TimerSettings>({
-    workTime: 20,
-    restTime: 10,
-    rounds: 8,
-    sets: 2,
-    restBetweenSets: 40,
-    countdownTime: 5
-  });
+  const [mode, setModeState] = useState<TimerMode>(loadMode);
+  const [trainingSettings, setTrainingSettings] = useState<TrainingSettings>(DEFAULT_TRAINING);
+  const [focusSettings, setFocusSettings] = useState<FocusSettings>(DEFAULT_FOCUS);
+
+  // Derived effective engine settings
+  const settings = useMemo(() => {
+    if (mode === 'training') return trainingSettings;
+    return {
+      workTime: focusSettings.focusTime * 60,
+      restTime: focusSettings.shortBreak * 60,
+      rounds: focusSettings.sessionsBeforeLongBreak,
+      sets: 999, // infinite loop in focus mode
+      restBetweenSets: focusSettings.longBreak * 60,
+      countdownTime: focusSettings.countdownTime,
+    };
+  }, [mode, trainingSettings, focusSettings]);
 
   const [isRunning, setIsRunning] = useState(false);
   const [currentTime, setCurrentTime] = useState(settings.workTime);
@@ -91,6 +118,22 @@ const TabataTimer = () => {
     setPrevTimerState('idle');
   }, [settings.workTime, stopAllScheduledBeeps]);
 
+  const setMode = useCallback((next: TimerMode) => {
+    if (next === mode) return;
+    stopAllScheduledBeeps();
+    setIsRunning(false);
+    setCurrentRound(1);
+    setCurrentSet(1);
+    setTimerState('idle');
+    setPrevTimerState('idle');
+    setModeState(next);
+    try {
+      localStorage.setItem('timerMode', next);
+    } catch {
+      /* ignore */
+    }
+  }, [mode, stopAllScheduledBeeps]);
+
   const toggleTimer = async () => {
     if (timerState === 'idle') {
       // Initialize audio and wait for it to complete before scheduling sounds
@@ -147,6 +190,10 @@ const TabataTimer = () => {
       } else if (timerState === 'work') {
         if (currentRound < settings.rounds) {
           handleStateTransition('rest', settings.restTime);
+        } else if (mode === 'focus') {
+          // Focus mode: after last session in cycle, go to long break and loop
+          handleStateTransition('setRest', settings.restBetweenSets);
+          setCurrentRound(1);
         } else if (currentSet < settings.sets) {
           handleStateTransition('setRest', settings.restBetweenSets);
           setCurrentRound(1);
@@ -164,9 +211,27 @@ const TabataTimer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, handleStateTransition]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, mode, handleStateTransition]);
 
   const remainingTime = useMemo(() => {
+    if (mode === 'focus') {
+      // Time remaining in current Pomodoro cycle (until end of long break)
+      const { workTime, restTime, rounds, restBetweenSets } = settings;
+      const cycleTotal = rounds * workTime + (rounds - 1) * restTime + restBetweenSets;
+      if (timerState === 'idle' || timerState === 'countdown') return cycleTotal;
+      let remaining = currentTime;
+      if (timerState === 'work') {
+        const roundsLeft = rounds - currentRound; // remaining short breaks + focus rounds after this one
+        remaining += roundsLeft * (restTime + workTime) + restBetweenSets;
+      } else if (timerState === 'rest') {
+        const focusLeft = rounds - currentRound;
+        const restsLeft = Math.max(0, focusLeft - 1);
+        remaining += focusLeft * workTime + restsLeft * restTime + restBetweenSets;
+      }
+      // setRest: just currentTime
+      return remaining;
+    }
+
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     const totalWorkoutTime = settings.sets * timePerSet + (settings.sets - 1) * settings.restBetweenSets;
 
@@ -201,7 +266,16 @@ const TabataTimer = () => {
     }
 
     return remaining;
-  }, [settings, timerState, currentTime, currentRound, currentSet]);
+  }, [settings, mode, timerState, currentTime, currentRound, currentSet]);
+
+  const cyclesText = useMemo(() => {
+    if (mode === 'focus') {
+      return `${currentRound}/${focusSettings.sessionsBeforeLongBreak}`;
+    }
+    return `${(currentSet - 1) * settings.rounds + currentRound}/${settings.rounds * settings.sets}`;
+  }, [mode, currentRound, currentSet, focusSettings.sessionsBeforeLongBreak, settings.rounds, settings.sets]);
+
+  const heroSubtitle = mode === 'focus' ? 'minimalist Pomodoro timer' : 'minimalist HIIT timer';
 
   const toggleMobileSettings = () => {
     setIsMobileSettingsOpen(!isMobileSettingsOpen);
@@ -212,13 +286,13 @@ const TabataTimer = () => {
       {/* Mobile Layout - Full viewport adaptation */}
       <div className="md:hidden h-full flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
-          <TimerHero hideInFullscreen={isFullscreen} />
+          <TimerHero hideInFullscreen={isFullscreen} subtitle={heroSubtitle} />
         </div>
 
         <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5] dark:border-[#262626] dark:bg-[#1A1A1A]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out mb-2`}>
           <div className="flex flex-col h-full min-h-0">
             <div className="flex-1 min-h-0">
-              <TimerDisplay 
+              <TimerDisplay cyclesText={cyclesText} mode={mode} 
                 currentTime={currentTime} 
                 currentRound={currentRound} 
                 currentSet={currentSet} 
@@ -241,14 +315,14 @@ const TabataTimer = () => {
       <div className="hidden md:block h-full p-8 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="h-full flex flex-col">
           <div className="flex-shrink-0">
-            <TimerHero hideInFullscreen={isFullscreen} />
+            <TimerHero hideInFullscreen={isFullscreen} subtitle={heroSubtitle} />
           </div>
 
           <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5] dark:border-[#262626] dark:bg-[#1A1A1A]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
             {/* Tablet Layout - 2 columns with adjusted proportions for tablet screens */}
             <div className="xl:hidden grid grid-cols-5 h-full min-h-0 transition-all duration-500 ease-in-out">
               <div className="col-span-3">
-                <TimerDisplay 
+                <TimerDisplay cyclesText={cyclesText} mode={mode} 
                   currentTime={currentTime} 
                   currentRound={currentRound} 
                   currentSet={currentSet} 
@@ -266,8 +340,12 @@ const TabataTimer = () => {
               {!isFullscreen && (
                 <div className="col-span-2 border-l border-[#E8E8E8] bg-[#F8F8F8] dark:border-[#262626] dark:bg-[#141414] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
                   <TimerSettingsPanel 
-                    settings={settings} 
-                    onSettingsChange={setSettings} 
+                    mode={mode}
+                    onModeChange={setMode}
+                    trainingSettings={trainingSettings}
+                    focusSettings={focusSettings}
+                    onTrainingChange={setTrainingSettings}
+                    onFocusChange={setFocusSettings}
                     isRunning={isRunning} 
                     timerState={timerState} 
                   />
@@ -277,7 +355,7 @@ const TabataTimer = () => {
 
             {/* Desktop Layout - Original layout for large screens */}
             <div className="hidden xl:grid xl:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
-              <TimerDisplay 
+              <TimerDisplay cyclesText={cyclesText} mode={mode} 
                 currentTime={currentTime} 
                 currentRound={currentRound} 
                 currentSet={currentSet} 
@@ -294,8 +372,12 @@ const TabataTimer = () => {
               {!isFullscreen && (
                 <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] dark:border-[#262626] dark:bg-[#141414] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[32px] px-[34px]">
                   <TimerSettingsPanel 
-                    settings={settings} 
-                    onSettingsChange={setSettings} 
+                    mode={mode}
+                    onModeChange={setMode}
+                    trainingSettings={trainingSettings}
+                    focusSettings={focusSettings}
+                    onTrainingChange={setTrainingSettings}
+                    onFocusChange={setFocusSettings}
                     isRunning={isRunning} 
                     timerState={timerState} 
                   />
@@ -310,8 +392,12 @@ const TabataTimer = () => {
       <MobileSettingsDrawer
         isOpen={isMobileSettingsOpen}
         onToggle={toggleMobileSettings}
-        settings={settings}
-        onSettingsChange={setSettings}
+        mode={mode}
+        onModeChange={setMode}
+        trainingSettings={trainingSettings}
+        focusSettings={focusSettings}
+        onTrainingChange={setTrainingSettings}
+        onFocusChange={setFocusSettings}
         isRunning={isRunning}
         timerState={timerState}
       />
