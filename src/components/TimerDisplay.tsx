@@ -5,6 +5,7 @@ import TimerControls from './TimerControls';
 import TimerInfo from './TimerInfo';
 import TimerMainDisplay from './TimerMainDisplay';
 import { getBackgroundColor } from '@/utils/timerUtils';
+import type { TimerMode } from './ModeTabs';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
@@ -18,6 +19,8 @@ interface TimerDisplayProps {
   totalRounds: number;
   remainingTime: number;
   workTime: number;
+  cyclesText: string;
+  mode: TimerMode;
   onToggleTimer: () => void;
   onResetTimer: () => void;
   onToggleSettings?: () => void;
@@ -33,6 +36,8 @@ const TimerDisplay = ({
   totalRounds,
   remainingTime,
   workTime,
+  cyclesText,
+  mode,
   onToggleTimer,
   onResetTimer,
   onToggleSettings
