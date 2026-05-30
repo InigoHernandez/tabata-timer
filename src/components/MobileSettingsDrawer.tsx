@@ -14,6 +14,7 @@ interface MobileSettingsDrawerProps {
   onFocusChange: (s: FocusSettings) => void;
   isRunning: boolean;
   timerState: string;
+  tabataLabels?: boolean;
 }
 const MobileSettingsDrawer = ({
   isOpen,
@@ -25,7 +26,8 @@ const MobileSettingsDrawer = ({
   onTrainingChange,
   onFocusChange,
   isRunning,
-  timerState
+  timerState,
+  tabataLabels = false
 }: MobileSettingsDrawerProps) => {
   React.useEffect(() => {
     if (!isOpen) return;
@@ -68,6 +70,7 @@ const MobileSettingsDrawer = ({
             onFocusChange={onFocusChange}
             isRunning={isRunning}
             timerState={timerState}
+            tabataLabels={tabataLabels}
           />
         </div>
       </div>

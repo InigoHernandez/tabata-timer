@@ -21,6 +21,7 @@ export default function TimerLandingPage({ page }: Props) {
           initialMode={page.mode}
           initialTraining={page.training}
           initialFocus={page.focus}
+          tabataLabels={page.path === '/tabata'}
         />
       </div>
 
