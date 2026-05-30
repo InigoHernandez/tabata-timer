@@ -139,7 +139,7 @@ const TimerDisplay = ({
                   className="text-3xl font-jetbrains-mono"
                   style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
                 >
-                  {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                  {cyclesText}
                 </div>
               </div>
 
@@ -204,7 +204,7 @@ const TimerDisplay = ({
                   className="text-xl lg:text-2xl font-jetbrains-mono"
                   style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
                 >
-                  {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                  {cyclesText}
                 </div>
               </div>
 
@@ -265,7 +265,7 @@ const TimerDisplay = ({
                   className="text-base font-jetbrains-mono"
                   style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
                 >
-                  {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                  {cyclesText}
                 </div>
               </div>
               
@@ -342,7 +342,7 @@ const TimerDisplay = ({
                 className="text-xl font-jetbrains-mono"
                 style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               >
-                {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                {cyclesText}
               </div>
             </div>
             
@@ -401,7 +401,7 @@ const TimerDisplay = ({
                 className="text-xl md:text-2xl lg:text-4xl font-jetbrains-mono"
                 style={{ letterSpacing: '-0.01em', fontWeight: '400' }}
               >
-                {(currentSet - 1) * totalRounds + currentRound}/{totalRounds * totalSets}
+                {cyclesText}
               </div>
             </div>
 
