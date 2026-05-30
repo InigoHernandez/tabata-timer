@@ -1,8 +1,6 @@
 
-import TabataTimer from '@/components/TabataTimer';
+import Home from './Home';
 
-const Index = () => {
-  return <TabataTimer />;
-};
+const Index = () => <Home />;
 
 export default Index;
