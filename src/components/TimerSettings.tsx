@@ -130,7 +130,7 @@ const TimerSettingsPanel = ({
                   <span className={labelClass}>Focus time</span>
                   <span className={valueClass} style={{ fontWeight: '400' }}>{focusSettings.focusTime} min</span>
                 </div>
-                <Slider value={[focusSettings.focusTime]} onValueChange={v => updateFocus('focusTime', v[0])} max={90} min={5} step={5} className="w-full" disabled={slidersDisabled} />
+                <Slider value={[focusSettings.focusTime]} onValueChange={v => updateFocus('focusTime', v[0])} max={55} min={5} step={5} className="w-full" disabled={slidersDisabled} />
               </div>
 
               <div className="space-y-2 lg:space-y-3">
