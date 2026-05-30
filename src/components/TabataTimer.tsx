@@ -308,7 +308,7 @@ const TabataTimer = () => {
                 currentSet={currentSet} 
                 timerState={timerState} 
                 isRunning={isRunning} 
-                totalSets={settings.sets} 
+                totalSets={mode === "focus" ? 1 : settings.sets} 
                 totalRounds={settings.rounds} 
                  remainingTime={remainingTime}
                 workTime={settings.workTime} 
@@ -338,7 +338,7 @@ const TabataTimer = () => {
                   currentSet={currentSet} 
                   timerState={timerState} 
                   isRunning={isRunning} 
-                  totalSets={settings.sets} 
+                  totalSets={mode === "focus" ? 1 : settings.sets} 
                   totalRounds={settings.rounds} 
                    remainingTime={remainingTime}
                   workTime={settings.workTime} 
@@ -371,7 +371,7 @@ const TabataTimer = () => {
                 currentSet={currentSet} 
                 timerState={timerState} 
                 isRunning={isRunning} 
-                totalSets={settings.sets} 
+                totalSets={mode === "focus" ? 1 : settings.sets} 
                 totalRounds={settings.rounds} 
                 remainingTime={remainingTime} 
                 workTime={settings.workTime} 
