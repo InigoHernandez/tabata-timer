@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { Switch } from '@/components/ui/switch';
 import ModeTabs, { type TimerMode } from './ModeTabs';
 
 export interface TrainingSettings {
@@ -18,7 +17,6 @@ export interface FocusSettings {
   shortBreak: number; // minutes
   longBreak: number; // minutes
   pomodoros: number; // number of pomodoros before long break
-  loop: boolean;
 }
 
 interface TimerSettingsProps {
