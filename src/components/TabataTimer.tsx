@@ -134,7 +134,7 @@ const TabataTimer = () => {
   }, [timerState, playStartSound, playFinishSound, scheduleLastFourBeeps]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval>;
 
     if (isRunning && currentTime > 0) {
       interval = setInterval(() => {
