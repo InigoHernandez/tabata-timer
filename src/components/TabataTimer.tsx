@@ -363,7 +363,7 @@ const TabataTimer = () => {
         <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5] dark:border-[#262626] dark:bg-[#1A1A1A]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out mb-2`}>
           <div className="flex flex-col h-full min-h-0">
             <div className="flex-1 min-h-0">
-              <TimerDisplay cyclesText={cyclesText} mode={mode} 
+              <TimerDisplay sequence={sequence} activeIndex={activeIndex} cyclesText={cyclesText} mode={mode} 
                 currentTime={currentTime} 
                 currentRound={currentRound} 
                 currentSet={currentSet} 
@@ -393,7 +393,7 @@ const TabataTimer = () => {
             {/* Tablet Layout - 2 columns with adjusted proportions for tablet screens */}
             <div className="xl:hidden grid grid-cols-5 h-full min-h-0 transition-all duration-500 ease-in-out">
               <div className="col-span-3">
-                <TimerDisplay cyclesText={cyclesText} mode={mode} 
+                <TimerDisplay sequence={sequence} activeIndex={activeIndex} cyclesText={cyclesText} mode={mode} 
                   currentTime={currentTime} 
                   currentRound={currentRound} 
                   currentSet={currentSet} 
@@ -426,7 +426,7 @@ const TabataTimer = () => {
 
             {/* Desktop Layout - Original layout for large screens */}
             <div className="hidden xl:grid xl:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
-              <TimerDisplay cyclesText={cyclesText} mode={mode} 
+              <TimerDisplay sequence={sequence} activeIndex={activeIndex} cyclesText={cyclesText} mode={mode} 
                 currentTime={currentTime} 
                 currentRound={currentRound} 
                 currentSet={currentSet} 
