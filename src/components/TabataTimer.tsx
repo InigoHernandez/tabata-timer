@@ -286,13 +286,13 @@ const TabataTimer = () => {
       {/* Mobile Layout - Full viewport adaptation */}
       <div className="md:hidden h-full flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
-          <TimerHero hideInFullscreen={isFullscreen} />
+          <TimerHero hideInFullscreen={isFullscreen} subtitle={heroSubtitle} />
         </div>
 
         <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5] dark:border-[#262626] dark:bg-[#1A1A1A]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out mb-2`}>
           <div className="flex flex-col h-full min-h-0">
             <div className="flex-1 min-h-0">
-              <TimerDisplay 
+              <TimerDisplay cyclesText={cyclesText} mode={mode} 
                 currentTime={currentTime} 
                 currentRound={currentRound} 
                 currentSet={currentSet} 
@@ -315,14 +315,14 @@ const TabataTimer = () => {
       <div className="hidden md:block h-full p-8 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="h-full flex flex-col">
           <div className="flex-shrink-0">
-            <TimerHero hideInFullscreen={isFullscreen} />
+            <TimerHero hideInFullscreen={isFullscreen} subtitle={heroSubtitle} />
           </div>
 
           <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5] dark:border-[#262626] dark:bg-[#1A1A1A]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
             {/* Tablet Layout - 2 columns with adjusted proportions for tablet screens */}
             <div className="xl:hidden grid grid-cols-5 h-full min-h-0 transition-all duration-500 ease-in-out">
               <div className="col-span-3">
-                <TimerDisplay 
+                <TimerDisplay cyclesText={cyclesText} mode={mode} 
                   currentTime={currentTime} 
                   currentRound={currentRound} 
                   currentSet={currentSet} 
@@ -340,8 +340,12 @@ const TabataTimer = () => {
               {!isFullscreen && (
                 <div className="col-span-2 border-l border-[#E8E8E8] bg-[#F8F8F8] dark:border-[#262626] dark:bg-[#141414] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
                   <TimerSettingsPanel 
-                    settings={settings} 
-                    onSettingsChange={setSettings} 
+                    mode={mode}
+                    onModeChange={setMode}
+                    trainingSettings={trainingSettings}
+                    focusSettings={focusSettings}
+                    onTrainingChange={setTrainingSettings}
+                    onFocusChange={setFocusSettings}
                     isRunning={isRunning} 
                     timerState={timerState} 
                   />
@@ -351,7 +355,7 @@ const TabataTimer = () => {
 
             {/* Desktop Layout - Original layout for large screens */}
             <div className="hidden xl:grid xl:grid-cols-3 h-full min-h-0 transition-all duration-500 ease-in-out">
-              <TimerDisplay 
+              <TimerDisplay cyclesText={cyclesText} mode={mode} 
                 currentTime={currentTime} 
                 currentRound={currentRound} 
                 currentSet={currentSet} 
@@ -368,8 +372,12 @@ const TabataTimer = () => {
               {!isFullscreen && (
                 <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] dark:border-[#262626] dark:bg-[#141414] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[32px] px-[34px]">
                   <TimerSettingsPanel 
-                    settings={settings} 
-                    onSettingsChange={setSettings} 
+                    mode={mode}
+                    onModeChange={setMode}
+                    trainingSettings={trainingSettings}
+                    focusSettings={focusSettings}
+                    onTrainingChange={setTrainingSettings}
+                    onFocusChange={setFocusSettings}
                     isRunning={isRunning} 
                     timerState={timerState} 
                   />
@@ -384,8 +392,12 @@ const TabataTimer = () => {
       <MobileSettingsDrawer
         isOpen={isMobileSettingsOpen}
         onToggle={toggleMobileSettings}
-        settings={settings}
-        onSettingsChange={setSettings}
+        mode={mode}
+        onModeChange={setMode}
+        trainingSettings={trainingSettings}
+        focusSettings={focusSettings}
+        onTrainingChange={setTrainingSettings}
+        onFocusChange={setFocusSettings}
         isRunning={isRunning}
         timerState={timerState}
       />
