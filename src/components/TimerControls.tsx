@@ -63,12 +63,13 @@ const TimerControls = ({
         
         {/* Play/Pause Button - Same size as others */}
         <Button 
-          onClick={onToggleTimer} 
+          onClick={timerState === 'finished' ? onResetTimer : onToggleTimer} 
           size="lg" 
           className={`${buttonSizes} rounded-lg p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-all duration-300 ease-out`}
-          disabled={timerState === 'finished'}
         >
-          {isRunning ? (
+          {timerState === 'finished' ? (
+            <RefreshCcw className={`${iconSizes} transition-colors duration-300 ease-out`} />
+          ) : isRunning ? (
             <Pause className={`${iconSizes} fill-current transition-colors duration-300 ease-out`} />
           ) : (
             <Play className={`${iconSizes} fill-current transition-colors duration-300 ease-out`} />
@@ -104,12 +105,13 @@ const TimerControls = ({
       </Button>
       
       <Button 
-        onClick={onToggleTimer} 
+        onClick={timerState === 'finished' ? onResetTimer : onToggleTimer} 
         size="lg" 
         className={`${buttonSizes} rounded-md p-0 bg-foreground text-background hover:bg-foreground/90 active:scale-95 transition-all duration-300 ease-out`}
-        disabled={timerState === 'finished'}
       >
-        {isRunning ? (
+        {timerState === 'finished' ? (
+          <RefreshCcw className={`${iconSizes} transition-colors duration-300 ease-out`} />
+        ) : isRunning ? (
           <Pause className={`${iconSizes} fill-current transition-colors duration-300 ease-out`} />
         ) : (
           <Play className={`${iconSizes} fill-current transition-colors duration-300 ease-out`} />
