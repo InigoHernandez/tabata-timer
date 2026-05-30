@@ -125,6 +125,7 @@ const TimerDisplay = ({
                 isRunning={isRunning}
                 workTime={workTime}
                 isFullscreen={isFullscreen}
+                mode={mode}
               />
             </div>
 
@@ -190,6 +191,7 @@ const TimerDisplay = ({
                 isRunning={isRunning}
                 workTime={workTime}
                 isFullscreen={isFullscreen}
+                mode={mode}
               />
             </div>
 
@@ -252,6 +254,7 @@ const TimerDisplay = ({
                 isRunning={isRunning}
                 workTime={workTime}
                 isFullscreen={false}
+                mode={mode}
               />
             </div>
 
@@ -329,6 +332,7 @@ const TimerDisplay = ({
               isRunning={isRunning}
               workTime={workTime}
               isFullscreen={false}
+                mode={mode}
             />
           </div>
 
@@ -389,6 +393,7 @@ const TimerDisplay = ({
               isRunning={isRunning}
               workTime={workTime}
               isFullscreen={isFullscreen}
+                mode={mode}
             />
           </div>
 
