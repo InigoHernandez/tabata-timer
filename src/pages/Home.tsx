@@ -7,7 +7,7 @@ const popular = [
   { path: '/tabata', label: 'Tabata', desc: '20/10 × 8 rounds — the classic 4-minute protocol.' },
   { path: '/hiit', label: 'HIIT', desc: 'Customizable intervals for any conditioning workout.' },
   { path: '/pomodoro', label: 'Pomodoro', desc: '25-minute focus blocks with short breaks.' },
-  { path: '/deep-work', label: 'Deep Work', desc: '90-minute uninterrupted focus sessions.' },
+  { path: '/deep-work', label: 'Deep Work', desc: 'Long uninterrupted focus sessions.' },
   { path: '/emom', label: 'EMOM', desc: 'Every Minute On the Minute — CrossFit standard.' },
   { path: '/amrap', label: 'AMRAP', desc: 'As Many Rounds As Possible in a fixed window.' },
 ];

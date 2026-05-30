@@ -21,7 +21,6 @@ const focusLinks = [
   { to: '/work-timer', label: 'Work' },
   { to: '/focus-timer', label: 'Focus' },
   { to: '/52-17', label: '52/17' },
-  { to: '/90-20', label: '90/20' },
 ];
 const genericLinks = [
   { to: '/timer', label: 'Timer' },
