@@ -27,6 +27,15 @@ const MobileSettingsDrawer = ({
   isRunning,
   timerState
 }: MobileSettingsDrawerProps) => {
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen]);
+
   return <>
       {/* Backdrop */}
       <div className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={onToggle} onTouchMove={(e) => e.preventDefault()} />
