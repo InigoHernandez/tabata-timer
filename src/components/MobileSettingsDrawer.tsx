@@ -37,11 +37,11 @@ const MobileSettingsDrawer = ({
     }}>
         {/* Handle */}
         <div className="flex justify-center pt-3 pb-1">
-          <div className="w-12 h-1 bg-gray-300 rounded-full" />
+          <div className="w-12 h-1 bg-gray-300 dark:bg-[#3a3a3a] rounded-full" />
         </div>
 
         {/* Header */}
-        <div className="flex justify-between items-center px-6 py-3 border-b border-gray-200 flex-shrink-0">
+        <div className="flex justify-between items-center px-6 py-3 border-b border-gray-200 dark:border-[#262626] flex-shrink-0">
           <h2 className="text-lg font-normal">Timer settings</h2>
           <Button onClick={onToggle} size="sm" className="rounded-lg w-10 h-10 p-0 bg-foreground text-background hover:bg-foreground/90 transition-all duration-200">
             <Check className="w-5 h-5" />
