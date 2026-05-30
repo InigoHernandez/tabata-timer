@@ -67,7 +67,7 @@ const ProgressBars = memo(({ sequence, activeIndex }: ProgressBarsProps) => {
                 fontSize: '14px',
                 height: `${BAR_H}px`,
                 display: 'inline-flex',
-                alignItems: 'flex-end',
+                alignItems: 'center',
                 lineHeight: 1,
                 marginLeft: `${R_GAP - ITEM_GAP}px`,
                 marginRight: `${R_GAP - ITEM_GAP}px`,
