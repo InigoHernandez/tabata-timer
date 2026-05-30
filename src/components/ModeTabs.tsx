@@ -12,6 +12,7 @@ const ModeTabs = ({ mode, onChange }: ModeTabsProps) => {
     { id: 'training', label: 'Training' },
     { id: 'focus', label: 'Focus' },
   ];
+  const activeIndex = tabs.findIndex((t) => t.id === mode);
 
   return (
     <div
@@ -19,6 +20,15 @@ const ModeTabs = ({ mode, onChange }: ModeTabsProps) => {
       role="tablist"
       aria-label="Timer mode"
     >
+      {/* Animated pill */}
+      <div
+        aria-hidden="true"
+        className="absolute top-1 bottom-1 left-1 rounded-md bg-foreground transition-transform duration-200 ease-out pointer-events-none"
+        style={{
+          width: 'calc(50% - 4px)',
+          transform: `translateX(${activeIndex * 100}%)`,
+        }}
+      />
       {tabs.map((tab) => {
         const isActive = mode === tab.id;
         return (
@@ -29,7 +39,7 @@ const ModeTabs = ({ mode, onChange }: ModeTabsProps) => {
             onClick={() => onChange(tab.id)}
             className={`relative z-10 py-2 text-sm font-normal rounded-md transition-colors duration-300 ${
               isActive
-                ? 'bg-foreground text-background'
+                ? 'text-background'
                 : 'text-foreground/50 hover:text-foreground/80'
             }`}
           >
