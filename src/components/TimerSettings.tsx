@@ -40,9 +40,7 @@ const TimerSettingsPanel = ({
       <div className="space-y-4 lg:space-y-5 px-0 py-0 w-full">
         <div className="space-y-2 lg:space-y-3 py-[6px]">
           <div className="flex justify-between items-center py-0">
-            <span style={{
-            color: 'rgba(0, 0, 0, 0.3)'
-          }} className="text-base font-normal md:text-base">
+            <span className="text-base font-normal md:text-base text-foreground/30">
               Number of tabatas
             </span>
             <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
@@ -54,9 +52,7 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base md:text-base font-normal" style={{
-            color: '#0000004d'
-          }}>
+            <span className="text-base md:text-base font-normal text-foreground/30">
               Rounds per tabatas
             </span>
             <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
@@ -68,9 +64,7 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base md:text-base font-normal" style={{
-            color: '#0000004d'
-          }}>
+            <span className="text-base md:text-base font-normal text-foreground/30">
               Work time
             </span>
             <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
@@ -82,9 +76,7 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base md:text-base font-normal" style={{
-            color: '#0000004d'
-          }}>
+            <span className="text-base md:text-base font-normal text-foreground/30">
               Rest time
             </span>
             <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
@@ -96,9 +88,7 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base md:text-base font-normal" style={{
-            color: '#0000004d'
-          }}>
+            <span className="text-base md:text-base font-normal text-foreground/30">
               Rest between tabatas
             </span>
             <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{
@@ -110,9 +100,7 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-2 lg:space-y-3 pb-1">
           <div className="flex justify-between items-center">
-            <span className="text-base md:text-base font-normal" style={{
-            color: '#0000004d'
-          }}>
+            <span className="text-base md:text-base font-normal text-foreground/30">
               Countdown time
             </span>
             <span className="font-normal text-base md:text-base font-jetbrains-mono" style={{

@@ -49,7 +49,7 @@ export const getBackgroundColor = (isRunning: boolean, timerState: TimerState) =
   
   switch (timerState) {
     case 'idle':
-      return 'white'; // READY - keep white background
+      return 'transparent'; // READY - inherit card background
     case 'countdown':
       return 'rgba(255, 139, 71, 0.15)'; // GET READY - orange with 15% opacity
     case 'work':

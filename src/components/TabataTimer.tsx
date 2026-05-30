@@ -208,14 +208,14 @@ const TabataTimer = () => {
   };
 
   return (
-    <div className="h-dvh bg-[#F8F8F8] font-aspekta animate-fade-in transition-all duration-500 ease-in-out overflow-hidden">
+    <div className="h-dvh bg-[#F8F8F8] dark:bg-[#0F0F0F] font-aspekta animate-fade-in transition-colors duration-500 ease-in-out overflow-hidden">
       {/* Mobile Layout - Full viewport adaptation */}
       <div className="md:hidden h-full flex flex-col p-2 overflow-hidden transition-all duration-500 ease-in-out">
         <div className="flex-shrink-0">
           <TimerHero hideInFullscreen={isFullscreen} />
         </div>
 
-        <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out mb-2`}>
+        <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5] dark:border-[#262626] dark:bg-[#1A1A1A]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out mb-2`}>
           <div className="flex flex-col h-full min-h-0">
             <div className="flex-1 min-h-0">
               <TimerDisplay 
@@ -244,7 +244,7 @@ const TabataTimer = () => {
             <TimerHero hideInFullscreen={isFullscreen} />
           </div>
 
-          <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
+          <Card className={`flex-1 overflow-hidden ${isFullscreen ? 'border-0 bg-transparent' : 'border border-[#E8E8E8] bg-[#F5F5F5] dark:border-[#262626] dark:bg-[#1A1A1A]'} rounded-xl shadow-none min-h-0 transition-all duration-500 ease-in-out`}>
             {/* Tablet Layout - 2 columns with adjusted proportions for tablet screens */}
             <div className="xl:hidden grid grid-cols-5 h-full min-h-0 transition-all duration-500 ease-in-out">
               <div className="col-span-3">
@@ -264,7 +264,7 @@ const TabataTimer = () => {
               </div>
 
               {!isFullscreen && (
-                <div className="col-span-2 border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
+                <div className="col-span-2 border-l border-[#E8E8E8] bg-[#F8F8F8] dark:border-[#262626] dark:bg-[#141414] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[24px] px-[24px]">
                   <TimerSettingsPanel 
                     settings={settings} 
                     onSettingsChange={setSettings} 
@@ -292,7 +292,7 @@ const TabataTimer = () => {
               />
 
               {!isFullscreen && (
-                <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[32px] px-[34px]">
+                <div className="border-l border-[#E8E8E8] bg-[#F8F8F8] dark:border-[#262626] dark:bg-[#141414] p-4 md:p-6 flex flex-col transition-all duration-500 ease-in-out py-[32px] px-[34px]">
                   <TimerSettingsPanel 
                     settings={settings} 
                     onSettingsChange={setSettings} 
