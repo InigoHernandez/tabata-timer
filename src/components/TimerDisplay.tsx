@@ -102,7 +102,7 @@ const TimerDisplay = ({
             <div className="flex justify-between items-start flex-shrink-0 mb-6">
               {/* Progress Bars - Top Left */}
               <div className="flex-1 max-w-md">
-                <ProgressBars 
+                <ProgressBars sequence={sequence} activeIndex={activeIndex} 
                   currentSet={currentSet}
                   currentRound={currentRound}
                   totalSets={totalSets}
@@ -168,7 +168,7 @@ const TimerDisplay = ({
             <div className="flex justify-between items-start flex-shrink-0 mb-4 lg:mb-6 relative">
               {/* Progress Bars - Top Left with consistent top alignment */}
               <div className="flex-1 max-w-[240px] lg:max-w-[280px]">
-                <ProgressBars 
+                <ProgressBars sequence={sequence} activeIndex={activeIndex} 
                   currentSet={currentSet}
                   currentRound={currentRound}
                   totalSets={totalSets}
@@ -233,7 +233,7 @@ const TimerDisplay = ({
             {/* Top section - Progress bars and remaining time */}
             <div className="flex justify-between items-start mb-4 flex-shrink-0">
               <div className="flex-1 max-w-[180px]">
-                <ProgressBars 
+                <ProgressBars sequence={sequence} activeIndex={activeIndex} 
                   currentSet={currentSet}
                   currentRound={currentRound}
                   totalSets={totalSets}
@@ -311,7 +311,7 @@ const TimerDisplay = ({
           {/* Top section - Progress bars and remaining time */}
           <div className="flex justify-between items-start mb-4 flex-shrink-0">
             <div className="flex-1 max-w-[200px]">
-              <ProgressBars 
+              <ProgressBars sequence={sequence} activeIndex={activeIndex} 
                 currentSet={currentSet}
                 currentRound={currentRound}
                 totalSets={totalSets}
@@ -382,7 +382,7 @@ const TimerDisplay = ({
           />
 
           <div className="mr-20 md:mr-32 lg:mr-48 mb-4 flex-shrink-0">
-            <ProgressBars 
+            <ProgressBars sequence={sequence} activeIndex={activeIndex} 
               currentSet={currentSet}
               currentRound={currentRound}
               totalSets={totalSets}
