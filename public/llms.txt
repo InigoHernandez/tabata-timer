@@ -1,0 +1,63 @@
+# Stint
+
+A minimalist timer for training, focus, and any timed session.
+
+## What is Stint?
+
+Stint is a free online timer with two modes:
+
+- **Training mode**: For HIIT, Tabata, EMOM, AMRAP, circuit training, boxing rounds, and any interval workout
+
+- **Focus mode**: For Pomodoro technique, deep work sessions, study sessions, and productivity
+
+No signup, no ads, no app to install. Works in any modern browser on phone, tablet, or desktop.
+
+## Key features
+
+- Customizable work/rest intervals
+
+- Multiple rounds and sessions
+
+- Visual progress indicators
+
+- Dark mode support
+
+- Fullscreen mode for gym or workspace use
+
+- Mobile and desktop responsive
+
+## Use cases
+
+- Tabata workouts (20s work / 10s rest, 8 rounds)
+
+- HIIT training
+
+- Pomodoro technique (25min focus / 5min break)
+
+- Deep work sessions (60-90 minutes)
+
+- Study timers
+
+- Meditation and breathwork
+
+- Boxing and martial arts rounds
+
+- Circuit training
+
+- EMOM (Every Minute On the Minute)
+
+- AMRAP (As Many Rounds As Possible)
+
+## Technology
+
+Built as a Progressive Web App with React. No backend required — runs entirely in your browser.
+
+## Privacy
+
+Stint does not track users, does not require accounts, and does not show ads. Anonymous usage analytics via Plausible (cookie-free).
+
+## Links
+
+- Homepage: https://stint.run
+
+- Built by: Iñigo Hernández (https://inigohernandez.design)
