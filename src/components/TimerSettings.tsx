@@ -54,7 +54,7 @@ const TimerSettingsPanel = ({
   // Disable sliders when timer is running (not idle, paused, or finished)
   const slidersDisabled = isRunning && timerState !== 'idle' && timerState !== 'finished';
 
-  const labelClass = 'text-base font-normal md:text-base text-foreground/30';
+  const labelClass = 'text-base font-normal md:text-base text-foreground/60';
   const valueClass = 'font-normal text-base md:text-base font-jetbrains-mono';
 
   return (

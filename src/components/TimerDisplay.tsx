@@ -107,7 +107,7 @@ const TimerDisplay = ({
 
               {/* Remaining Time - Top Right */}
               <div className="text-right">
-                <div className="text-base font-normal mb-1 text-foreground/30">
+                <div className="text-base font-normal mb-1 text-foreground/60">
                   Remaining time
                 </div>
                 <div className="text-3xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
@@ -132,7 +132,7 @@ const TimerDisplay = ({
             <div className="flex justify-between items-end flex-shrink-0 mt-6">
               {/* Cycles - Bottom Left */}
               <div>
-                <div className="text-base font-normal mb-2 text-foreground/30">
+                <div className="text-base font-normal mb-2 text-foreground/60">
                   Cycles
                 </div>
                 <div 
@@ -168,7 +168,7 @@ const TimerDisplay = ({
 
               {/* Remaining Time - Top Right with exact alignment to progress bars top and controls right edge */}
               <div className="absolute top-0 right-0 text-right">
-                <div className="text-sm lg:text-base font-normal mb-1 text-foreground/30">
+                <div className="text-sm lg:text-base font-normal mb-1 text-foreground/60">
                   Remaining time
                 </div>
                 <div className="text-xl lg:text-2xl font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
@@ -193,7 +193,7 @@ const TimerDisplay = ({
             <div className="flex justify-between items-end flex-shrink-0 mt-4 lg:mt-6 mb-4 lg:mb-6">
               {/* Cycles - Bottom Left */}
               <div>
-                <div className="text-sm lg:text-base font-normal mb-1 lg:mb-2 text-foreground/30">
+                <div className="text-sm lg:text-base font-normal mb-1 lg:mb-2 text-foreground/60">
                   Cycles
                 </div>
                 <div 
@@ -226,7 +226,7 @@ const TimerDisplay = ({
                 <ProgressBars sequence={sequence} activeIndex={activeIndex} />
               </div>
               <div className="text-right">
-                <div className="text-xs font-normal mb-1 text-foreground/30">
+                <div className="text-xs font-normal mb-1 text-foreground/60">
                   Remaining time
                 </div>
                 <div className="text-base font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
@@ -250,7 +250,7 @@ const TimerDisplay = ({
             {/* Bottom section - Cycles and Controls */}
             <div className="flex justify-between items-end flex-shrink-0 pt-2 pb-4">
               <div>
-                <div className="text-xs font-normal mb-1 text-foreground/30">
+                <div className="text-xs font-normal mb-1 text-foreground/60">
                   Cycles
                 </div>
                 <div 
@@ -299,7 +299,7 @@ const TimerDisplay = ({
               <ProgressBars sequence={sequence} activeIndex={activeIndex} />
             </div>
             <div className="text-right">
-              <div className="text-sm font-normal mb-1 text-foreground/30">
+              <div className="text-sm font-normal mb-1 text-foreground/60">
                 Remaining time
               </div>
               <div className="text-lg font-jetbrains-mono" style={{ letterSpacing: '-0.01em', fontWeight: '400' }}>
@@ -323,7 +323,7 @@ const TimerDisplay = ({
           {/* Bottom section - Cycles and Controls (always visible) */}
           <div className="flex justify-between items-end flex-shrink-0 pt-2">
             <div>
-              <div className="text-sm font-normal mb-1 text-foreground/30">
+              <div className="text-sm font-normal mb-1 text-foreground/60">
                 Cycles
               </div>
               <div 
@@ -378,7 +378,7 @@ const TimerDisplay = ({
 
           <div className="flex justify-between items-end flex-shrink-0 pt-4">
             <div>
-              <div className="text-sm md:text-base font-normal mb-2 text-foreground/30">
+              <div className="text-sm md:text-base font-normal mb-2 text-foreground/60">
                 Cycles
               </div>
               <div 
