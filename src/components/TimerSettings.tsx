@@ -28,6 +28,7 @@ interface TimerSettingsProps {
   onFocusChange: (s: FocusSettings) => void;
   isRunning?: boolean;
   timerState?: string;
+  tabataLabels?: boolean;
 }
 const TimerSettingsPanel = ({
   mode,
@@ -37,7 +38,8 @@ const TimerSettingsPanel = ({
   onTrainingChange,
   onFocusChange,
   isRunning = false,
-  timerState = 'idle'
+  timerState = 'idle',
+  tabataLabels = false
 }: TimerSettingsProps) => {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -57,6 +59,10 @@ const TimerSettingsPanel = ({
   const labelClass = 'text-base font-normal md:text-base text-foreground/60';
   const valueClass = 'font-normal text-base md:text-base font-jetbrains-mono';
 
+  const setsLabel = tabataLabels ? 'Number of tabatas' : 'Number of sets';
+  const roundsLabel = tabataLabels ? 'Rounds per tabata' : 'Rounds per set';
+  const restBetweenLabel = tabataLabels ? 'Rest between tabatas' : 'Rest between sets';
+
   return (
     <div className="flex-1 py-2 animate-fade-in md:py-0 flex flex-col w-full">
       <div className="mb-4 lg:mb-5 w-full">
@@ -69,7 +75,7 @@ const TimerSettingsPanel = ({
             <>
         <div className="space-y-2 lg:space-y-3 py-[6px]">
           <div className="flex justify-between items-center py-0">
-            <span className={labelClass}>Number of tabatas</span>
+            <span className={labelClass}>{setsLabel}</span>
             <span className={valueClass} style={{ fontWeight: '400' }}>{trainingSettings.sets}</span>
           </div>
           <Slider value={[trainingSettings.sets]} onValueChange={value => updateTraining('sets', value[0])} max={8} min={1} step={1} className="w-full" disabled={slidersDisabled} />
@@ -77,7 +83,7 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className={labelClass}>Rounds per tabatas</span>
+            <span className={labelClass}>{roundsLabel}</span>
             <span className={valueClass} style={{ fontWeight: '400' }}>{trainingSettings.rounds}</span>
           </div>
           <Slider value={[trainingSettings.rounds]} onValueChange={value => updateTraining('rounds', value[0])} max={12} min={1} step={1} className="w-full" disabled={slidersDisabled} />
@@ -101,7 +107,7 @@ const TimerSettingsPanel = ({
 
         <div className="space-y-2 lg:space-y-3">
           <div className="flex justify-between items-center">
-            <span className={labelClass}>Rest between tabatas</span>
+            <span className={labelClass}>{restBetweenLabel}</span>
             <span className={valueClass} style={{ fontWeight: '400' }}>{formatTime(trainingSettings.restBetweenSets)}</span>
           </div>
           <Slider value={[trainingSettings.restBetweenSets]} onValueChange={value => updateTraining('restBetweenSets', value[0])} max={180} min={30} step={15} className="w-full" disabled={slidersDisabled} />

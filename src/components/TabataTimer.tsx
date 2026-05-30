@@ -42,9 +42,10 @@ interface TabataTimerProps {
   initialMode?: TimerMode;
   initialTraining?: Partial<TrainingSettings>;
   initialFocus?: Partial<FocusSettings>;
+  tabataLabels?: boolean;
 }
 
-const TabataTimer = ({ initialMode, initialTraining, initialFocus }: TabataTimerProps = {}) => {
+const TabataTimer = ({ initialMode, initialTraining, initialFocus, tabataLabels = false }: TabataTimerProps = {}) => {
   const [mode, setModeState] = useState<TimerMode>(() => initialMode ?? loadMode());
   const [trainingSettings, setTrainingSettings] = useState<TrainingSettings>({ ...DEFAULT_TRAINING, ...initialTraining });
   const [focusSettings, setFocusSettings] = useState<FocusSettings>({ ...DEFAULT_FOCUS, ...initialFocus });
@@ -425,6 +426,7 @@ const TabataTimer = ({ initialMode, initialTraining, initialFocus }: TabataTimer
                     onFocusChange={setFocusSettings}
                     isRunning={isRunning} 
                     timerState={timerState} 
+                    tabataLabels={tabataLabels}
                   />
                 </div>
               )}
@@ -457,6 +459,7 @@ const TabataTimer = ({ initialMode, initialTraining, initialFocus }: TabataTimer
                     onFocusChange={setFocusSettings}
                     isRunning={isRunning} 
                     timerState={timerState} 
+                    tabataLabels={tabataLabels}
                   />
                 </div>
               )}
@@ -477,6 +480,7 @@ const TabataTimer = ({ initialMode, initialTraining, initialFocus }: TabataTimer
         onFocusChange={setFocusSettings}
         isRunning={isRunning}
         timerState={timerState}
+        tabataLabels={tabataLabels}
       />
     </div>
   );
