@@ -473,7 +473,6 @@ export const landingPages: LandingPage[] = [
       { path: '/deep-work', label: 'Deep work' },
       { path: '/study-timer', label: 'Study' },
       { path: '/52-17', label: '52/17' },
-      { path: '/90-20', label: '90/20' },
     ],
   },
 ];
