@@ -24,7 +24,6 @@ const DEFAULT_FOCUS: FocusSettings = {
   shortBreak: 5,
   longBreak: 15,
   pomodoros: 4,
-  loop: false,
 };
 
 const loadMode = (): TimerMode => {
@@ -211,7 +210,7 @@ const TabataTimer = () => {
         setCurrentRound(prev => prev + 1);
         handleStateTransition('work', settings.workTime);
       } else if (timerState === 'setRest') {
-        if (mode === 'focus' && !focusSettings.loop) {
+        if (mode === 'focus') {
           handleStateTransition('finished', 0);
           setIsRunning(false);
         } else {
@@ -221,7 +220,7 @@ const TabataTimer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, mode, focusSettings.loop, handleStateTransition]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, mode, handleStateTransition]);
 
   const remainingTime = useMemo(() => {
     if (mode === 'focus') {

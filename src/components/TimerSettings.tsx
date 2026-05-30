@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { Switch } from '@/components/ui/switch';
 import ModeTabs, { type TimerMode } from './ModeTabs';
 
 export interface TrainingSettings {
@@ -18,7 +17,6 @@ export interface FocusSettings {
   shortBreak: number; // minutes
   longBreak: number; // minutes
   pomodoros: number; // number of pomodoros before long break
-  loop: boolean;
 }
 
 interface TimerSettingsProps {
@@ -124,7 +122,7 @@ const TimerSettingsPanel = ({
                   <span className={labelClass}>Number of pomodoros</span>
                   <span className={valueClass} style={{ fontWeight: '400' }}>{focusSettings.pomodoros}</span>
                 </div>
-                <Slider value={[focusSettings.pomodoros]} onValueChange={v => updateFocus('pomodoros', v[0])} max={12} min={2} step={1} className="w-full" disabled={slidersDisabled} />
+                <Slider value={[focusSettings.pomodoros]} onValueChange={v => updateFocus('pomodoros', v[0])} max={12} min={1} step={1} className="w-full" disabled={slidersDisabled} />
               </div>
 
               <div className="space-y-2 lg:space-y-3">
@@ -151,13 +149,6 @@ const TimerSettingsPanel = ({
                 <Slider value={[focusSettings.longBreak]} onValueChange={v => updateFocus('longBreak', v[0])} max={45} min={5} step={1} className="w-full" disabled={slidersDisabled} />
               </div>
 
-              <div className="flex justify-between items-center pt-2 pb-1">
-                <span className={labelClass}>Loop</span>
-                <Switch
-                  checked={focusSettings.loop}
-                  onCheckedChange={(checked) => onFocusChange({ ...focusSettings, loop: checked })}
-                />
-              </div>
             </>
           )}
         </div>

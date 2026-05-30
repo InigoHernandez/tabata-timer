@@ -42,6 +42,9 @@ const TimerMainDisplay = memo(({
   // Format time with custom colon styling
   const formattedTime = useMemo(() => {
     const timeString = formatTimeDisplay(displayTime);
+    if (!timeString.includes(':')) {
+      return <>{timeString}</>;
+    }
     const [minutes, secs] = timeString.split(':');
     
     return (
