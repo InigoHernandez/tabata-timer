@@ -5,27 +5,54 @@ import TimerDisplay from './TimerDisplay';
 import TimerSettingsPanel from './TimerSettings';
 import MobileSettingsDrawer from './MobileSettingsDrawer';
 import { useAudio } from '@/hooks/useAudio';
-
-interface TimerSettings {
-  workTime: number;
-  restTime: number;
-  rounds: number;
-  sets: number;
-  restBetweenSets: number;
-  countdownTime: number;
-}
+import type { TimerMode } from './ModeTabs';
+import type { TrainingSettings, FocusSettings } from './TimerSettings';
 
 type TimerState = 'idle' | 'countdown' | 'work' | 'rest' | 'setRest' | 'finished';
 
+const DEFAULT_TRAINING: TrainingSettings = {
+  workTime: 20,
+  restTime: 10,
+  rounds: 8,
+  sets: 2,
+  restBetweenSets: 40,
+  countdownTime: 5,
+};
+
+const DEFAULT_FOCUS: FocusSettings = {
+  focusTime: 25,
+  shortBreak: 5,
+  longBreak: 15,
+  sessionsBeforeLongBreak: 4,
+  countdownTime: 5,
+};
+
+const loadMode = (): TimerMode => {
+  try {
+    const v = localStorage.getItem('timerMode');
+    return v === 'focus' ? 'focus' : 'training';
+  } catch {
+    return 'training';
+  }
+};
+
 const TabataTimer = () => {
-  const [settings, setSettings] = useState<TimerSettings>({
-    workTime: 20,
-    restTime: 10,
-    rounds: 8,
-    sets: 2,
-    restBetweenSets: 40,
-    countdownTime: 5
-  });
+  const [mode, setModeState] = useState<TimerMode>(loadMode);
+  const [trainingSettings, setTrainingSettings] = useState<TrainingSettings>(DEFAULT_TRAINING);
+  const [focusSettings, setFocusSettings] = useState<FocusSettings>(DEFAULT_FOCUS);
+
+  // Derived effective engine settings
+  const settings = useMemo(() => {
+    if (mode === 'training') return trainingSettings;
+    return {
+      workTime: focusSettings.focusTime * 60,
+      restTime: focusSettings.shortBreak * 60,
+      rounds: focusSettings.sessionsBeforeLongBreak,
+      sets: 999, // infinite loop in focus mode
+      restBetweenSets: focusSettings.longBreak * 60,
+      countdownTime: focusSettings.countdownTime,
+    };
+  }, [mode, trainingSettings, focusSettings]);
 
   const [isRunning, setIsRunning] = useState(false);
   const [currentTime, setCurrentTime] = useState(settings.workTime);
@@ -91,6 +118,22 @@ const TabataTimer = () => {
     setPrevTimerState('idle');
   }, [settings.workTime, stopAllScheduledBeeps]);
 
+  const setMode = useCallback((next: TimerMode) => {
+    if (next === mode) return;
+    stopAllScheduledBeeps();
+    setIsRunning(false);
+    setCurrentRound(1);
+    setCurrentSet(1);
+    setTimerState('idle');
+    setPrevTimerState('idle');
+    setModeState(next);
+    try {
+      localStorage.setItem('timerMode', next);
+    } catch {
+      /* ignore */
+    }
+  }, [mode, stopAllScheduledBeeps]);
+
   const toggleTimer = async () => {
     if (timerState === 'idle') {
       // Initialize audio and wait for it to complete before scheduling sounds
@@ -147,6 +190,10 @@ const TabataTimer = () => {
       } else if (timerState === 'work') {
         if (currentRound < settings.rounds) {
           handleStateTransition('rest', settings.restTime);
+        } else if (mode === 'focus') {
+          // Focus mode: after last session in cycle, go to long break and loop
+          handleStateTransition('setRest', settings.restBetweenSets);
+          setCurrentRound(1);
         } else if (currentSet < settings.sets) {
           handleStateTransition('setRest', settings.restBetweenSets);
           setCurrentRound(1);
@@ -164,9 +211,27 @@ const TabataTimer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, handleStateTransition]);
+  }, [isRunning, currentTime, timerState, currentRound, currentSet, settings, mode, handleStateTransition]);
 
   const remainingTime = useMemo(() => {
+    if (mode === 'focus') {
+      // Time remaining in current Pomodoro cycle (until end of long break)
+      const { workTime, restTime, rounds, restBetweenSets } = settings;
+      const cycleTotal = rounds * workTime + (rounds - 1) * restTime + restBetweenSets;
+      if (timerState === 'idle' || timerState === 'countdown') return cycleTotal;
+      let remaining = currentTime;
+      if (timerState === 'work') {
+        const roundsLeft = rounds - currentRound; // remaining short breaks + focus rounds after this one
+        remaining += roundsLeft * (restTime + workTime) + restBetweenSets;
+      } else if (timerState === 'rest') {
+        const focusLeft = rounds - currentRound;
+        const restsLeft = Math.max(0, focusLeft - 1);
+        remaining += focusLeft * workTime + restsLeft * restTime + restBetweenSets;
+      }
+      // setRest: just currentTime
+      return remaining;
+    }
+
     const timePerSet = settings.rounds * settings.workTime + (settings.rounds - 1) * settings.restTime;
     const totalWorkoutTime = settings.sets * timePerSet + (settings.sets - 1) * settings.restBetweenSets;
 
@@ -201,7 +266,16 @@ const TabataTimer = () => {
     }
 
     return remaining;
-  }, [settings, timerState, currentTime, currentRound, currentSet]);
+  }, [settings, mode, timerState, currentTime, currentRound, currentSet]);
+
+  const cyclesText = useMemo(() => {
+    if (mode === 'focus') {
+      return `${currentRound}/${focusSettings.sessionsBeforeLongBreak}`;
+    }
+    return `${(currentSet - 1) * settings.rounds + currentRound}/${settings.rounds * settings.sets}`;
+  }, [mode, currentRound, currentSet, focusSettings.sessionsBeforeLongBreak, settings.rounds, settings.sets]);
+
+  const heroSubtitle = mode === 'focus' ? 'minimalist Pomodoro timer' : 'minimalist HIIT timer';
 
   const toggleMobileSettings = () => {
     setIsMobileSettingsOpen(!isMobileSettingsOpen);
