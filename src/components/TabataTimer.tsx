@@ -296,7 +296,7 @@ const TabataTimer = ({ initialMode, initialTraining, initialFocus }: TabataTimer
     return `${(currentSet - 1) * settings.rounds + currentRound}/${settings.rounds * settings.sets}`;
   }, [mode, currentRound, currentSet, focusSettings.pomodoros, settings.rounds, settings.sets]);
 
-  const heroSubtitle = mode === 'focus' ? 'minimalist Pomodoro timer' : 'minimalist HIIT timer';
+  const heroSubtitle = '— minimalist timer';
 
   const sequence = useMemo<SequenceItem[]>(() => {
     const seq: SequenceItem[] = [];
