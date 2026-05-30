@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+import { Switch } from '@/components/ui/switch';
 import ModeTabs, { type TimerMode } from './ModeTabs';
 
 export interface TrainingSettings {
@@ -16,8 +17,8 @@ export interface FocusSettings {
   focusTime: number; // minutes
   shortBreak: number; // minutes
   longBreak: number; // minutes
-  sessionsBeforeLongBreak: number;
-  countdownTime: number; // seconds
+  pomodoros: number; // number of pomodoros before long break
+  loop: boolean;
 }
 
 interface TimerSettingsProps {
@@ -120,10 +121,18 @@ const TimerSettingsPanel = ({
             <>
               <div className="space-y-2 lg:space-y-3 py-[6px]">
                 <div className="flex justify-between items-center">
+                  <span className={labelClass}>Number of pomodoros</span>
+                  <span className={valueClass} style={{ fontWeight: '400' }}>{focusSettings.pomodoros}</span>
+                </div>
+                <Slider value={[focusSettings.pomodoros]} onValueChange={v => updateFocus('pomodoros', v[0])} max={12} min={2} step={1} className="w-full" disabled={slidersDisabled} />
+              </div>
+
+              <div className="space-y-2 lg:space-y-3">
+                <div className="flex justify-between items-center">
                   <span className={labelClass}>Focus time</span>
                   <span className={valueClass} style={{ fontWeight: '400' }}>{focusSettings.focusTime} min</span>
                 </div>
-                <Slider value={[focusSettings.focusTime]} onValueChange={v => updateFocus('focusTime', v[0])} max={60} min={5} step={5} className="w-full" disabled={slidersDisabled} />
+                <Slider value={[focusSettings.focusTime]} onValueChange={v => updateFocus('focusTime', v[0])} max={90} min={5} step={5} className="w-full" disabled={slidersDisabled} />
               </div>
 
               <div className="space-y-2 lg:space-y-3">
@@ -131,7 +140,7 @@ const TimerSettingsPanel = ({
                   <span className={labelClass}>Short break</span>
                   <span className={valueClass} style={{ fontWeight: '400' }}>{focusSettings.shortBreak} min</span>
                 </div>
-                <Slider value={[focusSettings.shortBreak]} onValueChange={v => updateFocus('shortBreak', v[0])} max={15} min={1} step={1} className="w-full" disabled={slidersDisabled} />
+                <Slider value={[focusSettings.shortBreak]} onValueChange={v => updateFocus('shortBreak', v[0])} max={20} min={1} step={1} className="w-full" disabled={slidersDisabled} />
               </div>
 
               <div className="space-y-2 lg:space-y-3">
@@ -139,23 +148,15 @@ const TimerSettingsPanel = ({
                   <span className={labelClass}>Long break</span>
                   <span className={valueClass} style={{ fontWeight: '400' }}>{focusSettings.longBreak} min</span>
                 </div>
-                <Slider value={[focusSettings.longBreak]} onValueChange={v => updateFocus('longBreak', v[0])} max={30} min={5} step={1} className="w-full" disabled={slidersDisabled} />
+                <Slider value={[focusSettings.longBreak]} onValueChange={v => updateFocus('longBreak', v[0])} max={45} min={5} step={1} className="w-full" disabled={slidersDisabled} />
               </div>
 
-              <div className="space-y-2 lg:space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className={labelClass}>Sessions before long break</span>
-                  <span className={valueClass} style={{ fontWeight: '400' }}>{focusSettings.sessionsBeforeLongBreak}</span>
-                </div>
-                <Slider value={[focusSettings.sessionsBeforeLongBreak]} onValueChange={v => updateFocus('sessionsBeforeLongBreak', v[0])} max={8} min={2} step={1} className="w-full" disabled={slidersDisabled} />
-              </div>
-
-              <div className="space-y-2 lg:space-y-3 pb-1">
-                <div className="flex justify-between items-center">
-                  <span className={labelClass}>Countdown time</span>
-                  <span className={valueClass} style={{ fontWeight: '400' }}>{focusSettings.countdownTime}s</span>
-                </div>
-                <Slider value={[focusSettings.countdownTime]} onValueChange={v => updateFocus('countdownTime', v[0])} max={10} min={3} step={1} className="w-full" disabled={slidersDisabled} />
+              <div className="flex justify-between items-center pt-2 pb-1">
+                <span className={labelClass}>Loop</span>
+                <Switch
+                  checked={focusSettings.loop}
+                  onCheckedChange={(checked) => onFocusChange({ ...focusSettings, loop: checked })}
+                />
               </div>
             </>
           )}
