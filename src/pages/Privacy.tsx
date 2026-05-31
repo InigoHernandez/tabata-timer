@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 export default function Privacy() {
   return (
     <>
-      <Seo title="Privacy Policy | Stint" description="Stint's privacy policy. We collect no personal data." path="/privacy" />
+      <Seo title="Privacy Policy | Stint" description="Stint's privacy policy. We don't collect personal data, we don't show ads, we don't track. Just a simple timer that respects your privacy." path="/privacy" />
       <main className="max-w-3xl mx-auto px-6 py-20 font-aspekta text-foreground/80 leading-relaxed">
         <h1 className="text-4xl font-light mb-6 text-foreground">Privacy Policy</h1>
         <p className="mb-4">Stint runs entirely in your browser. We do not collect, store, or transmit any personal information.</p>

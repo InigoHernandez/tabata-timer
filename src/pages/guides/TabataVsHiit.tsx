@@ -6,7 +6,7 @@ export default function TabataVsHiit() {
     <GuideLayout
       path="/guides/tabata-vs-hiit"
       title="Tabata vs HIIT — What's the Difference? | Stint"
-      description="Tabata is one specific protocol. HIIT is an umbrella term. Here's how they differ and when to use each."
+      description="Tabata vs HIIT comparison. Same family but different protocols. Learn when to use each, what the science says, and how they affect fitness."
       h1="Tabata vs HIIT"
       date="2026-05-30"
     >

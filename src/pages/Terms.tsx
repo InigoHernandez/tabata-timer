@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 export default function Terms() {
   return (
     <>
-      <Seo title="Terms of Service | Stint" description="Terms of service for Stint, a free minimalist timer." path="/terms" />
+      <Seo title="Terms of Service | Stint" description="Terms of service for Stint, the free minimalist timer. Open access, no warranty, use at your own discretion. Read the full terms here." path="/terms" />
       <main className="max-w-3xl mx-auto px-6 py-20 font-aspekta text-foreground/80 leading-relaxed">
         <h1 className="text-4xl font-light mb-6 text-foreground">Terms of Service</h1>
         <p className="mb-4">Stint is provided free of charge, as-is, without warranty of any kind. Use it at your own discretion.</p>

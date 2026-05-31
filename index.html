@@ -42,6 +42,15 @@
               window.location.search +
               window.location.hash
           );
+          return;
+        }
+        if (h === 'www.stint.run') {
+          window.location.replace(
+            'https://stint.run' +
+              window.location.pathname +
+              window.location.search +
+              window.location.hash
+          );
         }
       })();
     </script>
