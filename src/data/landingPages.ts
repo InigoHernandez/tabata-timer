@@ -268,6 +268,7 @@ export const landingPages: LandingPage[] = [
       { path: '/52-17', label: '52/17 timer' },
       { path: '/focus-timer', label: 'Focus timer' },
       { path: '/guides/pomodoro-technique', label: 'Guide: Pomodoro Technique' },
+      { path: '/guides/how-to-use-a-timer-for-productivity', label: 'Guide: How to use a timer for productivity' },
     ],
     longContent: 'The Pomodoro Technique was invented in the late 1980s by Francesco Cirillo, who used a tomato-shaped kitchen timer (pomodoro means tomato in Italian) to break study sessions into manageable chunks. Each pomodoro is a hard commitment: 25 minutes, one task, no interruptions. After four pomodoros, you earn a longer 15-minute break. The structure works because it converts vague intent ("I should work on this") into a discrete, finishable unit. Stint runs the protocol the way Cirillo described — minimalist, no gamification, just the timer.',
   },
@@ -294,6 +295,7 @@ export const landingPages: LandingPage[] = [
       { path: '/52-17', label: '52/17 timer' },
       { path: '/focus-timer', label: 'Focus timer' },
       { path: '/guides/deep-work', label: 'Guide: Deep Work' },
+      { path: '/guides/how-to-use-a-timer-for-productivity', label: 'Guide: How to use a timer for productivity' },
     ],
     longContent: 'Deep work — a term popularized by Cal Newport — is professional activity performed in a state of distraction-free concentration that pushes your cognitive capabilities to their limit. Newport argues this is the work that produces real value and is increasingly rare in a world of constant interruption. The protocol is simple: long blocks (60–120 minutes), zero context switching, and rigorous defense of the block against meetings, notifications, and curiosity-driven tab opens. Stint provides the timer; the discipline is yours.',
   },
@@ -311,6 +313,7 @@ export const landingPages: LandingPage[] = [
       { path: '/work-timer', label: 'Work timer' },
       { path: '/deep-work', label: 'Deep work timer' },
       { path: '/focus-timer', label: 'Focus timer' },
+      { path: '/guides/how-to-use-a-timer-for-productivity', label: 'Guide: How to use a timer for productivity' },
     ],
   },
   {
@@ -327,6 +330,7 @@ export const landingPages: LandingPage[] = [
       { path: '/deep-work', label: 'Deep work timer' },
       { path: '/study-timer', label: 'Study timer' },
       { path: '/52-17', label: '52/17 timer' },
+      { path: '/guides/how-to-use-a-timer-for-productivity', label: 'Guide: How to use a timer for productivity' },
     ],
   },
   {
@@ -342,6 +346,7 @@ export const landingPages: LandingPage[] = [
       { path: '/deep-work', label: 'Deep work timer' },
       { path: '/work-timer', label: 'Work timer' },
       { path: '/study-timer', label: 'Study timer' },
+      { path: '/guides/how-to-use-a-timer-for-productivity', label: 'Guide: How to use a timer for productivity' },
     ],
   },
   {
