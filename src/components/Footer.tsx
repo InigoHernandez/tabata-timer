@@ -27,6 +27,8 @@ const genericLinks = [
   { to: '/online-timer', label: 'Online timer' },
   { to: '/countdown-timer', label: 'Countdown' },
   { to: '/session-timer', label: 'Session' },
+  { to: '/training', label: 'Training' },
+  { to: '/focus', label: 'Focus' },
 ];
 const moreLinks = [
   { to: '/guides', label: 'Guides' },
