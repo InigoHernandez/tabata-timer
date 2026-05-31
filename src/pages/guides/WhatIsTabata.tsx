@@ -5,8 +5,8 @@ export default function WhatIsTabata() {
   return (
     <GuideLayout
       path="/guides/what-is-tabata"
-      title="What is Tabata? The 4-Minute HIIT Protocol Explained | Stint"
-      description="A clear, sourced explanation of the Tabata protocol — its origins, the science behind it, and how to do it well."
+      title="What is Tabata? The 4-Minute Workout Explained | Stint"
+      description="Tabata explained: history, science, and how to do the protocol. The 4-minute high-intensity workout developed by Dr. Izumi Tabata in 1996."
       h1="What is Tabata?"
       date="2026-05-30"
     >

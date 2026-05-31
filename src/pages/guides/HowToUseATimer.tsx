@@ -4,8 +4,8 @@ export default function HowToUseATimer() {
   return (
     <GuideLayout
       path="/guides/how-to-use-a-timer-for-productivity"
-      title="How to Use a Timer for Productivity — A Playbook | Stint"
-      description="A practical playbook for time-boxing your work — what to time, what to ignore, and how to make the habit stick."
+      title="How to Use a Timer for Productivity | Stint Guides"
+      description="Practical guide to using timers for productivity. Pomodoro, Deep Work, time blocking — how to choose and apply the right timer technique."
       h1="How to use a timer for productivity"
       date="2026-05-30"
     >

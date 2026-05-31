@@ -13,7 +13,7 @@ const guides = [
 export default function GuidesIndex() {
   return (
     <>
-      <Seo title="Guides — Timers, Protocols & Productivity | Stint" description="Guides on Tabata, HIIT, Pomodoro, Deep Work and how to use timers effectively." path="/guides" />
+        <Seo title="Guides — Timers, Protocols & Productivity | Stint" description="Articles about Tabata, HIIT, Pomodoro, Deep Work and timer techniques. Learn how to time your training and focus sessions effectively." path="/guides" />
       <main className="max-w-3xl mx-auto px-6 py-20 font-aspekta text-foreground/80 leading-relaxed">
         <h1 className="text-4xl font-light mb-8 text-foreground">Guides</h1>
         <ul className="space-y-6">

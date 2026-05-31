@@ -182,7 +182,7 @@ export const landingPages: LandingPage[] = [
   {
     path: '/rounds',
     title: 'Round Timer Free Online — Boxing & Combat Sports | Stint',
-    description: 'Free round-based timer for boxing, MMA, and combat sports. Customizable round and rest durations.',
+    description: 'Free round-based timer for boxing, MMA, and combat sports. Customizable round and rest durations. Set rounds, rest, and warning beeps. No ads, no signup needed.',
     h1: 'Round Timer',
     intro: 'Round-based training timer. Configure work (round) length, rest between rounds, and total number of rounds.',
     mode: 'training',
@@ -198,7 +198,7 @@ export const landingPages: LandingPage[] = [
   {
     path: '/circuit',
     title: 'Circuit Training Timer Free Online | Stint',
-    description: 'Free circuit training timer. Multi-station workouts with customizable work and rest durations.',
+    description: 'Free circuit training timer. Multi-station workouts with customizable work and rest durations. Perfect for HIIT, CrossFit, and bodyweight circuits. No signup needed.',
     h1: 'Circuit Training Timer',
     intro: 'Run through a circuit of stations with controlled work and transition times. Set the number of stations as rounds.',
     mode: 'training',
@@ -230,7 +230,7 @@ export const landingPages: LandingPage[] = [
   {
     path: '/cardio-timer',
     title: 'Cardio Interval Timer Free Online | Stint',
-    description: 'Free cardio interval timer. Sprint/recovery cycles for running, cycling, rowing, and conditioning.',
+    description: 'Free cardio interval timer. Sprint/recovery cycles for running, cycling, rowing, and conditioning. Customize work/rest ratios. Perfect for HIIT and steady-state cardio.',
     h1: 'Cardio Interval Timer',
     intro: 'Sprint-and-recover intervals for running, cycling, rowing, or any conditioning work. Set effort and recovery times.',
     mode: 'training',
@@ -319,7 +319,7 @@ export const landingPages: LandingPage[] = [
   {
     path: '/work-timer',
     title: 'Work Timer Free Online — Focus Sessions for Professionals | Stint',
-    description: 'Free work timer for focused professional sessions. Pomodoro or custom durations. No signup.',
+    description: 'Free work timer for focused professional sessions. Pomodoro or custom durations. No signup. Track focus blocks, breaks, and deep work intervals in your browser.',
     h1: 'Work Timer',
     intro: 'A clean work timer for focused professional sessions. Defaults to the Pomodoro protocol — customize to any duration.',
     mode: 'focus',
@@ -421,7 +421,7 @@ export const landingPages: LandingPage[] = [
   {
     path: '/countdown-timer',
     title: 'Free Countdown Timer Online — Customizable | Stint',
-    description: 'Free online countdown timer. Set any duration and press start. Minimalist, no ads.',
+    description: 'Free online countdown timer. Set any duration and press start. Minimalist, no ads. Perfect for cooking, meetings, workouts, or any timed activity.',
     h1: 'Countdown Timer',
     intro: 'A simple countdown timer for any duration. Set a single work interval with no rest and one round.',
     mode: 'training',
@@ -437,7 +437,7 @@ export const landingPages: LandingPage[] = [
   {
     path: '/session-timer',
     title: 'Free Session Timer Online — For Any Activity | Stint',
-    description: 'Free session timer for any timed activity. Meditation, study, workouts, breathing exercises.',
+    description: 'Free session timer for any timed activity. Meditation, study, workouts, breathing exercises. Customizable duration and intervals. Minimalist, no ads, works anywhere.',
     h1: 'Session Timer',
     intro: 'A timer for any kind of session — meditation, study, workouts, breathing practice. Pick a mode and start.',
     mode: 'focus',
@@ -468,7 +468,7 @@ export const landingPages: LandingPage[] = [
   {
     path: '/focus',
     title: 'Focus Timer — Pomodoro & Deep Work | Stint',
-    description: 'Free focus timer for Pomodoro, deep work, study, and concentration sessions. Minimalist, no signup.',
+    description: 'Free focus timer for Pomodoro, deep work, study, and concentration sessions. Minimalist, no signup. Works in any browser. No ads, no app to install. Just press play.',
     h1: 'Focus Timer',
     intro: 'Stint in focus mode: Pomodoro-style focus blocks with short and long breaks. Customize duration and pomodoro count.',
     mode: 'focus',

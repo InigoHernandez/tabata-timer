@@ -6,7 +6,7 @@ export default function About() {
     <>
       <Seo
         title="About Stint — A Minimalist Timer for Any Session"
-        description="Stint is a free, minimalist, distraction-free timer for training and focus sessions. Built by Iñigo Hernandez."
+        description="Built by Iñigo Hernández, Stint is a free minimalist timer for training, focus, and any timed session. No ads, no tracking, just timers."
         path="/about"
       />
       <main className="max-w-3xl mx-auto px-6 py-20 font-aspekta text-foreground/80 leading-relaxed">
