@@ -4,7 +4,8 @@ A modern, feature-rich interval timer for workouts and focus sessions built with
 
 > https://stint.run/
 
-<img width="756" height="425" alt="Stint Timer" src="https://github.com/user-attachments/assets/9e0e3f04-d645-4a1f-84a2-f2310b17e6af" />
+<img width="1511" height="859" alt="image" src="https://github.com/user-attachments/assets/bac4c75d-2b47-48ff-8af5-6c458d8b1695" />
+
 
 
 ## Features
