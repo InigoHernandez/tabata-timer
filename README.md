@@ -1,10 +1,10 @@
-# Rythmic Interval Blaster
+# Stint
 
-A modern, feature-rich Tabata interval timer application built with React and TypeScript. Perfect for high-intensity interval training (HIIT) workouts with customizable work/rest periods, multiple sets, and audio feedback.
+A modern, feature-rich interval timer for workouts and focus sessions built with React and TypeScript. Perfect for HIIT, Tabata, Pomodoro, Deep Work, and custom timed sessions.
 
->> https://tabata.page/
+> https://stint.run/
 
-<img width="756" height="425" alt="Tabata Timer" src="https://github.com/user-attachments/assets/9e0e3f04-d645-4a1f-84a2-f2310b17e6af" />
+<img width="756" height="425" alt="Stint Timer" src="https://github.com/user-attachments/assets/9e0e3f04-d645-4a1f-84a2-f2310b17e6af" />
 
 
 ## Features
@@ -55,8 +55,8 @@ A modern, feature-rich Tabata interval timer application built with React and Ty
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
-cd rythmic-interval-blaster-main
+git clone https://github.com/InigoHernandez/tabata-timer.git
+cd tabata-timer
 ```
 
 2. Install dependencies:
